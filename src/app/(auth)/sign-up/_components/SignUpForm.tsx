@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -8,33 +8,21 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSeparator,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
 import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
+import OtpForm, { otpFormSchema } from "./OtpForm";
 
 const signUpFormSchema = z.object({
   email: z.string().email(),
   password: z.string().min(4, {
     message: "Password must be at least 4 characters",
-  }),
-});
-
-const otpSchema = z.object({
-  pin: z.string().length(6, {
-    message: "OTP sent is a 6-digit code",
   }),
 });
 
@@ -49,13 +37,6 @@ export default function SignUpForm() {
     defaultValues: {
       email: "",
       password: "",
-    },
-  });
-
-  const otpForm = useForm<z.infer<typeof otpSchema>>({
-    resolver: zodResolver(otpSchema),
-    defaultValues: {
-      pin: "",
     },
   });
 
@@ -74,12 +55,17 @@ export default function SignUpForm() {
         strategy: "email_code",
       });
       setVerify(true);
-    } catch (err) {
+    } catch (err: any) {
       console.error(JSON.stringify(err, null, 2));
+      toast({
+        title: "Uh oh! Something went wrong.",
+        description: err.errors[0].longMessage || "Could not fulfill request",
+        variant: "destructive",
+      });
     }
   }
 
-  async function onVerify(values: z.infer<typeof otpSchema>) {
+  async function onVerify(values: z.infer<typeof otpFormSchema>) {
     console.log(values);
 
     if (!isLoaded) return;
@@ -98,6 +84,13 @@ export default function SignUpForm() {
       // and redirect the user
       if (completeSignUp.status === "complete") {
         await setActive({ session: completeSignUp.createdSessionId });
+        const res = await fetch("/api/user/sign-up", {
+          method: "POST",
+          body: JSON.stringify({
+            email: email,
+            userId: completeSignUp.createdUserId
+          })
+        })
         toast({
           title: "Signed up!",
           description: "Your account has been created",
@@ -120,7 +113,7 @@ export default function SignUpForm() {
       console.error("Error:", JSON.stringify(err, null, 2));
       toast({
         title: "Uh oh! Something went wrong.",
-        description: "There was a problem with your request.",
+        description: err.errors[0].longMessage || "Could not fulfill request",
         variant: "destructive",
       });
     }
@@ -129,43 +122,7 @@ export default function SignUpForm() {
   return (
     <>
       {verify ? (
-        <Form {...otpForm}>
-          <form onSubmit={otpForm.handleSubmit(onVerify)} className="space-y-8">
-            <FormField
-              control={otpForm.control}
-              name="pin"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>One-Time Password</FormLabel>
-                  <FormControl>
-                    <InputOTP maxLength={6} {...field}>
-                      <InputOTPGroup>
-                        <InputOTPSlot index={0} />
-                        <InputOTPSlot index={1} />
-                        <InputOTPSlot index={2} />
-                        <InputOTPSeparator />
-                        <InputOTPSlot index={3} />
-                        <InputOTPSlot index={4} />
-                        <InputOTPSlot index={5} />
-                      </InputOTPGroup>
-                    </InputOTP>
-                  </FormControl>
-                  <FormDescription>
-                    Please enter the one-time password sent to your email.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <Button
-              type="submit"
-              className="text-lg bg-purple-600 hover:bg-purple-700 active:bg-purple-900 transition-colors"
-            >
-              Verify OTP
-            </Button>
-          </form>
-        </Form>
+        <OtpForm onVerify={onVerify} />
       ) : (
         <Form {...signUpForm}>
           <form
