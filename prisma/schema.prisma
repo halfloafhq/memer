@@ -13,10 +13,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id    String    @id @default(auto()) @map("_id") @db.ObjectId
+  email String
+  userId String   @unique
+  collections Collection[]
+}
+
 model Meme {
   id    String    @id @default(auto()) @map("_id") @db.ObjectId
   name  String
   tags  String[]
   url   String
   description   String
+  collections MemeCollection[]
+}
+
+model Collection {
+  id    String    @id @default(auto()) @map("_id") @db.ObjectId
+  name  String
+  memes MemeCollection[]
+  madeById String
+  madeBy User @relation(fields: [madeById], references: [userId])
+}
+
+model MemeCollection {
+  id    String    @id @default(auto()) @map("_id") @db.ObjectId
+  memeId String   @db.ObjectId
+  meme  Meme @relation(fields: [memeId], references: [id])
+  collectionId String   @db.ObjectId
+  collection  Collection @relation(fields: [collectionId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([memeId, collectionId])
 }

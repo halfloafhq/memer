@@ -75,7 +75,7 @@ export default function SignInForm() {
       console.error(JSON.stringify(err, null, 2));
       toast({
         title: "Uh oh! Something went wrong.",
-        description: "There was a problem with your request.",
+        description: err.errors[0]?.longMessage || "There was a problem signing in",
         variant: "destructive",
       });
     }

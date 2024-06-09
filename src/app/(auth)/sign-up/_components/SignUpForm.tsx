@@ -27,6 +27,7 @@ const signUpFormSchema = z.object({
 });
 
 export default function SignUpForm() {
+  const [email, setEmail] = useState<string>("");
   const [verify, setVerify] = useState<boolean>(false);
   const { signUp, setActive, isLoaded } = useSignUp();
   const router = useRouter();
@@ -54,6 +55,8 @@ export default function SignUpForm() {
       await signUp?.prepareEmailAddressVerification({
         strategy: "email_code",
       });
+
+      setEmail(values.email)
       setVerify(true);
     } catch (err: any) {
       console.error(JSON.stringify(err, null, 2));
@@ -84,13 +87,24 @@ export default function SignUpForm() {
       // and redirect the user
       if (completeSignUp.status === "complete") {
         await setActive({ session: completeSignUp.createdSessionId });
-        const res = await fetch("/api/user/sign-up", {
+        const req = await fetch("/api/user/sign-up", {
           method: "POST",
           body: JSON.stringify({
             email: email,
             userId: completeSignUp.createdUserId
           })
         })
+
+        const res = await req.json();
+
+        if (req.status !== 201) {
+        toast({
+          title: "Something went wrong!",
+          description: res.message,
+          variant: "destructive",
+        });
+        }
+
         toast({
           title: "Signed up!",
           description: "Your account has been created",
