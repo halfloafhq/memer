@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button";
+"use client";
+import CollectionDialog from "../_components/CollectionDialog";
 
 export default function Dashboard() {
   return (
@@ -17,7 +18,7 @@ export default function Dashboard() {
           <p className="text-sm text-muted-foreground">
             You can start saving memes to a collection
           </p>
-          <Button className="mt-4">Add Collection</Button>
+          <CollectionDialog />
         </div>
       </div>
     </main>

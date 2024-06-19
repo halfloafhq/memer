@@ -45,7 +45,7 @@ export default function Navbar() {
         {signedIn ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Avatar className="h-9 w-9">
+              <Avatar className="h-9 w-9 cursor-pointer">
                 <User className="h-full w-full text-gray-50" />
                 <span className="sr-only">Toggle user menu</span>
               </Avatar>
