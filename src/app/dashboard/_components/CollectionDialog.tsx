@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,9 +7,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -18,18 +18,16 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 
 const collectionFormSchema = z.object({
-  name: z.string().min(4, {
-    message: "Name must be at least 4 characters",
+  name: z.string().min(3, {
+    message: "Name must be at least 3 characters",
   }),
 });
 
 export default function CollectionDialog() {
-
   const collectionForm = useForm<z.infer<typeof collectionFormSchema>>({
     resolver: zodResolver(collectionFormSchema),
     defaultValues: {
@@ -38,7 +36,7 @@ export default function CollectionDialog() {
   });
 
   async function onSubmit(values: z.infer<typeof collectionFormSchema>) {
-
+    console.log(values);
   }
 
   return (
@@ -53,24 +51,30 @@ export default function CollectionDialog() {
             Create a new collection to bookmark your favorite memes.
           </DialogDescription>
         </DialogHeader>
-        <Form>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input
-              id="name"
-              placeholder="Twitter"
-              className="col-span-3"
+        <Form {...collectionForm}>
+          <form onSubmit={collectionForm.handleSubmit(onSubmit)}>
+            <FormField
+              control={collectionForm.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem className="w-full flex flex-col items-center justify-center">
+                  <FormControl>
+                    <Input
+                      className="col-span-3"
+                      placeholder="Twitter"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-        </div>
+            <DialogFooter className="mt-6">
+              <Button type="submit">Create</Button>
+            </DialogFooter>
+          </form>
         </Form>
-        <DialogFooter>
-          <Button type="submit">Create</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
