@@ -3,7 +3,7 @@ import Link from "next/link";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import MemerIcon from "./MemerIcon";
-import { User } from "lucide-react";
+import { LayoutDashboardIcon, LogOutIcon, User } from "lucide-react";
 import { useClerk, useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { useToast } from "./ui/use-toast";
@@ -17,7 +17,7 @@ export default function Navbar() {
   const router = useRouter();
 
   function dashboard() {
-    router.push("/dashboard")
+    router.push("/dashboard/collections")
   }
 
   async function logout() {
@@ -51,9 +51,9 @@ export default function Navbar() {
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={dashboard}>Dashboard</DropdownMenuItem>
+              <DropdownMenuItem onClick={dashboard} className="cursor-pointer text-md"><LayoutDashboardIcon className="h-5 w-5 mx-2 text-primary"/>Dashboard</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={logout} className="cursor-pointer text-md"><LogOutIcon className="h-5 w-5 mx-2 text-red-500"/>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
