@@ -10,13 +10,13 @@ export default function Sidebar() {
     {
       icon: <Library />,
       name: "Collections",
-      active: pathname === "collections" ? true : false,
+      active: pathname === "collections",
       path: "/dashboard/collections",
     },
     {
       icon: <Pencil />,
       name: "Editor",
-      active: pathname === "editor" ? true : false,
+      active: pathname === "editor",
       path: "/dashboard/editor",
     },
   ];
@@ -34,22 +34,15 @@ export default function Sidebar() {
             <div
               key={idx}
               className={cn(
-                tool.active ? "bg-[#F5F5F5] rounded-lg" : null,
-                "p-4 w-full flex items-center justify-start gap-x-4 hover:cursor-pointer",
+                "p-4 w-full flex items-center justify-start gap-x-4 rounded-lg transition duration-200 ease-in-out cursor-pointer",
+                tool.active
+                  ? "bg-[#F5F5F5] text-[#363430]"
+                  : "text-[#91908F] hover:text-[#363430]",
               )}
               onClick={() => reRoute(tool.path)}
             >
               {tool.icon}
-              <h3
-                className={cn(
-                  tool.active
-                    ? "text-[#363430] font-semibold"
-                    : "text-[#91908F] font-medium",
-                  "text-xl",
-                )}
-              >
-                {tool.name}
-              </h3>
+              <h3 className="text-xl font-medium">{tool.name}</h3>
             </div>
           ))}
         </div>
