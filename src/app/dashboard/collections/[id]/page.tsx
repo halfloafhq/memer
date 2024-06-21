@@ -35,7 +35,7 @@ export default function CollectionPage({ params }: { params: { id: string } }) {
       }
     }
     getCollectionById(params.id);
-  }, [params.id]);
+  }, [params.id, toast, setCollection]);
 
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 w-full min-h-screen">
