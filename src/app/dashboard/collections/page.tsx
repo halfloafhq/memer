@@ -3,12 +3,14 @@ import { useLoadingCtx } from "@/context/LoadingContext";
 import CollectionDialog from "../_components/CollectionDialog";
 import { useDashboardCtx } from "@/context/DashboardContext";
 import Loader from "../_components/Loader";
+import { useRouter } from "next/navigation";
 
 export default function CollectionsPage() {
   const { collections } = useDashboardCtx();
   const { loading } = useLoadingCtx();
+  const router = useRouter();
 
- return (
+  return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 w-full min-h-screen">
       {loading ? (
         <div className="flex items-center justify-center flex-1">
@@ -45,6 +47,9 @@ export default function CollectionsPage() {
               <div
                 key={collection.id}
                 className="border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer"
+                onClick={() =>
+                  router.push(`/dashboard/collections/${collection.id}`)
+                }
               >
                 <p className="text-2xl font-semibold text-gray-800 text-center">
                   {collection.name}

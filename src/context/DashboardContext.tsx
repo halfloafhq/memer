@@ -74,7 +74,6 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
     }
   };
 
-
   useEffect(() => {
     firstFetch();
   }, []);
