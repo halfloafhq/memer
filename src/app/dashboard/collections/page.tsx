@@ -1,17 +1,20 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useLoadingCtx } from "@/context/LoadingContext";
 import CollectionDialog from "../_components/CollectionDialog";
-import { Collection } from "@prisma/client";
-import { useToast } from "@/components/ui/use-toast";
-import { useDashboardContext } from "@/context/DashboardContext";
+import { useDashboardCtx } from "@/context/DashboardContext";
+import Loader from "../_components/Loader";
 
 export default function Dashboard() {
-  const { collections } = useDashboardContext();
-  const { toast } = useToast();
+  const { collections } = useDashboardCtx();
+  const { loading } = useLoadingCtx();
 
-  return (
-    <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 w-full">
-      {collections.length === 0 ? (
+ return (
+    <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 w-full min-h-screen">
+      {loading ? (
+        <div className="flex items-center justify-center flex-1">
+          <Loader />
+        </div>
+      ) : collections.length === 0 ? (
         <>
           <div className="flex items-center">
             <h1 className="text-lg font-semibold md:text-2xl">Collections</h1>
@@ -35,7 +38,7 @@ export default function Dashboard() {
         <>
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-bold text-gray-800">Collections</h2>
-              <CollectionDialog />
+            <CollectionDialog />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
             {collections.map((collection) => (

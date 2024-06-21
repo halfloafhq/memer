@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
 import { useEffect, useState } from "react";
-import { useDashboardContext } from "@/context/DashboardContext";
+import { useDashboardCtx } from "@/context/DashboardContext";
 
 const collectionFormSchema = z.object({
   name: z.string().min(3, {
@@ -31,7 +31,7 @@ const collectionFormSchema = z.object({
 
 export default function CollectionDialog() {
   const { toast } = useToast();
-  const { refreshCollections } = useDashboardContext();
+  const { refreshCollections } = useDashboardCtx();
   const [open, setOpen] = useState<boolean>(false);
   const collectionForm = useForm<z.infer<typeof collectionFormSchema>>({
     resolver: zodResolver(collectionFormSchema),
