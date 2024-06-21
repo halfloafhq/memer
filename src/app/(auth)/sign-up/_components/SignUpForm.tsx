@@ -56,7 +56,7 @@ export default function SignUpForm() {
         strategy: "email_code",
       });
 
-      setEmail(values.email)
+      setEmail(values.email);
       setVerify(true);
     } catch (err: any) {
       console.error(JSON.stringify(err, null, 2));
@@ -91,18 +91,18 @@ export default function SignUpForm() {
           method: "POST",
           body: JSON.stringify({
             email: email,
-            userId: completeSignUp.createdUserId
-          })
-        })
+            userId: completeSignUp.createdUserId,
+          }),
+        });
 
         const res = await req.json();
 
         if (req.status !== 201) {
-        toast({
-          title: "Something went wrong!",
-          description: res.message,
-          variant: "destructive",
-        });
+          toast({
+            title: "Something went wrong!",
+            description: res.message,
+            variant: "destructive",
+          });
         }
 
         toast({
@@ -134,7 +134,7 @@ export default function SignUpForm() {
   }
 
   return (
-    <>
+    <div className="p-4">
       {verify ? (
         <OtpForm onVerify={onVerify} />
       ) : (
@@ -179,6 +179,6 @@ export default function SignUpForm() {
           </form>
         </Form>
       )}
-    </>
+    </div>
   );
 }

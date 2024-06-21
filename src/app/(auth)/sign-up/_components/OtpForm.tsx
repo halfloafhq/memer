@@ -21,14 +21,13 @@ export const otpFormSchema = z.object({
   pin: z.string().min(6, {
     message: "Your one-time password must be 6 characters.",
   }),
-})
+});
 
 type OtpFormProps = {
-  onVerify: (values: {pin: string}) => void
-}
+  onVerify: (values: { pin: string }) => void;
+};
 
-export default function OtpForm({onVerify}: OtpFormProps) {
-
+export default function OtpForm({ onVerify }: OtpFormProps) {
   const otpForm = useForm<z.infer<typeof otpFormSchema>>({
     resolver: zodResolver(otpFormSchema),
     defaultValues: {
@@ -37,36 +36,46 @@ export default function OtpForm({onVerify}: OtpFormProps) {
   });
 
   return (
-    <Form {...otpForm}>
-      <form onSubmit={otpForm.handleSubmit(onVerify)} className="w-2/3 space-y-6">
-        <FormField
-          control={otpForm.control}
-          name="pin"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>One-Time Password</FormLabel>
-              <FormControl>
-                <InputOTP maxLength={6} {...field}>
-                  <InputOTPGroup>
-                    <InputOTPSlot index={0} />
-                    <InputOTPSlot index={1} />
-                    <InputOTPSlot index={2} />
-                    <InputOTPSlot index={3} />
-                    <InputOTPSlot index={4} />
-                    <InputOTPSlot index={5} />
-                  </InputOTPGroup>
-                </InputOTP>
-              </FormControl>
-              <FormDescription>
-                Please enter the one-time password sent to your phone.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
- 
-        <Button type="submit" className="text-lg bg-purple-600 hover:bg-purple-700 active:bg-purple-900 transition-colors">Verify OTP</Button>
-      </form>
-    </Form>
-  )
+    <div className="p-4">
+      <Form {...otpForm}>
+        <form
+          onSubmit={otpForm.handleSubmit(onVerify)}
+          className="w-2/3 space-y-6"
+        >
+          <FormField
+            control={otpForm.control}
+            name="pin"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>One-Time Password</FormLabel>
+                <FormControl>
+                  <InputOTP maxLength={6} {...field}>
+                    <InputOTPGroup>
+                      <InputOTPSlot index={0} />
+                      <InputOTPSlot index={1} />
+                      <InputOTPSlot index={2} />
+                      <InputOTPSlot index={3} />
+                      <InputOTPSlot index={4} />
+                      <InputOTPSlot index={5} />
+                    </InputOTPGroup>
+                  </InputOTP>
+                </FormControl>
+                <FormDescription>
+                  Please enter the one-time password sent to your phone.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button
+            type="submit"
+            className="text-lg bg-purple-600 hover:bg-purple-700 active:bg-purple-900 transition-colors"
+          >
+            Verify OTP
+          </Button>
+        </form>
+      </Form>
+    </div>
+  );
 }
