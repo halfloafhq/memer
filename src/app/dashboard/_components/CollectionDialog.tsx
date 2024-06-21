@@ -9,7 +9,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -20,6 +19,8 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { useToast } from "@/components/ui/use-toast";
+import { useEffect, useState } from "react";
 
 const collectionFormSchema = z.object({
   name: z.string().min(3, {
@@ -28,6 +29,8 @@ const collectionFormSchema = z.object({
 });
 
 export default function CollectionDialog() {
+  const { toast } = useToast();
+  const [open, setOpen] = useState<boolean>(false);
   const collectionForm = useForm<z.infer<typeof collectionFormSchema>>({
     resolver: zodResolver(collectionFormSchema),
     defaultValues: {
@@ -37,10 +40,33 @@ export default function CollectionDialog() {
 
   async function onSubmit(values: z.infer<typeof collectionFormSchema>) {
     console.log(values);
+    try {
+      const req = await fetch("/api/collection", {
+        method: "POST",
+        body: JSON.stringify({
+          collectionName: values.name,
+        }),
+      });
+      if (req.status === 201) {
+        return toast({
+          title: "Created collection!",
+          description: `The collection, ${values.name} was created successfully`,
+        });
+      }
+    } catch (err: any) {
+      console.error(err);
+      return toast({
+        title: "Uh oh! Couldn't create collection",
+        description: err.message,
+        variant: "destructive",
+      });
+    } finally {
+      setOpen(false);
+    }
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="default">Add collection</Button>
       </DialogTrigger>
