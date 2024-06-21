@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
 import { useEffect, useState } from "react";
+import { useDashboardContext } from "@/context/DashboardContext";
 
 const collectionFormSchema = z.object({
   name: z.string().min(3, {
@@ -30,6 +31,7 @@ const collectionFormSchema = z.object({
 
 export default function CollectionDialog() {
   const { toast } = useToast();
+  const { refreshCollections } = useDashboardContext();
   const [open, setOpen] = useState<boolean>(false);
   const collectionForm = useForm<z.infer<typeof collectionFormSchema>>({
     resolver: zodResolver(collectionFormSchema),
@@ -47,6 +49,7 @@ export default function CollectionDialog() {
         }),
       });
       if (req.status === 201) {
+        refreshCollections();
         return toast({
           title: "Created collection!",
           description: `The collection, ${values.name}, was created successfully`,
@@ -61,6 +64,7 @@ export default function CollectionDialog() {
       });
     } finally {
       setOpen(false);
+      collectionForm.reset();
     }
   }
 
