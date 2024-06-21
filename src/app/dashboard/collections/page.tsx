@@ -24,7 +24,7 @@ export default function Dashboard() {
             x-chunk="dashboard-02-chunk-1"
           >
             <div className="flex flex-col items-center gap-5 text-center p-10">
-              <h3 className="text-2xl font-bold tracking-tight">
+              <h3 className="text-3xl font-bold tracking-tight">
                 You have no collections
               </h3>
               <p className="text-sm text-muted-foreground">
