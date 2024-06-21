@@ -4,7 +4,7 @@ import CollectionDialog from "../_components/CollectionDialog";
 import { useDashboardCtx } from "@/context/DashboardContext";
 import Loader from "../_components/Loader";
 
-export default function Dashboard() {
+export default function CollectionsPage() {
   const { collections } = useDashboardCtx();
   const { loading } = useLoadingCtx();
 
