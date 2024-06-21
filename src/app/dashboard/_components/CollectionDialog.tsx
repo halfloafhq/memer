@@ -39,7 +39,6 @@ export default function CollectionDialog() {
   });
 
   async function onSubmit(values: z.infer<typeof collectionFormSchema>) {
-    console.log(values);
     try {
       const req = await fetch("/api/collection", {
         method: "POST",
@@ -50,7 +49,7 @@ export default function CollectionDialog() {
       if (req.status === 201) {
         return toast({
           title: "Created collection!",
-          description: `The collection, ${values.name} was created successfully`,
+          description: `The collection, ${values.name}, was created successfully`,
         });
       }
     } catch (err: any) {
