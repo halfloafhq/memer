@@ -3,30 +3,11 @@ import { useEffect, useState } from "react";
 import CollectionDialog from "../_components/CollectionDialog";
 import { Collection } from "@prisma/client";
 import { useToast } from "@/components/ui/use-toast";
+import { useDashboardContext } from "@/context/DashboardContext";
 
 export default function Dashboard() {
-  const [collections, setCollections] = useState<Collection[]>([]);
+  const { collections } = useDashboardContext();
   const { toast } = useToast();
-
-  useEffect(() => {
-    async function getCollections() {
-      try {
-        const req = await fetch("/api/collection/all");
-        const res = await req.json();
-        setCollections(res.data);
-      } catch (err: any) {
-        console.error(err);
-        toast({
-          title: "Uh oh! Couldn't get collections",
-          description: err.message,
-          variant: "destructive",
-        });
-        return;
-      }
-    }
-
-    getCollections();
-  }, []);
 
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 w-full">
