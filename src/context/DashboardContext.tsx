@@ -60,7 +60,9 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
 
   const refreshCollections = async () => {
     try {
-      const req = await fetch("/api/collection/all");
+      const req = await fetch("/api/collection/all", {
+        method: "POST",
+      });
       const res = await req.json();
       if (req.status === 200) {
         setCollections(res.data);
