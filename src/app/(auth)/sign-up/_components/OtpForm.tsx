@@ -25,9 +25,10 @@ export const otpFormSchema = z.object({
 
 type OtpFormProps = {
   onVerify: (values: { pin: string }) => void;
+  loading: boolean;
 };
 
-export default function OtpForm({ onVerify }: OtpFormProps) {
+export default function OtpForm({ onVerify, loading }: OtpFormProps) {
   const otpForm = useForm<z.infer<typeof otpFormSchema>>({
     resolver: zodResolver(otpFormSchema),
     defaultValues: {
@@ -71,8 +72,9 @@ export default function OtpForm({ onVerify }: OtpFormProps) {
           <Button
             type="submit"
             className="text-lg bg-purple-600 hover:bg-purple-700 active:bg-purple-900 transition-colors"
+            disabled={loading}
           >
-            Verify OTP
+            {!loading ? "Verify OTP" : "Verifying..."}
           </Button>
         </form>
       </Form>

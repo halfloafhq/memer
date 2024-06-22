@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -27,6 +27,7 @@ const signInFormSchema = z.object({
 
 export default function SignInForm() {
   const { signIn, setActive, isLoaded } = useSignIn();
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
   const { toast } = useToast();
 
@@ -42,6 +43,7 @@ export default function SignInForm() {
     // Simulate verification step
 
     if (!isLoaded) return;
+    setLoading(true);
 
     try {
       const signInAttempt = await signIn.create({
@@ -78,6 +80,8 @@ export default function SignInForm() {
         description: err.errors[0]?.longMessage || "There was a problem signing in",
         variant: "destructive",
       });
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -118,8 +122,9 @@ export default function SignInForm() {
           <Button
             type="submit"
             className="text-lg bg-purple-600 hover:bg-purple-700 active:bg-purple-900 transition-colors"
+            disabled={loading}
           >
-            Sign In
+            {!loading ? "Sign In" : "Signing in..."}
           </Button>
         </form>
       </Form>

@@ -32,6 +32,7 @@ const collectionFormSchema = z.object({
 export default function CollectionDialog() {
   const { toast } = useToast();
   const { refreshCollections } = useDashboardCtx();
+  const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const collectionForm = useForm<z.infer<typeof collectionFormSchema>>({
     resolver: zodResolver(collectionFormSchema),
@@ -41,6 +42,7 @@ export default function CollectionDialog() {
   });
 
   async function onSubmit(values: z.infer<typeof collectionFormSchema>) {
+    setLoading(true);
     try {
       const req = await fetch("/api/collection", {
         method: "POST",
@@ -52,7 +54,7 @@ export default function CollectionDialog() {
         refreshCollections();
         return toast({
           title: "Created collection!",
-          description: `The collection, ${values.name}, was created successfully`,
+          description: `${values.name} was created successfully.`,
         });
       }
     } catch (err: any) {
@@ -64,6 +66,7 @@ export default function CollectionDialog() {
       });
     } finally {
       setOpen(false);
+      setLoading(false);
       collectionForm.reset();
     }
   }
@@ -99,7 +102,9 @@ export default function CollectionDialog() {
               )}
             />
             <DialogFooter className="mt-6">
-              <Button type="submit">Create</Button>
+              <Button type="submit" disabled={loading}>
+                {!loading ? "Create" : "Creating..."}
+              </Button>
             </DialogFooter>
           </form>
         </Form>

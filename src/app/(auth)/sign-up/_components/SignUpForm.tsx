@@ -28,6 +28,7 @@ const signUpFormSchema = z.object({
 
 export default function SignUpForm() {
   const [email, setEmail] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const [verify, setVerify] = useState<boolean>(false);
   const { signUp, setActive, isLoaded } = useSignUp();
   const router = useRouter();
@@ -45,6 +46,8 @@ export default function SignUpForm() {
     // Simulate verification step
 
     if (!isLoaded) return;
+
+    setLoading(true);
 
     try {
       await signUp?.create({
@@ -65,6 +68,8 @@ export default function SignUpForm() {
         description: err.errors[0].longMessage || "Could not fulfill request",
         variant: "destructive",
       });
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -72,6 +77,7 @@ export default function SignUpForm() {
     console.log(values);
 
     if (!isLoaded) return;
+    setLoading(true);
 
     try {
       // Use the code the user provided to attempt verification
@@ -130,13 +136,15 @@ export default function SignUpForm() {
         description: err.errors[0].longMessage || "Could not fulfill request",
         variant: "destructive",
       });
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <div className="p-4">
       {verify ? (
-        <OtpForm onVerify={onVerify} />
+        <OtpForm onVerify={onVerify} loading={loading} />
       ) : (
         <Form {...signUpForm}>
           <form
@@ -173,8 +181,9 @@ export default function SignUpForm() {
             <Button
               type="submit"
               className="text-lg bg-purple-600 hover:bg-purple-700 active:bg-purple-900 transition-colors"
+              disabled={loading}
             >
-              Sign Up
+            {!loading ? "Sign Up" : "Signing up..."}
             </Button>
           </form>
         </Form>
