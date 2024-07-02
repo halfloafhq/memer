@@ -2,7 +2,7 @@
 import { useLoadingCtx } from "@/context/LoadingContext";
 import CollectionDialog from "../_components/CollectionDialog";
 import { useDashboardCtx } from "@/context/DashboardContext";
-import Loader from "../_components/Loader";
+import Loader from "@/components/Loader";
 import { useRouter } from "next/navigation";
 
 export default function CollectionsPage() {
