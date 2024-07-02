@@ -1,7 +1,7 @@
-"use client";
+"use client"
 import Link from "next/link";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar } from "@/components/ui/avatar";
 import MemerIcon from "./MemerIcon";
 import { LayoutDashboardIcon, LogOutIcon, User } from "lucide-react";
 import { useClerk, useUser } from "@clerk/nextjs";
@@ -17,7 +17,11 @@ export default function Navbar() {
   const router = useRouter();
 
   function dashboard() {
-    router.push("/dashboard/collections")
+    if (user?.publicMetadata.role === "admin") {
+      router.push("/admin/dashboard/upload")
+    } else {
+      router.push("/dashboard/collections")
+    }
   }
 
   async function logout() {
