@@ -5,11 +5,43 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import Image from "next/image";
-import { CloudUpload, X } from "lucide-react";
+import { CloudUpload, X, Plus } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+
+const predefinedTags = [
+  "Funny",
+  "Relatable",
+  "Wholesome",
+  "Sarcastic",
+  "Ironic",
+  "Nostalgic",
+  "Animals",
+  "Politics",
+  "Movies",
+  "Gaming",
+  "Sports",
+  "Music",
+  "Technology",
+  "Science",
+  "Food",
+  "Fashion",
+  "Art",
+  "Literature",
+  "Dark",
+];
 
 export default function AdminDashboardUploadPage() {
   const [meme, setMeme] = useState<File | null>(null);
   const [memeURL, setMemeURL] = useState<string>("");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [customTag, setCustomTag] = useState<string>("");
 
   function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -23,6 +55,23 @@ export default function AdminDashboardUploadPage() {
     setMemeURL("");
   }
 
+  function handleTagSelection(tag: string) {
+    if (!selectedTags.includes(tag)) {
+      setSelectedTags([...selectedTags, tag]);
+    }
+  }
+
+  function handleCustomTagAdd() {
+    if (customTag && !selectedTags.includes(customTag)) {
+      setSelectedTags([...selectedTags, customTag]);
+      setCustomTag("");
+    }
+  }
+
+  function removeTag(tag: string) {
+    setSelectedTags(selectedTags.filter((t) => t !== tag));
+  }
+
   return (
     <main className="container flex flex-1 flex-col gap-4 px-4 py-8 md:gap-8">
       <div className="flex items-center">
@@ -34,13 +83,48 @@ export default function AdminDashboardUploadPage() {
             <Label htmlFor="meme-name">Meme Name</Label>
             <Input id="meme-name" type="text" placeholder="Rick Astley" />
           </div>
-          <div className="grid gap-2">
+           <div className="grid gap-2">
             <Label htmlFor="meme-tags">Meme Tags</Label>
-            <Input id="meme-tags" type="text" />
-          </div>
-          <div className="grid gap-2">
+            <div className="flex flex-wrap gap-2 mb-2">
+              {selectedTags.map(tag => (
+                <div key={tag} className="bg-gray-200 px-2 py-1 rounded-full flex items-center">
+                  <span>{tag}</span>
+                  <button type="button" onClick={() => removeTag(tag)} className="ml-1 text-gray-600 hover:text-gray-800">
+                    <X size={14} />
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div className="flex gap-2">
+              <Select onValueChange={handleTagSelection}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select a tag" />
+                </SelectTrigger>
+                <SelectContent>
+                  {predefinedTags.map(tag => (
+                    <SelectItem key={tag} value={tag}>{tag}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <div className="flex gap-2">
+                <Input
+                  type="text"
+                  value={customTag}
+                  onChange={(e) => setCustomTag(e.target.value)}
+                  placeholder="Custom tag"
+                />
+                <Button type="button" onClick={handleCustomTagAdd} size="icon">
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          </div><div className="grid gap-2">
             <Label htmlFor="meme-description">Meme Description</Label>
-            <Textarea id="meme-description" className="min-h-[100px]" placeholder="Rick Astley is a British rock band." />
+            <Textarea
+              id="meme-description"
+              className="min-h-[100px]"
+              placeholder="Rick Astley is a British rock band."
+            />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="meme-image">Meme Image</Label>

@@ -1,9 +1,20 @@
-"use client"
+"use client";
 import Link from "next/link";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 import { Avatar } from "@/components/ui/avatar";
 import MemerIcon from "./MemerIcon";
-import { LayoutDashboardIcon, LogOutIcon, User } from "lucide-react";
+import {
+  LayoutDashboardIcon,
+  LogOutIcon,
+  ShieldCheck,
+  User,
+} from "lucide-react";
 import { useClerk, useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { useToast } from "./ui/use-toast";
@@ -16,12 +27,16 @@ export default function Navbar() {
   const { toast } = useToast();
   const router = useRouter();
 
-  function dashboard() {
+  function adminDashboard() {
     if (user?.publicMetadata.role === "admin") {
-      router.push("/admin/dashboard/upload")
+      router.push("/admin/dashboard/upload");
     } else {
-      router.push("/dashboard/collections")
+      router.push("/dashboard/collections");
     }
+  }
+
+  function dashboard() {
+    router.push("/dashboard/collections");
   }
 
   async function logout() {
@@ -30,14 +45,14 @@ export default function Navbar() {
     return toast({
       title: "Logged out successfully",
       variant: "default",
-    })
+    });
   }
 
   useEffect(() => {
     if (user) {
       setSignedIn(true);
     }
-  }, [user,setSignedIn]);
+  }, [user, setSignedIn]);
 
   return (
     <header className="flex h-16 w-full shrink-0 items-center px-4 md:px-6 bg-gray-950 text-gray-50">
@@ -55,9 +70,33 @@ export default function Navbar() {
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={dashboard} className="cursor-pointer text-md"><LayoutDashboardIcon className="h-5 w-5 mx-2 text-primary"/>Dashboard</DropdownMenuItem>
+              {user?.publicMetadata.role === "admin" ? (
+                <>
+                  <DropdownMenuItem
+                    onClick={adminDashboard}
+                    className="cursor-pointer text-md"
+                  >
+                    <ShieldCheck className="h-5 w-5 mx-2 text-foreground" />
+                    Admin Dashboard
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                </>
+              ) : null}
+              <DropdownMenuItem
+                onClick={dashboard}
+                className="cursor-pointer text-md"
+              >
+                <LayoutDashboardIcon className="h-5 w-5 mx-2 text-primary" />
+                Dashboard
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={logout} className="cursor-pointer text-md"><LogOutIcon className="h-5 w-5 mx-2 text-red-500"/>Logout</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={logout}
+                className="cursor-pointer text-md"
+              >
+                <LogOutIcon className="h-5 w-5 mx-2 text-red-500" />
+                Logout
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
