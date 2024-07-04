@@ -6,6 +6,9 @@ import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { LoadingProvider } from "@/context/LoadingContext";
 import { ThemeProvider } from "@/components/theme-provider";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { extractRouterConfig } from "uploadthing/server";
+import { ourFileRouter } from "@/app/api/uploadthing/core";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +33,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <LoadingProvider>
+              <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
               <main className="flex flex-col">
                 <Navbar />
                 {children}

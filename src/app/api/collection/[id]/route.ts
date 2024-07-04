@@ -1,5 +1,5 @@
-import getAuthenticatedUser from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { currentUser } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -7,7 +7,7 @@ export async function GET(
   { params }: { params: { id: string } },
 ) {
   try {
-    const user = await getAuthenticatedUser(req);
+    const user = await currentUser();
 
     if (!user) {
       return NextResponse.json(
@@ -32,7 +32,7 @@ export async function GET(
     const collection = await prisma.collection.findUnique({
       where: {
         id: params.id,
-        madeById: user.userId,
+        madeById: user.id,
       },
       include: {
         memes: true,

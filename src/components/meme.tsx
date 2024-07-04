@@ -19,9 +19,6 @@ export function Meme({ src, name, description }: MemeProps) {
       />
       <div className="bg-white p-4 dark:bg-gray-950">
         <h3 className="font-semibold text-lg md:text-xl">{name}</h3>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
-          {description}
-        </p>
       </div>
     </div>
   );

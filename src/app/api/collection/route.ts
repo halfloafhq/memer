@@ -1,10 +1,10 @@
-import getAuthenticatedUser from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { currentUser } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const user = await getAuthenticatedUser(req);
+    const user = await currentUser();
 
     if (!user) {
       return NextResponse.json(
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     await prisma.collection.create({
       data: {
         name: collectionName,
-        madeById: user.userId,
+        madeById: user.id,
       },
     });
 

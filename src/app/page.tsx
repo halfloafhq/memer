@@ -1,51 +1,10 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { MemeCard } from "@/components/meme-card";
+import { getMemes } from "./_actions";
 
-const memes = [
-  {
-    src: "/next.svg",
-    name: "Yapping",
-    description: "Yapping",
-  },
-  {
-    src: "/next.svg",
-    name: "Yapping",
-    description: "Yapping",
-  },
-  {
-    src: "/next.svg",
-    name: "Yapping",
-    description: "Yapping",
-  },
-  {
-    src: "/next.svg",
-    name: "Yapping",
-    description: "Yapping",
-  },
-  {
-    src: "/next.svg",
-    name: "Yapping",
-    description: "Yapping",
-  },
-  {
-    src: "/next.svg",
-    name: "Yapping",
-    description: "Yapping",
-  },
-  {
-    src: "/next.svg",
-    name: "Yapping",
-    description: "Yapping",
-  },
-  {
-    src: "/next.svg",
-    name: "Yapping",
-    description: "Yapping",
-  },
-];
-
-export default function Page() {
+export default async function Page() {
+  const memes = await getMemes();
   return (
     <main className="w-full max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-12">
       <div className="flex flex-col gap-8 md:gap-12">
@@ -65,7 +24,7 @@ export default function Page() {
           {memes.map((meme, idx) => (
             <MemeCard
               key={idx}
-              src={meme.src}
+              src={meme.url}
               name={meme.name}
               description={meme.description}
             />

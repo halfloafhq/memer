@@ -1,12 +1,12 @@
-import getAuthenticatedUser from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { NextRequest, NextResponse } from "next/server";
+import { currentUser } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
-    const user = await getAuthenticatedUser(req);
+    const user = await currentUser();
 
     if (!user) {
       return NextResponse.json(
@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
 
     const collections = await prisma.collection.findMany({
       where: {
-        madeById: user.userId,
+        madeById: user.id,
       },
     });
 

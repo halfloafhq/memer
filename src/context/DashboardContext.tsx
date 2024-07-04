@@ -6,13 +6,14 @@ import React, {
   useState,
   useEffect,
   ReactNode,
+  useCallback,
 } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { Collection } from "@prisma/client";
 import { useLoadingCtx } from "./LoadingContext";
 
 type DashboardContextType = {
-  collections: Collection[],
+  collections: Collection[];
   refreshCollections: () => void;
 };
 
@@ -39,7 +40,7 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
   const { setLoading } = useLoadingCtx();
   const { toast } = useToast();
 
-  const firstFetch = async () => {
+  const firstFetch = useCallback(async () => {
     setLoading(true);
     try {
       const req = await fetch("/api/collection/all");
@@ -48,17 +49,17 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
         setCollections(res.data);
       }
     } catch (err: any) {
-      return toast({
+      toast({
         title: "Uh oh! Couldn't fetch collections",
         description: err.message,
         variant: "destructive",
       });
     } finally {
-    setLoading(false);
+      setLoading(false);
     }
-  };
+  }, [setLoading, toast]);
 
-  const refreshCollections = async () => {
+  const refreshCollections = useCallback(async () => {
     try {
       const req = await fetch("/api/collection/all");
       const res = await req.json();
@@ -66,13 +67,13 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
         setCollections(res.data);
       }
     } catch (err: any) {
-      return toast({
+      toast({
         title: "Uh oh! Couldn't fetch collections",
         description: err.message,
         variant: "destructive",
       });
     }
-  };
+  }, [toast]);
 
   useEffect(() => {
     firstFetch();
