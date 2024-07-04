@@ -37,7 +37,7 @@ export default function AdminSidebar() {
                 "p-4 w-full flex items-center justify-start gap-x-4 rounded-lg transition duration-200 ease-in-out cursor-pointer",
                 tool.active
                   ? "bg-[#F5F5F5] text-[#363430]"
-                  : "text-[#91908F] hover:text-[#363430]",
+                  : "text-[#91908F] hover:text-[#363430] dark:hover:text-white",
               )}
               onClick={() => reRoute(tool.path)}
             >

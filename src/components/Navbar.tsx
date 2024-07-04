@@ -19,6 +19,7 @@ import { useClerk, useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { useToast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
+import { ModeToggle } from "./ThemeButton";
 
 export default function Navbar() {
   const { signOut } = useClerk();
@@ -60,7 +61,8 @@ export default function Navbar() {
         <MemerIcon className="h-6 w-6" />
         <span className="text-lg font-semibold">Memer</span>
       </Link>
-      <div className="ml-auto">
+      <div className="ml-auto flex items-center gap-4">
+        <ModeToggle />
         {signedIn ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

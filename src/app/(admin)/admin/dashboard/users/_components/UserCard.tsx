@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Ban, ShieldMinus, ShieldPlus } from "lucide-react";
 import { banUserAction, unbanUserAction } from "../_actions";
+import Image from "next/image";
 
 interface UserCardProps {
   userId: string;
@@ -25,21 +26,23 @@ export default function UserCard({
   return (
     <div key={userId} className="bg-white rounded-lg shadow-md p-6">
       <div className="flex items-center mb-4">
-        <img
+        <Image
           src={profileImage}
+          width={120}
+          height={120}
           alt={`${firstName} ${lastName}`}
           className="w-12 h-12 rounded-full mr-4"
         />
         <div>
-          <h2 className="text-xl font-semibold">
+          <h2 className="text-xl font-semibold dark:text-black">
             {firstName} {lastName}
           </h2>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-black">
             {email}
           </p>
         </div>
       </div>
-      <p className="mb-4">
+      <p className="mb-4 dark:text-black">
         <span className="font-semibold">Role:</span>{" "}
         {role}
       </p>

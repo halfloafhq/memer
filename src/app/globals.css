@@ -64,11 +64,23 @@
 }
 
 .loader path {
-  stroke: #000;
   stroke-width: 0.6px;
   animation: dashArray 4s ease-in-out infinite,
     dashOffset 4s linear infinite;
 }
+
+.loader-dark {
+  width: 12em;
+  height: 12em;
+}
+
+.loader-dark path {
+  stroke: #fff;
+  stroke-width: 0.6px;
+  animation: dashArray 4s ease-in-out infinite,
+    dashOffset 4s linear infinite;
+}
+
 
 @keyframes dashArray {
   0% {

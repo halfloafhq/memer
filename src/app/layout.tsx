@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { LoadingProvider } from "@/context/LoadingContext";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,13 +23,20 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
-          <LoadingProvider>
-            <main className="flex flex-col">
-              <Navbar />
-              {children}
-            </main>
-            <Toaster />
-          </LoadingProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <LoadingProvider>
+              <main className="flex flex-col">
+                <Navbar />
+                {children}
+              </main>
+              <Toaster />
+            </LoadingProvider>
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
