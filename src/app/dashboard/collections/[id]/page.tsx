@@ -45,10 +45,10 @@ export default function CollectionPage({ params }: { params: { id: string } }) {
         </div>
       ) : !collection ? (
         <div className="flex flex-col items-center justify-center flex-1">
-          <h1 className="text-2xl font-bold mb-4">Collection not found</h1>
+          <h1 className="text-2xl font-bold mb-4 dark:text-white">Collection not found</h1>
           <Link
             href="/dashboard/collections"
-            className="flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200"
+            className="flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200 dark:text-white"
           >
             <ChevronLeft className="w-5 h-5 mr-1" />
             <span className="text-xl">Back to Collections</span>
@@ -57,12 +57,12 @@ export default function CollectionPage({ params }: { params: { id: string } }) {
       ) : (
         <>
           <div className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl font-bold text-gray-800">
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
               {collection.name}
             </h1>
             <Link
               href="/dashboard/collections"
-              className="flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200"
+              className="flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200 dark:text-white"
             >
               <ChevronLeft className="w-5 h-5 mr-1" />
               <span className="text-xl">Back to Collections</span>

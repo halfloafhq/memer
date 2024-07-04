@@ -39,19 +39,19 @@ export default function CollectionsPage() {
       ) : (
         <>
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-bold text-gray-800">Collections</h2>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Collections</h2>
             <CollectionDialog />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
             {collections.map((collection) => (
               <div
                 key={collection.id}
-                className="border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer"
+                className="border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer dark:bg-primary"
                 onClick={() =>
                   router.push(`/dashboard/collections/${collection.id}`)
                 }
               >
-                <p className="text-2xl font-semibold text-gray-800 text-center">
+                <p className="text-2xl font-semibold text-gray-800 text-center dark:text-white">
                   {collection.name}
                 </p>
               </div>
