@@ -1,7 +1,7 @@
 import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
 
-export default function Loader() {
+export function Loader() {
   const { theme } = useTheme();
   const [currentTheme, setCurrentTheme] = useState<string | undefined>("light");
 

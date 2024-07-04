@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Avatar } from "@/components/ui/avatar";
-import MemerIcon from "./MemerIcon";
+import { MemerIcon } from "./memer-icon";
 import {
   LayoutDashboardIcon,
   LogOutIcon,
@@ -19,9 +19,9 @@ import { useClerk, useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { useToast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
-import { ModeToggle } from "./ThemeButton";
+import { ModeToggle } from "./theme-button";
 
-export default function Navbar() {
+export function Navbar() {
   const { signOut } = useClerk();
   const { user } = useUser();
   const [signedIn, setSignedIn] = useState<boolean>(false);

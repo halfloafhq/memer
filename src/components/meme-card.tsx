@@ -7,7 +7,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import Meme from "./Meme";
+import { Meme } from "./meme";
 
 type MemeCardProps = {
   src: string;
@@ -15,7 +15,7 @@ type MemeCardProps = {
   description: string;
 };
 
-export default function MemeCard({ src, name, description }: MemeCardProps) {
+export function MemeCard({ src, name, description }: MemeCardProps) {
   return (
     <Sheet>
       <SheetTrigger>
