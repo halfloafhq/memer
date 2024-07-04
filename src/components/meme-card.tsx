@@ -19,7 +19,9 @@ export function MemeCard({ src, name, description }: MemeCardProps) {
   return (
     <Sheet>
       <SheetTrigger>
+        <div className="border-2 border-gray-200 dark:border-gray-700 rounded-lg p-2">
         <Meme src={src} name={name} description={description} />
+        </div>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
