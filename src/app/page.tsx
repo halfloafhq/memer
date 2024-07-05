@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { MemeCard } from "@/components/meme-card";
+import MemeCard from "@/components/meme-card";
 import { getMemes } from "./_actions";
 
 export default async function Page() {

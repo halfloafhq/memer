@@ -7,7 +7,7 @@ type MemeProps = {
   description: string;
 };
 
-export function Meme({ src, name, description }: MemeProps) {
+export default function Meme({ src, name, description }: MemeProps) {
   return (
     <div className="relative group overflow-hidden rounded-lg">
       <Image

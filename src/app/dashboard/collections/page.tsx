@@ -1,8 +1,8 @@
 "use client";
 import { useLoadingCtx } from "@/context/LoadingContext";
-import CollectionDialog from "../_components/CollectionDialog";
+import CollectionDialog from "../_components/collection-dialog";
 import { useDashboardCtx } from "@/context/DashboardContext";
-import { Loader } from "@/components/loader";
+import Loader from "@/components/loader";
 import { useRouter } from "next/navigation";
 
 export default function CollectionsPage() {

@@ -1,7 +1,7 @@
 import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
 
-export function Loader() {
+export default function Loader() {
   const { theme } = useTheme();
   const [currentTheme, setCurrentTheme] = useState<string | undefined>("light");
 
@@ -9,17 +9,16 @@ export function Loader() {
     setCurrentTheme(theme);
   }, [theme]);
 
-  const strokeColor = currentTheme === "dark" ? "#fff" : "#000";
+  const strokeColor = currentTheme === "light" ? "#000" : "#fff";
 
   return (
     <svg
       viewBox="0 0 64 64"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={currentTheme === "dark" ? "loader-dark" : "loader"}
+      className={currentTheme === "light" ? "loader" : "loader-dark"}
       style={{ stroke: strokeColor }}
     >
-      {" "}
       <path
         pathLength="360"
         d="M 56.3752 2 H 7.6248 C 7.2797 2 6.9999 2.268 6.9999 2.5985 V 61.4015 C 6.9999 61.7321 7.2797 62 7.6248 62 H 56.3752 C 56.7203 62 57.0001 61.7321 57.0001 61.4015 V 2.5985 C 57.0001 2.268 56.7203 2 56.3752 2 Z"

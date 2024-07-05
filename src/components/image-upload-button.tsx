@@ -6,7 +6,7 @@ interface UploadBtnProps {
   setSuccess: (success: boolean) => void;
 }
 
-export const UploadBtn = ({ setFileUrl, setSuccess }: UploadBtnProps) => {
+export default function UploadBtn({ setFileUrl, setSuccess }: UploadBtnProps) {
   const { toast } = useToast();
 
   return (

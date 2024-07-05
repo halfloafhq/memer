@@ -8,7 +8,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Meme } from "./meme";
+import Meme from "./meme";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { FileDown } from "lucide-react";
@@ -20,21 +20,29 @@ type MemeCardProps = {
   description: string;
 };
 
-export function MemeCard({ src, name, description }: MemeCardProps) {
+export default function MemeCard({ src, name, description }: MemeCardProps) {
   const { toast } = useToast();
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleDownload = async () => {
     try {
+      setLoading(true);
       const response = await fetch(src);
-      if (!response.ok) throw new Error("Network response was not ok");
+      if (!response.ok) {
+        return toast({
+          title: "Download Failed",
+          description:
+            "There was an error downloading the image. Please try again.",
+          variant: "destructive",
+        });
+      }
 
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
 
       const link = document.createElement("a");
       link.href = url;
-      link.download = `${name}.jpg`; // Assumes PNG format, adjust if needed
+      link.download = `${name}.jpg`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -53,6 +61,8 @@ export function MemeCard({ src, name, description }: MemeCardProps) {
           "There was an error downloading the image. Please try again.",
         variant: "destructive",
       });
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -77,7 +87,7 @@ export function MemeCard({ src, name, description }: MemeCardProps) {
           />
           <Button onClick={handleDownload}>
             <FileDown className="mr-2" />
-            { loading ? "Downloading..." : "Download" }
+            {loading ? "Downloading..." : "Download"}
           </Button>
         </div>
       </SheetContent>

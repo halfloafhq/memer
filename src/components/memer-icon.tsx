@@ -1,4 +1,4 @@
-export function MemerIcon(props: {className: string}) {
+export default function MemerIcon(props: {className: string}) {
   return (
     <svg
       {...props}

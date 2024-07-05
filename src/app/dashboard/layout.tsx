@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "./_components/Sidebar";
+import Sidebar from "./_components/sidebar";
 import { DashboardProvider } from "@/context/DashboardContext";
 
 function DashboardLayout({

@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
-import OtpForm, { otpFormSchema } from "./OtpForm";
+import OtpForm, { otpFormSchema } from "./otp-form";
 
 const signUpFormSchema = z.object({
   email: z.string().email(),

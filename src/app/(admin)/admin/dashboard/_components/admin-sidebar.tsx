@@ -3,7 +3,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { FileUp, User } from "lucide-react";
 
-export function AdminSidebar() {
+export default function AdminSidebar() {
   const pathname = usePathname().split("/")[3];
   const router = useRouter();
   const panel = [

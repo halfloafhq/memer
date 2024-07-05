@@ -1,5 +1,5 @@
 import React from "react";
-import SignUpForm from "./_components/SignUpForm";
+import SignUpForm from "./_components/signup-form";
 import Link from "next/link";
 
 export default function SignUpPage() {

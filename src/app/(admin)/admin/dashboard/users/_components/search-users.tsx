@@ -20,7 +20,7 @@ const formSchema = z.object({
   name: z.string(),
 });
 
-export const SearchUsers = () => {
+export default function SearchUsers() {
   const router = useRouter();
   const pathname = usePathname();
 

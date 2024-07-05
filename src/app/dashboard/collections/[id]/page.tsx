@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useLoadingCtx } from "@/context/LoadingContext";
-import { Loader } from "@/components/loader";
+import Loader from "@/components/loader";
 import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
 import { ChevronLeft } from "lucide-react";

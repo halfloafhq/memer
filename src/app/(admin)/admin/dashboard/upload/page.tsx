@@ -1,5 +1,5 @@
 "use client";
-import { MemeUploadForm } from "./_components/meme-upload-form";
+import MemeUploadForm from "./_components/meme-upload-form";
 
 export default function AdminDashboardUploadPage() {
   return (

@@ -14,7 +14,7 @@ interface UserCardProps {
   role: string | undefined;
 }
 
-export function UserCard({
+export default function UserCard({
   userId,
   profileImage,
   firstName,

@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
-import { UploadBtn } from "@/components/image-uploader";
+import UploadBtn from "@/components/image-upload-button";
 import { useUpload } from "@/hooks/useUpload";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -39,7 +39,7 @@ const predefinedTags = [
   "Dark",
 ];
 
-export function MemeUploadForm() {
+export default function MemeUploadForm() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [customTag, setCustomTag] = useState<string>("");
   const { success, fileUrl, setFileUrl, setSuccess } = useUpload();

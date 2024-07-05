@@ -1,7 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import { Loader } from "@/components/loader";
+import Loader from "@/components/loader";
 const Excalidraw = dynamic(
   async () => (await import("@excalidraw/excalidraw")).Excalidraw,
   {
