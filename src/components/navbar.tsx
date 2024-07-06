@@ -9,8 +9,8 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex h-16 w-full items-center px-4 py-8 md:px-6 bg-gray-950 text-gray-50 border-b border-gray-100">
       <Link href="/" className="flex items-center gap-2" prefetch={false}>
-        <MemerIcon className="h-6 w-6" />
-        <span className="text-lg font-semibold">Memer</span>
+        <MemerIcon className="h-9 w-9 text-primary" />
+        <span className="hidden sm:block text-lg font-semibold">Memer</span>
       </Link>
       <div className="ml-auto flex items-center justify-center gap-4">
         <ModeToggle />
