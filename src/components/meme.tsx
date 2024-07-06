@@ -4,10 +4,9 @@ import React from "react";
 type MemeProps = {
   src: string;
   name: string;
-  description: string;
 };
 
-export default function Meme({ src, name, description }: MemeProps) {
+export default function Meme({ src, name }: MemeProps) {
   return (
     <div className="relative group overflow-hidden rounded-lg">
       <Image

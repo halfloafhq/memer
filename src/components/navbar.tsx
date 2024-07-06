@@ -18,8 +18,10 @@ import {
 import { useClerk, useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { useToast } from "./ui/use-toast";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import ModeToggle from "./theme-button";
+import { DashboardSheet } from "./dashboard-sheet";
+import { AdminDashboardSheet } from "./admin-dashboard-sheet";
 
 export default function Navbar() {
   const { signOut } = useClerk();
@@ -27,6 +29,7 @@ export default function Navbar() {
   const [signedIn, setSignedIn] = useState<boolean>(false);
   const { toast } = useToast();
   const router = useRouter();
+  const pathname = usePathname().split("/")[1];
 
   function adminDashboard() {
     if (user?.publicMetadata.role === "admin") {
@@ -56,13 +59,20 @@ export default function Navbar() {
   }, [user, setSignedIn]);
 
   return (
-    <header className="flex h-16 w-full shrink-0 items-center px-4 md:px-6 bg-gray-950 text-gray-50">
+    <header className="flex h-16 w-full shrink-0 items-center px-4 md:px-6 bg-gray-950 text-gray-50 border-b border-gray-100">
       <Link href="/" className="flex items-center gap-2" prefetch={false}>
         <MemerIcon className="h-6 w-6" />
         <span className="text-lg font-semibold">Memer</span>
       </Link>
       <div className="ml-auto flex items-center gap-4">
         <ModeToggle />
+        <div className="block xl:hidden">
+        {pathname !== "admin" ? (
+          <DashboardSheet />
+        ) : (
+          <AdminDashboardSheet />
+        )}
+        </div>
         {signedIn ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

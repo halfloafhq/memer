@@ -23,7 +23,7 @@ export default async function AdminDashboardUsersPage(params: {
         {users.length === 0 ? (
           <p className="text-gray-500">No user found.</p>
         ) : (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 grid-cols-1">
             {users
               .filter((user) => user.publicMetadata.role !== "admin")
               .map((user) => (

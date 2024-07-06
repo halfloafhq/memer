@@ -26,7 +26,7 @@ export default function AdminSidebar() {
   }
 
   return (
-    <div className="w-1/5 h-screen p-8 flex flex-col items-start justify-start border-solid border-2 border-[#F5F5F5] gap-y-10">
+    <div className="hidden w-1/5 h-auto py-6 xl:px-6 xl:flex flex-col items-start justify-start border-solid border-r border-gray-200 gap-y-10">
       <div className="w-full">
         <h3 className="text-[#91908F] font-bold text-lg p-4">ADMIN PANEL</h3>
         <div className="mt-6 flex flex-col items-start justify-center gap-y-3">

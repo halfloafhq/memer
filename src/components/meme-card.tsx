@@ -66,31 +66,36 @@ export default function MemeCard({ src, name, description }: MemeCardProps) {
     }
   };
   return (
-    <Sheet>
-      <SheetTrigger>
-        <div className="border-2 border-gray-200 dark:border-gray-700 rounded-lg p-2">
-          <Meme src={src} name={name} description={description} />
-        </div>
-      </SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>{name}</SheetTitle>
-          <SheetDescription>{description}</SheetDescription>
-        </SheetHeader>
-        <div className="flex flex-col justify-center mt-4 gap-4">
-          <Image
-            src={src}
-            alt="Asset 1"
-            width={400}
-            height={300}
-            className="object-contain w-full h-60"
-          />
-          <Button onClick={handleDownload}>
-            <FileDown className="mr-2" />
-            {loading ? "Downloading..." : "Download"}
-          </Button>
-        </div>
-      </SheetContent>
-    </Sheet>
+    <div className="w-[250px]">
+      <Sheet>
+        <SheetTrigger className="w-full sm:w-auto">
+          <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-2 overflow-hidden shadow-sm hover:shadow-md dark:hover:shadow-gray-600 duration-300 ">
+            <Meme src={src} name={name} />
+          </div>
+        </SheetTrigger>
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle className="text-xl sm:text-2xl">{name}</SheetTitle>
+            <SheetDescription className="text-sm sm:text-base">
+              {description}
+            </SheetDescription>
+          </SheetHeader>
+          <div className="flex flex-col justify-center mt-4 gap-4">
+            <Image
+              src={src}
+              alt="Asset 1"
+              width={400}
+              height={400}
+              objectFit="contain"
+              className="object-contain w-full"
+            />
+            <Button onClick={handleDownload} className="w-full sm:w-auto">
+              <FileDown className="mr-2" />
+              {loading ? "Downloading..." : "Download"}
+            </Button>
+          </div>
+        </SheetContent>
+      </Sheet>
+    </div>
   );
 }
