@@ -46,7 +46,7 @@ export default function CollectionsPage() {
             {collections.map((collection) => (
               <div
                 key={collection.id}
-                className="border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out cursor-pointer dark:bg-primary"
+                className="border border-gray-300 rounded-lg p-4 shadow-sm hover:shadow-md dark:shadow-sm dark:hover:shadow-md dark:hover:shadow-gray-500 transition-shadow duration-300 ease-in-out cursor-pointer dark:bg-background"
                 onClick={() =>
                   router.push(`/dashboard/collections/${collection.id}`)
                 }
