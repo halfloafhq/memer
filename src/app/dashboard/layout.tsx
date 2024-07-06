@@ -9,10 +9,12 @@ function DashboardLayout({
 }>) {
   return (
     <DashboardProvider>
-      <div className="flex flex-1">
-        <Sidebar />
-        <main className="flex-1">{children}</main>
-    </div>
+      <div className="flex items-start justify-between">
+        <div className="min-w-[320px] min-h-screen">
+          <Sidebar />
+        </div>
+        <main className="w-full h-full">{children}</main>
+      </div>
     </DashboardProvider>
   );
 }
