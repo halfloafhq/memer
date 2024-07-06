@@ -33,12 +33,13 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <LoadingProvider>
-              <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-              <main className="flex flex-col">
-                <Navbar />
+              <NextSSRPlugin
+                routerConfig={extractRouterConfig(ourFileRouter)}
+              />
+              <Navbar />
+              <main className="flex-1 pt-16">
                 {children}
-              </main>
-              <Toaster />
+              </main><Toaster />
             </LoadingProvider>
           </ThemeProvider>
         </body>
