@@ -18,6 +18,7 @@ import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import OtpForm, { otpFormSchema } from "./otp-form";
+import { Eye, EyeOff } from "lucide-react";
 
 const signUpFormSchema = z.object({
   email: z.string().email(),
@@ -30,6 +31,7 @@ export default function SignUpForm() {
   const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [verify, setVerify] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const { signUp, setActive, isLoaded } = useSignUp();
   const router = useRouter();
   const { toast } = useToast();
@@ -74,7 +76,6 @@ export default function SignUpForm() {
   }
 
   async function onVerify(values: z.infer<typeof otpFormSchema>) {
-
     if (!isLoaded) return;
     setLoading(true);
 
@@ -171,7 +172,24 @@ export default function SignUpForm() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="********" {...field} />
+                    <div className="relative">
+                      <Input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="********"
+                        {...field}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                      >
+                        {showPassword ? (
+                          <Eye className="h-5 w-5" />
+                        ) : (
+                          <EyeOff className="h-5 w-5" />
+                        )}
+                      </button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -182,7 +200,7 @@ export default function SignUpForm() {
               className="text-lg bg-purple-600 hover:bg-purple-700 active:bg-purple-900 transition-colors"
               disabled={loading}
             >
-            {!loading ? "Sign Up" : "Signing up..."}
+              {!loading ? "Sign Up" : "Signing up..."}
             </Button>
           </form>
         </Form>

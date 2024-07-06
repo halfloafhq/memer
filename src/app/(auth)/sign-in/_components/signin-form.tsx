@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { useSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
+import { Eye, EyeOff } from "lucide-react";
 
 const signInFormSchema = z.object({
   email: z.string().email(),
@@ -28,6 +29,7 @@ const signInFormSchema = z.object({
 export default function SignInForm() {
   const { signIn, setActive, isLoaded } = useSignIn();
   const [loading, setLoading] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
   const { toast } = useToast();
 
@@ -77,7 +79,8 @@ export default function SignInForm() {
       console.error(JSON.stringify(err, null, 2));
       toast({
         title: "Uh oh! Something went wrong.",
-        description: err.errors[0]?.longMessage || "There was a problem signing in",
+        description:
+          err.errors[0]?.longMessage || "There was a problem signing in",
         variant: "destructive",
       });
     } finally {
@@ -113,7 +116,24 @@ export default function SignInForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" placeholder="********" {...field} />
+                  <div className="relative">
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="********"
+                      {...field}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                    >
+                      {showPassword ? (
+                        <Eye className="h-5 w-5" />
+                      ) : (
+                        <EyeOff className="h-5 w-5" />
+                      )}
+                    </button>
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
