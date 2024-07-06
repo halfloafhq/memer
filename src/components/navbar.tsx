@@ -12,11 +12,9 @@ export default function Navbar() {
         <MemerIcon className="h-6 w-6" />
         <span className="text-lg font-semibold">Memer</span>
       </Link>
-      <div className="ml-auto flex items-center gap-4">
+      <div className="ml-auto flex items-center justify-center gap-4">
         <ModeToggle />
-        <div className="block xl:hidden">
-          <DashboardSheet />
-        </div>
+        <DashboardSheet />
         <UserMenu />
       </div>
     </header>

@@ -67,10 +67,7 @@ export default function UserMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Avatar className="h-9 w-9 cursor-pointer">
-          <User className="h-full w-full text-gray-50" />
-          <span className="sr-only">Toggle user menu</span>
-        </Avatar>
+          <User className="h-9 w-9 cursor-pointer" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 mr-4">
         <DropdownMenuLabel className="font-bold p-2">My Account</DropdownMenuLabel>

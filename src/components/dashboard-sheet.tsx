@@ -60,48 +60,48 @@ export function DashboardSheet() {
   }
 
   return (
-    <Sheet onOpenChange={setOpen} open={open}>
-      <SheetTrigger>
-        <Menu className="h-5 w-5" />
-      </SheetTrigger>
-      <SheetContent side="left">
-        <SheetHeader>
-          <SheetTitle>{ adminPath ? "ADMIN PANEL" : "TOOLS" }</SheetTitle>
-        </SheetHeader>
-        <div className="mt-6 flex flex-col items-start justify-center gap-y-3">
-          {adminPath
-            ? panel.map((tool, idx) => (
-                <div
-                  key={idx}
-                  className={cn(
-                    "p-4 w-full flex items-center justify-start gap-x-4 rounded-lg transition duration-200 ease-in-out cursor-pointer",
-                    tool.active
-                      ? "bg-[#F5F5F5] text-[#363430]"
-                      : "text-[#91908F] hover:text-[#363430]",
-                  )}
-                  onClick={() => reRoute(tool.path)}
-                >
-                  {tool.icon}
-                  <h3 className="text-xl font-medium">{tool.name}</h3>
-                </div>
-              ))
-            : tools.map((tool, idx: number) => (
-                <div
-                  key={idx}
-                  className={cn(
-                    "p-4 w-full flex items-center justify-start gap-x-4 rounded-lg transition duration-200 ease-in-out cursor-pointer",
-                    tool.active
-                      ? "bg-[#F5F5F5] text-[#363430]"
-                      : "text-[#91908F] hover:text-[#363430]",
-                  )}
-                  onClick={() => reRoute(tool.path)}
-                >
-                  {tool.icon}
-                  <h3 className="text-xl font-medium">{tool.name}</h3>
-                </div>
-              ))}
-        </div>
-      </SheetContent>
-    </Sheet>
+      <Sheet onOpenChange={setOpen} open={open}>
+        <SheetTrigger>
+          <Menu className="h-9 w-9 cursor-pointer block xl:hidden" />
+        </SheetTrigger>
+        <SheetContent side="left">
+          <SheetHeader>
+            <SheetTitle>{adminPath ? "ADMIN PANEL" : "TOOLS"}</SheetTitle>
+          </SheetHeader>
+          <div className="mt-6 flex flex-col items-start justify-center gap-y-3">
+            {adminPath
+              ? panel.map((tool, idx) => (
+                  <div
+                    key={idx}
+                    className={cn(
+                      "p-4 w-full flex items-center justify-start gap-x-4 rounded-lg transition duration-200 ease-in-out cursor-pointer",
+                      tool.active
+                        ? "bg-[#F5F5F5] text-[#363430]"
+                        : "text-[#91908F] hover:text-[#363430]",
+                    )}
+                    onClick={() => reRoute(tool.path)}
+                  >
+                    {tool.icon}
+                    <h3 className="text-xl font-medium">{tool.name}</h3>
+                  </div>
+                ))
+              : tools.map((tool, idx: number) => (
+                  <div
+                    key={idx}
+                    className={cn(
+                      "p-4 w-full flex items-center justify-start gap-x-4 rounded-lg transition duration-200 ease-in-out cursor-pointer",
+                      tool.active
+                        ? "bg-[#F5F5F5] text-[#363430]"
+                        : "text-[#91908F] hover:text-[#363430]",
+                    )}
+                    onClick={() => reRoute(tool.path)}
+                  >
+                    {tool.icon}
+                    <h3 className="text-xl font-medium">{tool.name}</h3>
+                  </div>
+                ))}
+          </div>
+        </SheetContent>
+      </Sheet>
   );
 }
