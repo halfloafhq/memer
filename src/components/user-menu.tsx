@@ -17,6 +17,10 @@ import {
   User,
 } from "lucide-react";
 import Link from "next/link";
+import {
+  DropdownMenuGroup,
+  DropdownMenuLabel,
+} from "@radix-ui/react-dropdown-menu";
 
 export default function UserMenu() {
   const { signOut } = useClerk();
@@ -68,31 +72,35 @@ export default function UserMenu() {
           <span className="sr-only">Toggle user menu</span>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        {user?.publicMetadata.role === "admin" ? (
-          <>
-            <DropdownMenuItem
-              onClick={adminDashboard}
-              className="cursor-pointer text-md"
-            >
-              <ShieldCheck className="h-5 w-5 mx-2 text-foreground" />
-              Admin Dashboard
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-          </>
-        ) : null}
-        <DropdownMenuItem
-          onClick={dashboard}
-          className="cursor-pointer text-md"
-        >
-          <LayoutDashboardIcon className="h-5 w-5 mx-2 text-primary" />
-          Dashboard
-        </DropdownMenuItem>
+      <DropdownMenuContent className="w-56 mr-4">
+        <DropdownMenuLabel className="font-bold p-2">My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={logout} className="cursor-pointer text-md">
-          <LogOutIcon className="h-5 w-5 mx-2 text-red-500" />
-          Logout
-        </DropdownMenuItem>
+        <DropdownMenuGroup>
+          {user?.publicMetadata.role === "admin" ? (
+            <>
+              <DropdownMenuItem
+                onClick={adminDashboard}
+                className="cursor-pointer text-md"
+              >
+                <ShieldCheck className="h-5 w-5 mr-2 text-foreground" />
+                <span>Admin Dashboard</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+            </>
+          ) : null}
+          <DropdownMenuItem
+            onClick={dashboard}
+            className="cursor-pointer text-md"
+          >
+            <LayoutDashboardIcon className="h-5 w-5 mr-2 text-primary" />
+            <span>Dashboard</span>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={logout} className="cursor-pointer text-md">
+            <LogOutIcon className="h-5 w-5 mr-2 text-red-500" />
+            <span>Logout</span>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   );
