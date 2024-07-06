@@ -1,7 +1,7 @@
 import { useClerk, useUser } from "@clerk/nextjs";
 import React, { useEffect, useState } from "react";
 import { useToast } from "./ui/use-toast";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -9,7 +9,6 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { Avatar } from "@/components/ui/avatar";
 import {
   LayoutDashboardIcon,
   LogOutIcon,

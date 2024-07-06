@@ -14,7 +14,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Memer",
-  description: "Meme your way to greatness",
+  description: "Your one-stop meme workshop: Search, collect, create.",
 };
 
 export default function RootLayout({
