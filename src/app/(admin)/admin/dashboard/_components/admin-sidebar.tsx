@@ -26,10 +26,10 @@ export default function AdminSidebar() {
   }
 
   return (
-    <div className="hidden w-1/5 h-auto py-6 xl:px-6 xl:flex flex-col items-start justify-start border-solid border-r border-gray-200 gap-y-10">
+    <div className="hidden w-[320px] min-w-[320px] min-h-screen p-4 xl:flex flex-col items-start justify-start border-solid border-r border-gray-200 gap-y-10">
       <div className="w-full">
         <h3 className="text-[#91908F] font-bold text-lg p-4">ADMIN PANEL</h3>
-        <div className="mt-6 flex flex-col items-start justify-center gap-y-3">
+        <div className="mt-6 flex flex-col items-start justify-center gap-y-3 grow">
           {panel.map((tool, idx) => (
             <div
               key={idx}
