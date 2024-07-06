@@ -10,8 +10,8 @@ function DashboardLayout({
   return (
     <DashboardProvider>
       <div className="flex items-start justify-between">
-        <div className="min-w-[320px] min-h-screen">
-          <Sidebar />
+        <div className="xl:min-w-[320px] hidden xl:block min-h-screen">
+         <Sidebar />
         </div>
         <main className="w-full h-full">{children}</main>
       </div>

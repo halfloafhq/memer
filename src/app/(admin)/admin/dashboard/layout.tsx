@@ -15,7 +15,7 @@ function AdminDashboardLayout({
 
   return (
     <div className="flex items-start justify-between">
-      <div className="min-w-[320px] min-h-screen">
+      <div className="hidden xl:min-w-[320px] xl:block min-h-screen">
       <AdminSidebar />
       </div>
       <main className="w-full h-full">{children}</main>

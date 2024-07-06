@@ -74,7 +74,6 @@ export default function SignUpForm() {
   }
 
   async function onVerify(values: z.infer<typeof otpFormSchema>) {
-    console.log(values);
 
     if (!isLoaded) return;
     setLoading(true);

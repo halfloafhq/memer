@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -64,10 +64,6 @@ export default function MemeUploadForm() {
   function removeTag(tag: string) {
     setSelectedTags(selectedTags.filter((t) => t !== tag));
   }
-
-  useEffect(() => {
-    console.log("FileUrl changed:", fileUrl);
-  }, [fileUrl]);
 
   async function handleUploadMeme(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
