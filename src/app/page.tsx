@@ -7,7 +7,7 @@ export default async function Page() {
   const memes = await getMemes();
 
   return (
-    <main className="w-full max-w-6xl mx-auto px-6 py-8 md:py-12">
+    <main className="w-full min-h-screen max-w-6xl mx-auto px-6 py-8 md:py-12">
       <div className="flex flex-col gap-8 md:gap-12">
         <div className="w-full">
           <form className="flex items-center justify-center gap-2 md:gap-4">
