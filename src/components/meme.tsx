@@ -17,7 +17,7 @@ export default function Meme({ src, name }: MemeProps) {
           className="object-contain group-hover:opacity-40 transition-opacity"
         />
       </div>
-      <div className="bg-white p-4 dark:bg-gray-950">
+      <div className="bg-white p-4 dark:bg-gray-950 max-w-[300px]">
         <h3 className="font-semibold text-lg md:text-xl truncate">{name}</h3>
       </div>
     </div>
