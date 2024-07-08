@@ -75,7 +75,7 @@ export default function MemeCard({ src, name, description }: MemeCardProps) {
       <SheetContent>
         <SheetHeader>
           <SheetTitle className="text-xl sm:text-2xl">{name}</SheetTitle>
-          <SheetDescription className="text-sm sm:text-base">
+          <SheetDescription className="text-left text-sm sm:text-base">
             {description}
           </SheetDescription>
         </SheetHeader>
