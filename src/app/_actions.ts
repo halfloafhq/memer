@@ -2,9 +2,15 @@
 
 import { prisma } from "@/lib/prisma";
 
-export async function getMemes() {
+export async function getMemes(pageNumber: number) {
   try {
-    const memes = await prisma.meme.findMany();
+    const memes = await prisma.meme.findMany({
+      skip: pageNumber * 5,
+      take: 5,
+      orderBy: {
+        name: "asc",
+      },
+    });
     return memes;
   } catch (error) {
     console.error(error);

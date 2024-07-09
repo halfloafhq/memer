@@ -2,10 +2,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import MemeCard from "@/components/meme-card";
 import { getMemes, searchMemes} from "./_actions";
+import Memes from "@/components/memes";
+import { Spinner } from "@/components/spinner";
+import LoadMore from "@/components/load-more";
 
 export default async function Page({searchParams}: {searchParams: {search?: string}}) {
   const search = searchParams.search || "";
-  const memes = search ? await searchMemes(search) : await getMemes();
+  const memes = search ? await searchMemes(search) : await getMemes(0);
 
   return (
     <main className="w-full min-h-screen max-w-6xl mx-auto px-6 py-8 md:py-12">
@@ -24,18 +27,9 @@ export default async function Page({searchParams}: {searchParams: {search?: stri
           </form>
         </div>
         <div className="flex flex-wrap justify-center sm:justify-start gap-3 md:gap-4">
-          {memes.map((meme, idx) => (
-            <div
-              key={idx}
-            >
-              <MemeCard
-                src={meme.url}
-                name={meme.name}
-                description={meme.description}
-              />
-            </div>
-          ))}
-        </div>{" "}
+          <Memes memes={memes} />
+          { !search ? <LoadMore /> : null }
+        </div>
       </div>
     </main>
   );
