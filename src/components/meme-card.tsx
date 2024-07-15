@@ -16,12 +16,13 @@ import { FileDown } from "lucide-react";
 import { useToast } from "./ui/use-toast";
 
 type MemeCardProps = {
+  memeId: string;
   src: string;
   name: string;
   description: string;
 };
 
-export default function MemeCard({ src, name, description }: MemeCardProps) {
+export default function MemeCard({ src, name, description, memeId }: MemeCardProps) {
   const { toast } = useToast();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -93,7 +94,7 @@ export default function MemeCard({ src, name, description }: MemeCardProps) {
             <FileDown className="mr-2" />
             {loading ? "Downloading..." : "Download"}
           </Button>
-          <SaveMeme src={src} name={name} />
+          <SaveMeme src={src} name={name} memeId={memeId} />
         </div>
       </SheetContent>
     </Sheet>

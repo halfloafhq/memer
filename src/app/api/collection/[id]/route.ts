@@ -60,3 +60,92 @@ export async function GET(
     );
   }
 }
+
+export async function POST(
+  req: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  try {
+    const user = await currentUser();
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          message: "User not authenticated",
+        },
+        { status: 401 },
+      );
+    }
+
+    if (!params.id) {
+      return NextResponse.json(
+        {
+          message: "No collection id",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    const collection = await prisma.collection.findUnique({
+      where: {
+        id: params.id,
+        madeById: user.id,
+      },
+      include: {
+        memes: true,
+      }
+    });
+
+    if (!collection) {
+      return NextResponse.json(
+        {
+          message: "Collection not found",
+        },
+        {
+          status: 404,
+        },
+      );
+    }
+
+    const { collectionId, memeId } = await req.json();
+
+    if (!collectionId || !memeId) {
+      return NextResponse.json(
+        {
+          message: "No collection id or meme id",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    await prisma.memeCollection.create({
+      data: {
+        collectionId: collectionId,
+        memeId: memeId,
+      },
+    });
+
+    return NextResponse.json(
+      {
+        message: "Saved meme to collection successfully",
+      },
+      {
+        status: 200,
+      },
+    );
+  } catch (err: any) {
+    console.error(err);
+    return NextResponse.json(
+      {
+        message: "Internal Server error",
+      },
+      {
+        status: 500,
+      },
+    );
+  }
+}

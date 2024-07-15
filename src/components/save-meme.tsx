@@ -18,21 +18,24 @@ import { useUser } from "@clerk/nextjs";
 import { Collection } from "@prisma/client";
 import { getCollections } from "@/app/_actions";
 import { useRouter } from "next/navigation";
+import { useToast } from "./ui/use-toast";
 
 interface MemeProps {
+  memeId: string;
   src: string;
   name: string;
 }
 
-export default function SaveMeme({ src, name }: MemeProps) {
+export default function SaveMeme({ src, name, memeId }: MemeProps) {
   const { user, isLoaded, isSignedIn } = useUser();
   const [collections, setCollections] = useState<Collection[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [selectedCollection, setSelectedCollection] = useState<string | null>(
-    null,
-  );
+  const [selectedCollection, setSelectedCollection] =
+    useState<Collection | null>(null);
   const [open, setOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+  const { toast } = useToast();
 
   const filteredCollections = collections.filter((collection) =>
     collection.name.toLowerCase().includes(searchTerm.toLowerCase()),
@@ -46,11 +49,49 @@ export default function SaveMeme({ src, name }: MemeProps) {
     setOpen(open);
   };
 
-  function handleSaveMeme() {
+  async function handleSaveMeme() {
     if (selectedCollection) {
-      console.log(`Save meme "${name}" to collection "${selectedCollection}"`);
+      try {
+        setLoading(true);
+        const req = await fetch(`/api/collection/${selectedCollection.id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            collectionId: selectedCollection.id,
+            memeId: memeId,
+          }),
+        });
+        if (!req.ok) {
+          return toast({
+            title: "Save Failed",
+            description:
+              "There was an error saving the meme to the collection. Please try again.",
+            variant: "destructive",
+          });
+        }
+        toast({
+          title: "Saved!",
+          description: `${name} has been saved to ${selectedCollection.name}.`,
+        });
+      } catch (error) {
+        console.error("Save failed:", error);
+        return toast({
+          title: "Save Failed",
+          description:
+            "There was an error saving the meme to the collection. Please try again.",
+          variant: "destructive",
+        });
+      } finally {
+        setLoading(false);
+      }
     } else {
-      console.log("Please select a collection");
+      return toast({
+        title: "Please select a collection",
+        description: "Please select a collection to save your meme.",
+        variant: "destructive",
+      });
     }
   }
 
@@ -122,13 +163,13 @@ export default function SaveMeme({ src, name }: MemeProps) {
             <div
               key={collection.id}
               className={`p-2 cursor-pointer dark:hover:bg-primary hover:bg-gray-100 rounded ${
-                selectedCollection === collection.id
+                selectedCollection?.id === collection.id
                   ? "bg-blue-100 dark:bg-primary"
                   : ""
               }`}
               onClick={() => {
-                if (selectedCollection !== collection.id) {
-                  setSelectedCollection(collection.id);
+                if (selectedCollection?.id !== collection.id) {
+                  setSelectedCollection(collection);
                 } else {
                   setSelectedCollection(null);
                 }
@@ -139,7 +180,9 @@ export default function SaveMeme({ src, name }: MemeProps) {
           ))}
         </ScrollArea>
         <DialogFooter>
-          <Button onClick={handleSaveMeme}>Save meme</Button>
+          <Button onClick={handleSaveMeme} disabled={loading}>
+            {loading ? "Saving..." : "Save meme"}
+          </Button>
         </DialogFooter>
       </>
     );
