@@ -31,11 +31,20 @@ export default function SaveMeme({ src, name }: MemeProps) {
   const [selectedCollection, setSelectedCollection] = useState<string | null>(
     null,
   );
+  const [open, setOpen] = useState<boolean>(false);
   const router = useRouter();
 
   const filteredCollections = collections.filter((collection) =>
     collection.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
+
+  const handleOpenChange = (open: boolean) => {
+    if (open) {
+      setSelectedCollection(null);
+      setSearchTerm("");
+    }
+    setOpen(open);
+  };
 
   function handleSaveMeme() {
     if (selectedCollection) {
@@ -137,7 +146,7 @@ export default function SaveMeme({ src, name }: MemeProps) {
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button variant="secondary">
           <FolderOpen className="mr-2" /> Save to Collection
