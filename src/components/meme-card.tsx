@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import Meme from "./meme";
 import Image from "next/image";
+import SaveMeme from "./save-meme";
 import { Button } from "./ui/button";
 import { FileDown } from "lucide-react";
 import { useToast } from "./ui/use-toast";
@@ -92,6 +93,7 @@ export default function MemeCard({ src, name, description }: MemeCardProps) {
             <FileDown className="mr-2" />
             {loading ? "Downloading..." : "Download"}
           </Button>
+          <SaveMeme src={src} name={name} />
         </div>
       </SheetContent>
     </Sheet>

@@ -44,3 +44,17 @@ export async function searchMemes(searchTerm: string) {
     return [];
   }
 }
+
+export async function getCollections(userId: string) {
+  try {
+    const collections = await prisma.collection.findMany({
+      where: {
+        madeById: userId,
+      },
+    });
+    return collections;
+  } catch (error) {
+    console.error("Error fetching collections:", error);
+    return [];
+  }
+}
