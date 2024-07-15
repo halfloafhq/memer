@@ -17,7 +17,9 @@ import { Input } from "@/components/ui/input";
 import { UserSearch } from "lucide-react";
 
 const formSchema = z.object({
-  name: z.string(),
+  name: z.string().min(3, {
+    message: "Input must be at least 3 characters long",
+  }),
 });
 
 export default function SearchUsers() {
@@ -52,9 +54,12 @@ export default function SearchUsers() {
               </FormItem>
             )}
           />
-          <Button type="submit"><UserSearch className="mr-2"/>Search</Button>
+          <Button type="submit">
+            <UserSearch className="mr-2" />
+            Search
+          </Button>
         </form>
       </Form>
     </div>
   );
-};
+}
