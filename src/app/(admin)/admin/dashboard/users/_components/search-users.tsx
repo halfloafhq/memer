@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { UserSearch } from "lucide-react";
 
 const formSchema = z.object({
-  name: z.string().min(3, {
+  email: z.string().min(3, {
     message: "Input must be at least 3 characters long",
   }),
 });
@@ -29,12 +29,12 @@ export default function SearchUsers() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      email: "",
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    router.push(pathname + "?search=" + values.name);
+    router.push(pathname + "?search=" + values.email);
   }
 
   return (
@@ -43,10 +43,10 @@ export default function SearchUsers() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
-            name="name"
+            name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input placeholder="Mona Lisa" {...field} />
                 </FormControl>
