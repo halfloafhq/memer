@@ -77,6 +77,7 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
           title: "Saved!",
           description: `${name} has been saved to ${selectedCollection.name}.`,
         });
+        setOpen(false);
       } catch (error) {
         console.error("Save failed:", error);
         return toast({
