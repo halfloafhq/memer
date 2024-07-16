@@ -14,6 +14,7 @@ export default function Memes({ memes }: MemesProps) {
         src={meme.url}
         name={meme.name}
         description={meme.description}
+        memeId={meme.id}
       />
     </div>
   ));
