@@ -48,7 +48,6 @@ export async function removeMemeFromCollectionAction({
       };
     }
 
-    revalidatePath(`/dashboard/collections/${collectionId}`);
     return {
       success: true,
       message: "Meme removed from collection successfully",

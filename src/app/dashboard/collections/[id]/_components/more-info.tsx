@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
 import { downloadMeme } from "@/utils/download";
 import { removeMemeFromCollectionAction } from "../_actions";
+import { useDashboardCtx } from "@/context/DashboardContext";
 
 interface MoreInfoProps {
   src: string;
@@ -35,6 +36,7 @@ export default function MoreInfo({
   memeCollectionId,
   className,
 }: MoreInfoProps) {
+  const { refreshCollectionWithMemes } = useDashboardCtx();
   const { toast } = useToast();
   const handleDownload = async () => {
     try {
@@ -77,7 +79,8 @@ export default function MoreInfo({
           variant: "destructive",
         });
       } else {
-        toast({
+        refreshCollectionWithMemes();
+        return toast({
           title: "Removed!",
           description: `${name} has been removed successfully!`,
         });

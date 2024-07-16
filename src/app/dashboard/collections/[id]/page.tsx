@@ -8,37 +8,15 @@ import { ChevronLeft } from "lucide-react";
 import { CollectionWithMemes } from "@/types/collection";
 import Image from "next/image";
 import MoreInfo from "./_components/more-info";
+import { useDashboardCtx } from "@/context/DashboardContext";
 
 export default function CollectionPage({ params }: { params: { id: string } }) {
   const { loading, setLoading } = useLoadingCtx();
-  const [collection, setCollection] = useState<CollectionWithMemes | undefined>(
-    undefined,
-  );
-  const { toast } = useToast();
+  const { collectionWithMemes, getCollectionById } = useDashboardCtx();
 
   useEffect(() => {
-    async function getCollectionById(id: string) {
-      setLoading(true);
-      try {
-        const req = await fetch(`/api/collection/${id}`);
-        const res = await req.json();
-        console.log(res);
-        if (req.status === 200) {
-          setCollection(res.data);
-        }
-      } catch (err: any) {
-        console.error(err);
-        toast({
-          title: "Uh oh! Couldn't get collection",
-          description: err.message,
-          variant: "destructive",
-        });
-      } finally {
-        setLoading(false);
-      }
-    }
     getCollectionById(params.id);
-  }, [params.id, toast, setCollection, setLoading]);
+  }, []);
 
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 w-full min-h-screen">
@@ -46,7 +24,7 @@ export default function CollectionPage({ params }: { params: { id: string } }) {
         <div className="flex items-center justify-center flex-1">
           <Loader />
         </div>
-      ) : !collection ? (
+      ) : !collectionWithMemes ? (
         <div className="flex flex-col items-center justify-center flex-1">
           <h1 className="text-2xl font-bold mb-4 dark:text-white">
             Collection not found
@@ -64,7 +42,7 @@ export default function CollectionPage({ params }: { params: { id: string } }) {
         <>
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-              {collection.name}
+              {collectionWithMemes.name}
             </h1>
             <Link
               href="/dashboard/collections"
@@ -81,9 +59,10 @@ export default function CollectionPage({ params }: { params: { id: string } }) {
             <h2 className="text-xl font-semibold mb-4 dark:text-white">
               Memes in this Collection
             </h2>
-            {collection.memes && collection.memes.length >= 1 ? (
+            {collectionWithMemes.memes &&
+            collectionWithMemes.memes.length >= 1 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {collection.memes.map((memeCollection) => (
+                {collectionWithMemes.memes.map((memeCollection) => (
                   <div
                     key={memeCollection.id}
                     className="border rounded-lg p-4 shadow-sm dark:bg-secondary dark:border-gray-700 relative"
@@ -104,7 +83,7 @@ export default function CollectionPage({ params }: { params: { id: string } }) {
                       src={memeCollection.meme.url}
                       name={memeCollection.meme.name}
                       description={memeCollection.meme.description}
-                      collectionId={collection.id}
+                      collectionId={collectionWithMemes.id}
                       memeCollectionId={memeCollection.id}
                       className="absolute top-2 right-2 p-1 rounded-full bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200 border border-black/15"
                     />

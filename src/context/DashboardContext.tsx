@@ -11,10 +11,14 @@ import React, {
 import { useToast } from "@/components/ui/use-toast";
 import { Collection } from "@prisma/client";
 import { useLoadingCtx } from "./LoadingContext";
+import { CollectionWithMemes } from "@/types/collection";
 
 type DashboardContextType = {
   collections: Collection[];
   refreshCollections: () => void;
+  collectionWithMemes: CollectionWithMemes | undefined;
+  getCollectionById: (id: string) => void;
+  refreshCollectionWithMemes: () => void;
 };
 
 const DashboardContext = createContext<DashboardContextType | undefined>(
@@ -37,6 +41,9 @@ type DashboardProviderProps = {
 
 export const DashboardProvider = ({ children }: DashboardProviderProps) => {
   const [collections, setCollections] = useState<Collection[]>([]);
+  const [collectionWithMemes, setCollectionWithMemes] = useState<
+    CollectionWithMemes | undefined
+  >(undefined);
   const { setLoading } = useLoadingCtx();
   const { toast } = useToast();
 
@@ -75,12 +82,58 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
     }
   }, [toast]);
 
+  const getCollectionById = useCallback(
+    async (id: string) => {
+      try {
+        setLoading(true);
+        const req = await fetch(`/api/collection/${id}`);
+        const res = await req.json();
+        if (req.status === 200) {
+          setCollectionWithMemes(res.data);
+        }
+      } catch (err: any) {
+        toast({
+          title: "Uh oh! Couldn't get collection",
+          description: err.message,
+          variant: "destructive",
+        });
+      } finally {
+        setLoading(false);
+      }
+    },
+    [toast],
+  );
+
+  const refreshCollectionWithMemes = useCallback(async () => {
+    try {
+      const req = await fetch(`/api/collection/${collectionWithMemes?.id}`);
+      const res = await req.json();
+      if (req.status === 200) {
+        setCollectionWithMemes(res.data);
+      }
+    } catch (err: any) {
+      toast({
+        title: "Uh oh! Couldn't get collection",
+        description: err.message,
+        variant: "destructive",
+      });
+    }
+  }, [collectionWithMemes, toast]);
+
   useEffect(() => {
     firstFetch();
   }, []);
 
   return (
-    <DashboardContext.Provider value={{ collections, refreshCollections }}>
+    <DashboardContext.Provider
+      value={{
+        collections,
+        refreshCollections,
+        collectionWithMemes,
+        getCollectionById,
+        refreshCollectionWithMemes,
+      }}
+    >
       {children}
     </DashboardContext.Provider>
   );
