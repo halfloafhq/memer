@@ -1,4 +1,3 @@
-import getAuthenticatedUser from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
