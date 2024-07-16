@@ -5,20 +5,31 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
 import { downloadMeme } from "@/utils/download";
 
-interface MemeInfoProps {
+interface MoreInfoProps {
   src: string;
   name: string;
+  description: string;
   className?: string;
 }
 
-export default function MoreInfo({ src, name, className }: MemeInfoProps) {
+export default function MoreInfo({
+  src,
+  name,
+  description,
+  className,
+}: MoreInfoProps) {
   const { toast } = useToast();
   const handleDownload = async () => {
     try {
@@ -62,10 +73,25 @@ export default function MoreInfo({ src, name, className }: MemeInfoProps) {
               <span>Download</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer">
-              <Info className="mr-2 h-4 w-4" />
-              <span>More</span>
-            </DropdownMenuItem>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger className="cursor-pointer">
+                <Info className="mr-2 h-4 w-4" />
+                <span>More</span>
+              </DropdownMenuSubTrigger>
+              <DropdownMenuPortal>
+                <DropdownMenuSubContent className="w-60">
+                  <DropdownMenuLabel className="text-black dark:text-white">
+                    Description
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <p className="text-gray-600 dark:text-white">
+                      {description}
+                    </p>
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuPortal>
+            </DropdownMenuSub>{" "}
             <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer">
               <Trash2 className="mr-2 h-4 w-4 text-red-500" />
