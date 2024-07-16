@@ -18,7 +18,7 @@ interface MemeInfoProps {
   className?: string;
 }
 
-export default function MemeInfo({ src, name, className }: MemeInfoProps) {
+export default function MoreInfo({ src, name, className }: MemeInfoProps) {
   const { toast } = useToast();
   const handleDownload = async () => {
     try {

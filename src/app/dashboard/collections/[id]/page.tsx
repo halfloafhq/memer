@@ -4,10 +4,10 @@ import { useLoadingCtx } from "@/context/LoadingContext";
 import Loader from "@/components/loader";
 import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
-import { ChevronLeft, MoreHorizontal, MoreVertical } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { CollectionWithMemes } from "@/types/collection";
 import Image from "next/image";
-import MemeInfo from "./_components/meme-info";
+import MoreInfo from "./_components/more-info";
 
 export default function CollectionPage({ params }: { params: { id: string } }) {
   const { loading, setLoading } = useLoadingCtx();
@@ -100,7 +100,7 @@ export default function CollectionPage({ params }: { params: { id: string } }) {
                     <p className="text-center dark:text-white">
                       {memeCollection.meme.name || "Meme"}
                     </p>
-                    <MemeInfo src={memeCollection.meme.url} name={memeCollection.meme.name} className="absolute top-2 right-2 p-1 rounded-full bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200 border border-black/15" />
+                    <MoreInfo src={memeCollection.meme.url} name={memeCollection.meme.name} className="absolute top-2 right-2 p-1 rounded-full bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200 border border-black/15" />
                   </div>
                 ))}
               </div>
