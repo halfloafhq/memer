@@ -14,6 +14,7 @@ import SaveMeme from "./save-meme";
 import { Button } from "./ui/button";
 import { FileDown } from "lucide-react";
 import { useToast } from "./ui/use-toast";
+import { downloadMeme } from "@/utils/download";
 
 type MemeCardProps = {
   memeId: string;
@@ -22,39 +23,32 @@ type MemeCardProps = {
   description: string;
 };
 
-export default function MemeCard({ src, name, description, memeId }: MemeCardProps) {
+export default function MemeCard({
+  src,
+  name,
+  description,
+  memeId,
+}: MemeCardProps) {
   const { toast } = useToast();
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleDownload = async () => {
     try {
       setLoading(true);
-      const response = await fetch(src);
-      if (!response.ok) {
-        return toast({
+      const success = await downloadMeme(src, name);
+      if (!success) {
+        toast({
           title: "Download Failed",
           description:
             "There was an error downloading the image. Please try again.",
           variant: "destructive",
         });
+      } else {
+        toast({
+          title: "Downloaded!",
+          description: `${name} has been downloaded.`,
+        });
       }
-
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `${name}.jpg`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      window.URL.revokeObjectURL(url);
-
-      toast({
-        title: "Downloaded!",
-        description: `${name} has been downloaded.`,
-      });
     } catch (error) {
       console.error("Download failed:", error);
       toast({
@@ -70,9 +64,9 @@ export default function MemeCard({ src, name, description, memeId }: MemeCardPro
   return (
     <Sheet>
       <SheetTrigger className="w-full sm:w-auto">
-          <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-2 overflow-hidden shadow-sm hover:shadow-md dark:hover:shadow-gray-600 duration-300 ">
-            <Meme src={src} name={name} />
-          </div>
+        <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-2 overflow-hidden shadow-sm hover:shadow-md dark:hover:shadow-gray-600 duration-300 ">
+          <Meme src={src} name={name} />
+        </div>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
