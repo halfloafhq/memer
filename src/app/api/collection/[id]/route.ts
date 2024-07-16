@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { CollectionWithMemes } from "@/types/collection";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -29,15 +30,26 @@ export async function GET(
       );
     }
 
-    const collection = await prisma.collection.findUnique({
+    const collection = (await prisma.collection.findFirst({
       where: {
         id: params.id,
         madeById: user.id,
       },
       include: {
-        memes: true,
-      }
-    });
+        memes: {
+          include: {
+            meme: true,
+          },
+        },
+      },
+    })) as CollectionWithMemes | null;
+
+    if (!collection) {
+      return NextResponse.json(
+        { error: "Collection not found or unauthorized" },
+        { status: 404 },
+      );
+    }
 
     return NextResponse.json(
       {
@@ -95,7 +107,7 @@ export async function POST(
       },
       include: {
         memes: true,
-      }
+      },
     });
 
     if (!collection) {

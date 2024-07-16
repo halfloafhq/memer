@@ -20,6 +20,7 @@ export default function CollectionPage({ params }: { params: { id: string } }) {
       try {
         const req = await fetch(`/api/collection/${id}`);
         const res = await req.json();
+        console.log(res)
         if (req.status === 200) {
           setCollection(res.data);
         }
@@ -74,7 +75,7 @@ export default function CollectionPage({ params }: { params: { id: string } }) {
             <h2 className="text-xl font-semibold mb-4">
               Memes in this Collection
             </h2>
-            {collection.memes && collection.memes.length > 1 ? (
+            {collection.memes && collection.memes.length >= 1 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {collection.memes.map((meme) => (
                   <div
