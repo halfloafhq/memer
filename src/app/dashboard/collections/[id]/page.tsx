@@ -104,6 +104,8 @@ export default function CollectionPage({ params }: { params: { id: string } }) {
                       src={memeCollection.meme.url}
                       name={memeCollection.meme.name}
                       description={memeCollection.meme.description}
+                      collectionId={collection.id}
+                      memeCollectionId={memeCollection.id}
                       className="absolute top-2 right-2 p-1 rounded-full bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200 border border-black/15"
                     />
                   </div>

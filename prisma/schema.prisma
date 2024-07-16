@@ -32,7 +32,7 @@ model Meme {
 model Collection {
   id    String    @id @default(auto()) @map("_id") @db.ObjectId
   name  String
-  memes MemeCollection[]
+  memes MemeCollection[] 
   madeById String
   madeBy User @relation(fields: [madeById], references: [userId])
 }

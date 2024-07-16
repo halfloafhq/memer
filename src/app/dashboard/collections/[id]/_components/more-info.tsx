@@ -16,11 +16,14 @@ import {
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
 import { downloadMeme } from "@/utils/download";
+import { removeMemeFromCollectionAction } from "../_actions";
 
 interface MoreInfoProps {
   src: string;
   name: string;
   description: string;
+  collectionId: string;
+  memeCollectionId: string;
   className?: string;
 }
 
@@ -28,6 +31,8 @@ export default function MoreInfo({
   src,
   name,
   description,
+  collectionId,
+  memeCollectionId,
   className,
 }: MoreInfoProps) {
   const { toast } = useToast();
@@ -57,6 +62,36 @@ export default function MoreInfo({
       });
     }
   };
+
+  const handleRemove = async () => {
+    try {
+      const status = await removeMemeFromCollectionAction({
+        memeId: memeCollectionId,
+        collectionId,
+        memeCollectionId,
+      });
+      if (!status.success) {
+        return toast({
+          title: "Remove Failed",
+          description: status.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Removed!",
+          description: `${name} has been removed successfully!`,
+        });
+      }
+    } catch (error) {
+      console.error("Remove failed:", error);
+      return toast({
+        title: "Remove Failed",
+        description: "There was an error removing the image. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className={cn("", className)}>
       <DropdownMenu>
@@ -93,9 +128,9 @@ export default function MoreInfo({
               </DropdownMenuPortal>
             </DropdownMenuSub>{" "}
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer">
+            <DropdownMenuItem className="cursor-pointer" onClick={handleRemove}>
               <Trash2 className="mr-2 h-4 w-4 text-red-500" />
-              <span className="text-red-500">Delete</span>
+              <span className="text-red-500">Remove</span>
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>

@@ -64,9 +64,11 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
           }),
         });
         if (!req.ok) {
+          const res = await req.json();
           return toast({
             title: "Save Failed",
             description:
+              res.message ||
               "There was an error saving the meme to the collection. Please try again.",
             variant: "destructive",
           });
