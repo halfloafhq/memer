@@ -17,7 +17,7 @@ const ForgotPasswordForm = () => {
   const { isLoaded, signIn, setActive } = useSignIn();
 
   if (!isLoaded) {
-    return null;
+    return <div className="w-full max-w-md p-4 text-center">Loading...</div>;
   }
 
   const handleEmailSubmit = async (email: string) => {

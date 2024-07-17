@@ -5,8 +5,7 @@ import Link from "next/link";
 export default function page() {
   return (
     <main className="w-full min-h-screen flex flex-col items-center justify-center">
-      <section className="mb-12 text-center">
-        <div>
+      <section className="mb-4 text-center p-4">
           <h1 className="text-4xl font-bold">
             Forgot <span className="text-purple-600">password?</span>
           </h1>
@@ -15,9 +14,8 @@ export default function page() {
             <span className="text-purple-600"> meme world </span> awaits your
             return!
           </p>
-        </div>
       </section>
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md p-4">
         <ForgotPasswordForm />
       </div>
       <div className="mt-8 text-center">
