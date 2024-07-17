@@ -11,7 +11,8 @@ export default function SignUpPage() {
             Sign up on <span className="text-purple-600">Memer</span>
           </h1>
           <p className="mt-4 text-lg text-gray-600">
-            <span className="underline text-purple-600">Rick Roll</span> the world in a few clicks!
+            <span className="underline text-purple-600">Rick Roll</span> the
+            world in a few clicks!
           </p>
         </div>
       </section>

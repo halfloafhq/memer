@@ -27,6 +27,11 @@ export default function SignInPage() {
             </Link>
           </p>
         </div>
+        <div className="mt-2 text-center">
+          <p className="text-primary">
+            <Link href="/forgot-password">Forgot password?</Link>
+          </p>
+        </div>
       </section>
     </main>
   );

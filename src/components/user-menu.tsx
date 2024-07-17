@@ -1,4 +1,4 @@
-import { useClerk, useUser } from "@clerk/nextjs";
+import { useClerk, useSession, useUser } from "@clerk/nextjs";
 import React, { useEffect, useState } from "react";
 import { useToast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
@@ -25,6 +25,7 @@ export default function UserMenu() {
   const { signOut } = useClerk();
   const { user } = useUser();
   const [signedIn, setSignedIn] = useState<boolean>(false);
+  const { session } = useSession();
   const { toast } = useToast();
   const router = useRouter();
 
@@ -50,10 +51,12 @@ export default function UserMenu() {
   }
 
   useEffect(() => {
-    if (user) {
+    if (session) {
       setSignedIn(true);
+    } else {
+      setSignedIn(false);
     }
-  }, [user, setSignedIn]);
+  }, [session, setSignedIn]);
 
   if (!signedIn) {
     return (
@@ -66,10 +69,12 @@ export default function UserMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-          <User className="h-9 w-9 cursor-pointer" />
+        <User className="h-9 w-9 cursor-pointer" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 mr-4">
-        <DropdownMenuLabel className="font-bold p-2">My Account</DropdownMenuLabel>
+        <DropdownMenuLabel className="font-bold p-2">
+          My Account
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           {user?.publicMetadata.role === "admin" ? (
