@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import OtpForm, { otpFormSchema } from "./otp-form";
 import { Eye, EyeOff } from "lucide-react";
+import OauthSignIn from "@/components/google-oauth";
 
 const signUpFormSchema = z.object({
   email: z.string().email(),
@@ -197,7 +198,7 @@ export default function SignUpForm() {
             />
             <Button
               type="submit"
-              className="text-lg bg-purple-600 hover:bg-purple-700 active:bg-purple-900 transition-colors"
+              className="w-full text-lg bg-purple-600 hover:bg-purple-700 active:bg-purple-900 transition-colors"
               disabled={loading}
             >
               {!loading ? "Sign Up" : "Signing up..."}
@@ -205,6 +206,10 @@ export default function SignUpForm() {
           </form>
         </Form>
       )}
+
+      <div className="mt-4 text-center">
+      <OauthSignIn />
+      </div>
     </div>
   );
 }

@@ -71,7 +71,7 @@ export default function OtpForm({ onVerify, loading }: OtpFormProps) {
 
           <Button
             type="submit"
-            className="text-lg bg-purple-600 hover:bg-purple-700 active:bg-purple-900 transition-colors"
+            className="w-full text-lg bg-purple-600 hover:bg-purple-700 active:bg-purple-900 transition-colors"
             disabled={loading}
           >
             {!loading ? "Verify OTP" : "Verifying..."}

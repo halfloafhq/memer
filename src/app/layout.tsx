@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/toaster";
 import { Inter } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider, GoogleOneTap } from "@clerk/nextjs";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import { LoadingProvider } from "@/context/LoadingContext";
@@ -23,8 +23,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
+    <html lang="en">
+      <ClerkProvider>
+        <GoogleOneTap />
         <body className={inter.className}>
           <ThemeProvider
             attribute="class"
@@ -37,13 +38,12 @@ export default function RootLayout({
                 routerConfig={extractRouterConfig(ourFileRouter)}
               />
               <Navbar />
-              <main className="flex-1 pt-16">
-                {children}
-              </main><Toaster />
+              <main className="flex-1 pt-16">{children}</main>
+              <Toaster />
             </LoadingProvider>
           </ThemeProvider>
         </body>
-      </html>
-    </ClerkProvider>
+      </ClerkProvider>
+    </html>
   );
 }

@@ -58,3 +58,18 @@ export async function getCollections(userId: string) {
     return [];
   }
 }
+
+export async function createUser(email: string | null, userId: string) {
+  try {
+    const createdUser = await prisma.user.create({
+      data: {
+        email,
+        userId,
+      },
+    });
+    return { success: true, createdUser };
+  } catch (error) {
+    console.error("Error creating user:", error);
+    return { success: false, error: "Failed to create user" };
+  }
+}
