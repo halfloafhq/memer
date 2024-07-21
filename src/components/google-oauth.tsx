@@ -88,7 +88,7 @@ export default function OauthSignIn() {
       className="w-full bg-white text-black text-lg hover:text-white"
     >
       <Image src="/google.svg" alt="Google" width={20} height={20} />
-      <span className="ml-2 hidden md:block">Sign in with Google</span>
+      <span className="ml-2 hidden md:block">Continue with Google</span>
       <span className="ml-2 block md:hidden">Sign in</span>
     </Button>
   );
