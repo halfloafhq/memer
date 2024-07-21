@@ -94,24 +94,6 @@ export default function SignUpForm() {
       // and redirect the user
       if (completeSignUp.status === "complete") {
         await setActive({ session: completeSignUp.createdSessionId });
-        const req = await fetch("/api/user/sign-up", {
-          method: "POST",
-          body: JSON.stringify({
-            email: email,
-            userId: completeSignUp.createdUserId,
-          }),
-        });
-
-        const res = await req.json();
-
-        if (req.status !== 201) {
-          toast({
-            title: "Something went wrong!",
-            description: res.message,
-            variant: "destructive",
-          });
-        }
-
         toast({
           title: "Signed up!",
           description: "Your account has been created",
@@ -208,7 +190,7 @@ export default function SignUpForm() {
       )}
 
       <div className="mt-4 text-center">
-      <OauthSignIn />
+        <OauthSignIn />
       </div>
     </div>
   );
