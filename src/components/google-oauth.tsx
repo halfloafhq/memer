@@ -85,7 +85,7 @@ export default function OauthSignIn() {
   return (
     <Button
       onClick={() => handleSignIn("oauth_google")}
-      className="w-full bg-white text-black text-lg hover:text-white"
+      className="w-full bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 flex items-center justify-center py-2 px-4 rounded-md shadow-sm"
     >
       <Image src="/google.svg" alt="Google" width={20} height={20} />
       <span className="ml-2 hidden md:block">Continue with Google</span>
