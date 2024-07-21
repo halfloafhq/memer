@@ -89,7 +89,7 @@ export default function OauthSignIn() {
     >
       <Image src="/google.svg" alt="Google" width={20} height={20} />
       <span className="ml-2 hidden md:block">Continue with Google</span>
-      <span className="ml-2 block md:hidden">Sign in</span>
+      <span className="ml-2 block md:hidden">Google Sign In</span>
     </Button>
   );
 }
