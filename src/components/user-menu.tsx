@@ -20,10 +20,11 @@ import {
   DropdownMenuGroup,
   DropdownMenuLabel,
 } from "@radix-ui/react-dropdown-menu";
+import { Spinner } from "./spinner";
 
 export default function UserMenu() {
   const { signOut } = useClerk();
-  const { user } = useUser();
+  const { user, isLoaded } = useUser();
   const [signedIn, setSignedIn] = useState<boolean>(false);
   const { session } = useSession();
   const { toast } = useToast();
@@ -57,6 +58,14 @@ export default function UserMenu() {
       setSignedIn(false);
     }
   }, [session, setSignedIn]);
+
+  if (!isLoaded) {
+    return (
+      <div className="flex items-center gap-2">
+        <Spinner />
+      </div>
+    );
+  }
 
   if (!signedIn) {
     return (
