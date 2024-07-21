@@ -194,7 +194,7 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="secondary">
+        <Button variant="secondary" className="bg-gray-700 text-white">
           <FolderOpen className="mr-2" /> Save to Collection
         </Button>
       </DialogTrigger>
