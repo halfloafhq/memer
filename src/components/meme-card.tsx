@@ -82,7 +82,8 @@ export default function MemeCard({
             width={400}
             height={400}
             objectFit="contain"
-            className="object-contain w-full"
+            className="object-contain w-full bg-muted"
+            priority
           />
           <Button onClick={handleDownload} className="w-full sm:w-auto">
             <FileDown className="mr-2" />
