@@ -49,6 +49,10 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
     setOpen(open);
   };
 
+  async function handleCreateCollection() {
+    console.log("handleCreateCollection");
+  }
+
   async function handleSaveMeme() {
     if (selectedCollection) {
       try {
@@ -167,8 +171,8 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
               key={collection.id}
               className={`p-2 cursor-pointer dark:hover:bg-primary hover:bg-gray-100 rounded ${
                 selectedCollection?.id === collection.id
-                  ? "bg-blue-100 dark:bg-primary"
-                  : ""
+                  ? "bg-primary text-white hover:bg-primary/80 hover:text-white"
+                 : ""
               }`}
               onClick={() => {
                 if (selectedCollection?.id !== collection.id) {
@@ -194,7 +198,7 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="bg-gray-700 text-white">
+        <Button variant="secondary" className="bg-gray-600 hover:bg-gray-800 text-white focus:bg-gray-900">
           <FolderOpen className="mr-2" /> Save to Collection
         </Button>
       </DialogTrigger>

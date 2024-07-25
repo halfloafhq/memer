@@ -1,7 +1,7 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { FileUp, User } from "lucide-react";
+import { FileUp, SquarePen, User } from "lucide-react";
 
 export default function AdminSidebar() {
   const pathname = usePathname().split("/")[3];
@@ -18,6 +18,12 @@ export default function AdminSidebar() {
       name: "Users",
       active: pathname === "users",
       path: "/admin/dashboard/users",
+    },
+    {
+      icon: <SquarePen />,
+      name: "Edit Meme",
+      active: pathname === "edit",
+      path: "/admin/dashboard/edit",
     },
   ];
 
