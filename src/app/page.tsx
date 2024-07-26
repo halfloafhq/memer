@@ -1,9 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import MemeCard from "@/components/meme-card";
 import { getMemes, searchMemes} from "./_actions";
 import Memes from "@/components/memes";
-import { Spinner } from "@/components/spinner";
 import LoadMore from "@/components/load-more";
 
 export default async function Page({searchParams}: {searchParams: {search?: string}}) {

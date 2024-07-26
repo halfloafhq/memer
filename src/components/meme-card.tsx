@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -12,9 +12,13 @@ import Meme from "./meme";
 import Image from "next/image";
 import SaveMeme from "./save-meme";
 import { Button } from "./ui/button";
-import { FileDown } from "lucide-react";
+import { Edit, FileDown } from "lucide-react";
 import { useToast } from "./ui/use-toast";
 import { downloadMeme } from "@/utils/download";
+import { useUser } from "@clerk/nextjs";
+import { Spinner } from "./spinner";
+import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 type MemeCardProps = {
   memeId: string;
@@ -29,8 +33,10 @@ export default function MemeCard({
   description,
   memeId,
 }: MemeCardProps) {
+  const { user } = useUser();
   const { toast } = useToast();
   const [loading, setLoading] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   const handleDownload = async () => {
     try {
@@ -61,6 +67,11 @@ export default function MemeCard({
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    setIsAdmin(user?.publicMetadata.role === "admin");
+  }, [user]);
+
   return (
     <Sheet>
       <SheetTrigger className="w-full sm:w-auto">
@@ -68,7 +79,7 @@ export default function MemeCard({
           <Meme src={src} name={name} />
         </div>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="overflow-y-auto">
         <SheetHeader>
           <SheetTitle className="text-xl sm:text-2xl">{name}</SheetTitle>
           <SheetDescription className="text-left text-sm sm:text-base">
@@ -78,7 +89,7 @@ export default function MemeCard({
         <div className="flex flex-col justify-center mt-4 gap-4">
           <Image
             src={src}
-            alt="Asset 1"
+            alt={name}
             width={400}
             height={400}
             objectFit="contain"
@@ -90,8 +101,26 @@ export default function MemeCard({
             {loading ? "Downloading..." : "Download"}
           </Button>
           <SaveMeme src={src} name={name} memeId={memeId} />
+          {isAdmin && (
+            <Button variant="outline">
+              <Link href={`/admin/dashboard/edit?memeId=${memeId}`}>
+                <div className="flex items-center gap-2">
+                <Edit className="mr-2 h-5 w-5" />
+                Edit meme
+                </div>
+              </Link>
+            </Button>
+          )}
         </div>
       </SheetContent>
     </Sheet>
   );
 }
+
+MemeCard.Skeleton = function MemeCardSkeleton() {
+  return (
+    <div className="flex flex-col items-center justify-center">
+      <Skeleton className="h-[250px] w-[250px] rounded-xl" />
+    </div>
+  );
+};
