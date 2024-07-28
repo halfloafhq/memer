@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
+import { utapi } from "@/lib/utapi";
 
 export async function GET(req: NextRequest) {
   try {
@@ -135,4 +136,73 @@ export async function PUT(req: NextRequest) {
   }
 }
 
-export async function DELETE(req: NextRequest) {}
+export async function DELETE(req: NextRequest) {
+  try {
+    const user = await currentUser();
+    if (!user) {
+      return NextResponse.json(
+        {
+          error: "Unauthorized",
+        },
+        {
+          status: 401,
+        },
+      );
+    }
+    if (user.publicMetadata.role !== "admin") {
+      return NextResponse.json(
+        {
+          error: "Unauthorized",
+        },
+        {
+          status: 401,
+        },
+      );
+    }
+    const memeId = req.url.split("/").at(-1);
+    if (!memeId) {
+      return NextResponse.json(
+        { message: "Meme id is required" },
+        { status: 400 },
+      );
+    }
+    const meme = await prisma.meme.findUnique({
+      where: {
+        id: memeId,
+      },
+    });
+
+    if (!meme) {
+      return NextResponse.json({ message: "Meme not found" }, { status: 404 });
+    }
+
+    //Delete file from upload thing
+    await utapi.deleteFiles(meme.url);
+
+    //Delete meme from db
+    const deletedMeme = await prisma.meme.delete({
+      where: {
+        id: memeId,
+      },
+    });
+    return NextResponse.json(
+      {
+        message: "Meme deleted successfully",
+        data: deletedMeme,
+      },
+      {
+        status: 200,
+      },
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "Error deleting meme",
+        error: error,
+      },
+      {
+        status: 500,
+      },
+    );
+  }
+}
