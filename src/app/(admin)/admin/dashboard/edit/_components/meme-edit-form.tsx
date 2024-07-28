@@ -19,9 +19,25 @@ import { useUpload } from "@/hooks/useUpload";
 import { useToast } from "@/components/ui/use-toast";
 
 const predefinedTags = [
-  "Funny", "Relatable", "Wholesome", "Sarcastic", "Ironic", "Nostalgic",
-  "Animals", "Politics", "Movies", "Gaming", "Sports", "Music", "Technology",
-  "Science", "Food", "Fashion", "Art", "Literature", "Dark",
+  "Funny",
+  "Relatable",
+  "Wholesome",
+  "Sarcastic",
+  "Ironic",
+  "Nostalgic",
+  "Animals",
+  "Politics",
+  "Movies",
+  "Gaming",
+  "Sports",
+  "Music",
+  "Technology",
+  "Science",
+  "Food",
+  "Fashion",
+  "Art",
+  "Literature",
+  "Dark",
 ];
 
 export default function MemeEditForm() {
@@ -45,18 +61,19 @@ export default function MemeEditForm() {
     try {
       const response = await fetch(`/api/memes/${memeId}`);
       if (!response.ok) {
-        throw new Error('Failed to fetch meme data');
+        throw new Error("Failed to fetch meme data");
       }
-      const data = await response.json();
+      const { data } = await response.json();
+      console.log(data);
       setMemeName(data.name);
       setMemeDescription(data.description);
       setSelectedTags(data.tags);
-      setFileUrl(data.imageUrl);
-    } catch (error) {
+      setFileUrl(data.url);
+    } catch (error: any) {
       console.error("Error fetching meme data:", error);
       toast({
         title: "Error",
-        description: "Failed to fetch meme data",
+        description: error.message,
         variant: "destructive",
       });
     }
@@ -122,15 +139,19 @@ export default function MemeEditForm() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to update meme');
+        throw new Error("Failed to update meme");
       }
 
-      const updatedMeme = await response.json();
+      const { data: updatedMeme } = await response.json();
       toast({
         title: "Meme updated successfully",
         description: `${updatedMeme.name} has been updated`,
       });
-    } catch (error) {
+      setMemeName(updatedMeme.name);
+      setMemeDescription(updatedMeme.description);
+      setSelectedTags(updatedMeme.tags);
+      setFileUrl(updatedMeme.url);
+    } catch (error: any) {
       console.error("Error updating meme:", error);
       toast({
         title: "Meme update failed",
@@ -156,17 +177,22 @@ export default function MemeEditForm() {
   return (
     <form className="grid gap-4" onSubmit={handleUpdateMeme}>
       <div className="grid gap-2">
-        <Label htmlFor="meme-name">Meme Name</Label>
+        <Label htmlFor="meme-name" className="font-semibold">
+          Meme Name
+        </Label>
         <Input
           id="meme-name"
           type="text"
+          className="text-md"
           placeholder="Rick Astley"
           onChange={(e) => setMemeName(e.target.value)}
           value={memeName}
         />
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="meme-tags">Meme Tags</Label>
+        <Label htmlFor="meme-tags" className="font-semibold">
+          Meme Tags
+        </Label>
         <div className="flex flex-wrap gap-2 mb-2">
           {selectedTags.map((tag) => (
             <div
@@ -211,17 +237,21 @@ export default function MemeEditForm() {
         </div>
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="meme-description">Meme Description</Label>
+        <Label htmlFor="meme-description" className="font-semibold">
+          Meme Description
+        </Label>
         <Textarea
           id="meme-description"
-          className="min-h-[100px]"
+          className="min-h-[100px] text-md"
           placeholder="Describe your meme here"
           onChange={(e) => setMemeDescription(e.target.value)}
           value={memeDescription}
         />
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="meme-image">Meme Image</Label>
+        <Label htmlFor="meme-image" className="font-semibold">
+          Meme Image
+        </Label>
         {fileUrl ? (
           <div className="flex flex-col items-center justify-center relative">
             <Image

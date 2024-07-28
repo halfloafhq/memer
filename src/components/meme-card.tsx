@@ -16,9 +16,8 @@ import { Edit, FileDown } from "lucide-react";
 import { useToast } from "./ui/use-toast";
 import { downloadMeme } from "@/utils/download";
 import { useUser } from "@clerk/nextjs";
-import { Spinner } from "./spinner";
 import { Skeleton } from "@/components/ui/skeleton";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type MemeCardProps = {
   memeId: string;
@@ -34,9 +33,14 @@ export default function MemeCard({
   memeId,
 }: MemeCardProps) {
   const { user } = useUser();
+  const router = useRouter();
   const { toast } = useToast();
   const [loading, setLoading] = useState<boolean>(false);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
+
+  const handleEdit = (memeId: string) => {
+    router.push(`/admin/dashboard/edit?memeId=${memeId}`);
+  };
 
   const handleDownload = async () => {
     try {
@@ -102,13 +106,11 @@ export default function MemeCard({
           </Button>
           <SaveMeme src={src} name={name} memeId={memeId} />
           {isAdmin && (
-            <Button variant="outline">
-              <Link href={`/admin/dashboard/edit?memeId=${memeId}`}>
-                <div className="flex items-center gap-2">
+            <Button variant="outline" onClick={() => handleEdit(memeId)}>
+              <div className="flex items-center gap-2">
                 <Edit className="mr-2 h-5 w-5" />
                 Edit meme
-                </div>
-              </Link>
+              </div>
             </Button>
           )}
         </div>
