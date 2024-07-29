@@ -48,7 +48,7 @@ export default function MemeEditForm() {
   const [memeDescription, setMemeDescription] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [customTag, setCustomTag] = useState<string>("");
-  const { success, fileUrl, setFileUrl, setSuccess } = useUpload();
+  const { success, fileUrl, fileKey, setFileUrl, setSuccess, setFileKey } = useUpload();
   const [loading, setLoading] = useState<boolean>(false);
   const { toast } = useToast();
 
@@ -265,7 +265,7 @@ export default function MemeEditForm() {
             />
           </div>
         ) : (
-          <UploadBtn setFileUrl={setFileUrl} setSuccess={setSuccess} />
+          <UploadBtn setFileUrl={setFileUrl} setSuccess={setSuccess} setFileKey={setFileKey} />
         )}
       </div>
       <Button type="submit" className="mt-4" disabled={loading}>
