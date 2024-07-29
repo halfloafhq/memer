@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { memeName, memeDescription, memeTags, memeImageURL } =
+    const { memeName, memeDescription, memeTags, memeImageURL, memeFileKey } =
       await req.json();
 
     const meme = await prisma.meme.create({
@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
         description: memeDescription,
         tags: memeTags,
         url: memeImageURL,
+        fileKey: memeFileKey,
       },
     });
 

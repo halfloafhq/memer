@@ -177,7 +177,7 @@ export async function DELETE(req: NextRequest) {
     }
 
     //Delete file from upload thing
-    await utapi.deleteFiles(meme.url);
+    await utapi.deleteFiles(meme.fileKey);
 
     //Delete meme from db
     const deletedMeme = await prisma.meme.delete({
@@ -185,6 +185,7 @@ export async function DELETE(req: NextRequest) {
         id: memeId,
       },
     });
+
     return NextResponse.json(
       {
         message: "Meme deleted successfully",

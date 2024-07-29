@@ -42,7 +42,7 @@ const predefinedTags = [
 export default function MemeUploadForm() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [customTag, setCustomTag] = useState<string>("");
-  const { success, fileUrl, setFileUrl, setSuccess } = useUpload();
+  const { success, fileUrl, fileKey, setFileUrl, setSuccess, setFileKey } = useUpload();
   const [memeName, setMemeName] = useState<string>("");
   const [memeDescription, setMemeDescription] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -98,6 +98,7 @@ export default function MemeUploadForm() {
           memeDescription,
           memeTags: selectedTags,
           memeImageURL: fileUrl,
+          memeFileKey: fileKey,
         }),
       });
 
@@ -204,7 +205,7 @@ export default function MemeUploadForm() {
             />
           </div>
         ) : (
-          <UploadBtn setFileUrl={setFileUrl} setSuccess={setSuccess} />
+          <UploadBtn setFileUrl={setFileUrl} setSuccess={setSuccess} setFileKey={setFileKey} />
         )}
       </div>
       <Button type="submit" className="mt-4" disabled={loading}>

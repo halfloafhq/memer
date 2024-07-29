@@ -3,10 +3,15 @@ import { useToast } from "./ui/use-toast";
 
 interface UploadBtnProps {
   setFileUrl: (url: string | null) => void;
+  setFileKey: (key: string | null) => void;
   setSuccess: (success: boolean) => void;
 }
 
-export default function UploadBtn({ setFileUrl, setSuccess }: UploadBtnProps) {
+export default function UploadBtn({
+  setFileUrl,
+  setFileKey,
+  setSuccess,
+}: UploadBtnProps) {
   const { toast } = useToast();
 
   return (
@@ -16,6 +21,7 @@ export default function UploadBtn({ setFileUrl, setSuccess }: UploadBtnProps) {
       onClientUploadComplete={(res) => {
         if (res && res.length > 0) {
           setFileUrl(res[0].url);
+          setFileKey(res[0].key);
           setSuccess(true);
           toast({
             title: "Upload Completed",
@@ -39,4 +45,4 @@ export default function UploadBtn({ setFileUrl, setSuccess }: UploadBtnProps) {
       }}
     />
   );
-};
+}

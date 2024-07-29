@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import { CloudUpload, X, Plus } from "lucide-react";
+import { CloudUpload, X, Plus, Trash } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -17,6 +17,7 @@ import {
 import UploadBtn from "@/components/image-upload-button";
 import { useUpload } from "@/hooks/useUpload";
 import { useToast } from "@/components/ui/use-toast";
+import { DeleteMeme } from "@/components/delete-meme";
 
 const predefinedTags = [
   "Funny",
@@ -271,6 +272,7 @@ export default function MemeEditForm() {
         <CloudUpload className="mr-2" />
         {loading ? "Updating..." : "Update Meme"}
       </Button>
+      <DeleteMeme memeId={memeId} />
     </form>
   );
 }

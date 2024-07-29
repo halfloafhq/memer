@@ -25,6 +25,7 @@ model Meme {
   name  String
   tags  String[]
   url   String
+  fileKey String
   description   String
   collections MemeCollection[]
 }
