@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import { CloudUpload, X, Plus, Trash } from "lucide-react";
+import { CloudUpload, X, Plus } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -48,7 +48,9 @@ export default function MemeEditForm() {
   const [memeDescription, setMemeDescription] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [customTag, setCustomTag] = useState<string>("");
-  const { success, fileUrl, fileKey, setFileUrl, setSuccess, setFileKey } = useUpload();
+  const [removingImage, setRemovingImage] = useState<boolean>(false);
+  const { success, fileUrl, fileKey, setFileUrl, setSuccess, setFileKey } =
+    useUpload();
   const [loading, setLoading] = useState<boolean>(false);
   const { toast } = useToast();
 
@@ -56,7 +58,7 @@ export default function MemeEditForm() {
     if (memeId) {
       fetchMemeData();
     }
-  }, [memeId]);
+  }, [memeId, fetchMemeData]);
 
   async function fetchMemeData() {
     try {
@@ -65,11 +67,11 @@ export default function MemeEditForm() {
         throw new Error("Failed to fetch meme data");
       }
       const { data } = await response.json();
-      console.log(data);
       setMemeName(data.name);
       setMemeDescription(data.description);
       setSelectedTags(data.tags);
       setFileUrl(data.url);
+      setFileKey(data.fileKey);
     } catch (error: any) {
       console.error("Error fetching meme data:", error);
       toast({
@@ -161,6 +163,46 @@ export default function MemeEditForm() {
       });
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function handleRemoveImage() {
+    try {
+      setRemovingImage(true);
+      const res = await fetch("/api/memes/", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          memeFileKey: fileKey,
+        }),
+      });
+
+      if (res.status === 200) {
+        setFileUrl(null);
+        setFileKey(null);
+        setSuccess(false);
+        toast({
+          title: "Image removed",
+          description: "Image removed successfully",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to remove image",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Error",
+        description: "Failed to remove image",
+        variant: "destructive",
+      });
+    } finally {
+      setRemovingImage(false);
     }
   }
 
@@ -263,9 +305,28 @@ export default function MemeEditForm() {
               alt="Meme Preview"
               className="max-w-[720px] h-auto object-contain"
             />
+            <Button
+              variant="destructive"
+              onClick={handleRemoveImage}
+              disabled={removingImage}
+              className="mt-2"
+            >
+              {removingImage ? (
+                "Removing..."
+              ) : (
+                <>
+                  <X className="h-4 w-4 mr-2" />
+                  <span className="font-bold">Remove</span>
+                </>
+              )}
+            </Button>
           </div>
         ) : (
-          <UploadBtn setFileUrl={setFileUrl} setSuccess={setSuccess} setFileKey={setFileKey} />
+          <UploadBtn
+            setFileUrl={setFileUrl}
+            setSuccess={setSuccess}
+            setFileKey={setFileKey}
+          />
         )}
       </div>
       <Button type="submit" className="mt-4" disabled={loading}>

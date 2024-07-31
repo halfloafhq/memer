@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import { CloudUpload, X, Plus } from "lucide-react";
+import { CloudUpload, X, Plus, XIcon } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -42,10 +42,12 @@ const predefinedTags = [
 export default function MemeUploadForm() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [customTag, setCustomTag] = useState<string>("");
-  const { success, fileUrl, fileKey, setFileUrl, setSuccess, setFileKey } = useUpload();
+  const { success, fileUrl, fileKey, setFileUrl, setSuccess, setFileKey } =
+    useUpload();
   const [memeName, setMemeName] = useState<string>("");
   const [memeDescription, setMemeDescription] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [removingImage, setRemovingImage] = useState<boolean>(false);
   const { toast } = useToast();
 
   function handleTagSelection(tag: string) {
@@ -121,6 +123,46 @@ export default function MemeUploadForm() {
         });
       }
       setLoading(false);
+    }
+  }
+
+  async function handleRemoveImage() {
+    try {
+      setRemovingImage(true);
+      const res = await fetch("/api/memes/", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          memeFileKey: fileKey,
+        }),
+      });
+
+      if (res.status === 200) {
+        setFileUrl(null);
+        setFileKey(null);
+        setSuccess(false);
+        toast({
+          title: "Image removed",
+          description: "Image removed successfully",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to remove image",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Error",
+        description: "Failed to remove image",
+        variant: "destructive",
+      });
+    } finally {
+      setRemovingImage(false);
     }
   }
 
@@ -203,9 +245,28 @@ export default function MemeUploadForm() {
               alt="Meme Preview"
               className="max-w-[720px] h-auto object-contain"
             />
+            <Button
+              variant="destructive"
+              onClick={handleRemoveImage}
+              disabled={removingImage}
+              className="mt-2"
+            >
+              {removingImage ? (
+                "Removing..."
+              ) : (
+                <>
+                  <X className="h-4 w-4 mr-2" />
+                  <span className="font-bold">Remove</span>
+                </>
+              )}
+            </Button>
           </div>
         ) : (
-          <UploadBtn setFileUrl={setFileUrl} setSuccess={setSuccess} setFileKey={setFileKey} />
+          <UploadBtn
+            setFileUrl={setFileUrl}
+            setSuccess={setSuccess}
+            setFileKey={setFileKey}
+          />
         )}
       </div>
       <Button type="submit" className="mt-4" disabled={loading}>
