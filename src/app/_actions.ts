@@ -73,3 +73,13 @@ export async function createUser(email: string | null, userId: string) {
     return { success: false, error: "Failed to create user" };
   }
 }
+
+export async function getTotalMemes() {
+  try {
+    const total = await prisma.meme.count();
+    return total;
+  } catch (error) {
+    console.error("Error getting total memes:", error);
+    return 0;
+  }
+}

@@ -24,9 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ClerkProvider>
-        <GoogleOneTap />
-        <body className={inter.className}>
+      <body className={inter.className}>
+        <ClerkProvider>
+          <GoogleOneTap />
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -42,8 +42,8 @@ export default function RootLayout({
               <Toaster />
             </LoadingProvider>
           </ThemeProvider>
-        </body>
-      </ClerkProvider>
+        </ClerkProvider>
+      </body>
     </html>
   );
 }
