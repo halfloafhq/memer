@@ -2,8 +2,9 @@
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import Loader from "@/components/loader";
-import { AppState, BinaryFiles } from "@excalidraw/excalidraw/types/types";
+import { EditorData } from "@/types/collection";
 import { ExcalidrawElement } from "@excalidraw/excalidraw/types/element/types";
+import { AppState, BinaryFiles } from "@excalidraw/excalidraw/types/types";
 
 const Excalidraw = dynamic(
   async () => (await import("@excalidraw/excalidraw")).Excalidraw,
@@ -11,13 +12,6 @@ const Excalidraw = dynamic(
     ssr: false,
   },
 );
-
-interface EditorData {
-  elements: readonly ExcalidrawElement[];
-  appState: AppState;
-  files: BinaryFiles;
-  scrollToContent: boolean;
-}
 
 export default function EditorPage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);

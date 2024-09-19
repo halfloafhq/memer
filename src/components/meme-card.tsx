@@ -18,6 +18,7 @@ import { downloadMeme } from "@/utils/download";
 import { useUser } from "@clerk/nextjs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
+import ImportToEditor from "./import-to-editor";
 
 type MemeCardProps = {
   memeId: string;
@@ -105,6 +106,7 @@ export default function MemeCard({
             {loading ? "Downloading..." : "Download"}
           </Button>
           <SaveMeme src={src} name={name} memeId={memeId} />
+          <ImportToEditor src={src} />
           {isAdmin && (
             <Button variant="outline" onClick={() => handleEdit(memeId)}>
               <div className="flex items-center gap-2">
