@@ -16,6 +16,7 @@ import { useState } from "react";
 import UploadBtn from "@/components/image-upload-button";
 import { useUpload } from "@/hooks/useUpload";
 import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 const predefinedTags = [
   "Funny",
@@ -40,6 +41,7 @@ const predefinedTags = [
 ];
 
 export default function MemeUploadForm() {
+  const router = useRouter();
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [customTag, setCustomTag] = useState<string>("");
   const { success, fileUrl, fileKey, setFileUrl, setSuccess, setFileKey } =
@@ -115,6 +117,7 @@ export default function MemeUploadForm() {
           title: "Meme uploaded successfully",
           description: resp.data.name + " has been uploaded",
         });
+        router.refresh();
       } else {
         toast({
           title: "Meme upload failed",
