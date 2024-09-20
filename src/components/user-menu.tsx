@@ -21,6 +21,7 @@ import {
   DropdownMenuLabel,
 } from "@radix-ui/react-dropdown-menu";
 import { Spinner } from "./spinner";
+import { Button } from "./ui/button";
 
 export default function UserMenu() {
   const { signOut } = useClerk();
@@ -69,9 +70,11 @@ export default function UserMenu() {
 
   if (!signedIn) {
     return (
-      <Link href="/sign-in" className="text-sm text-white">
-        Login
-      </Link>
+      <Button asChild>
+        <Link href="/sign-in" className="text-sm text-white">
+          Login
+        </Link>
+      </Button>
     );
   }
 
