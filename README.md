@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Memer
+### One stop meme workshop
+
+## Overview
+
+This project is a comprehensive meme management platform that allows users to search for memes, edit them, and create personal collections. It also includes an admin dashboard for meme management and user administration.
+
+## Features
+
+- **Meme Search**: Easily find memes from our extensive database.
+- **Meme Editing**: Edit and customize memes to your liking with Excalidraw integrated.
+- **Collection Creation**: Users can create and manage their own meme collections.
+- **Admin Dashboard**:
+  - Upload and edit memes
+  - Manage user accounts and permissions
+- **User Authentication**: Secure user accounts and login system.
+
+## Tech Stack
+
+- **Frontend**:
+  - NextJS 14
+  - TypeScript
+  - TailwindCSS
+  - ShadCN UI
+- **Backend**:
+  - NextJS API Routes + Server Actions
+  - Prisma (ORM)
+- **Authentication**: ClerkJS
+- **File Upload**: UploadThing
+- **Database**: MongoDB
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository
+2. Install dependencies:
+   ```
+   npm install
+   ```
+3. Set up environment variables (for Clerk, UploadThing, and database connection)
+4. Run the development server:
+   ```
+   npm run dev
+   ```
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Contributing
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+For any questions or issues, please open an issue in the GitHub repository.
