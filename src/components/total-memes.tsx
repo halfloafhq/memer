@@ -6,7 +6,11 @@ import { getTotalMemes } from "@/app/_actions";
 import { Spinner } from "./spinner";
 import { useToast } from "./ui/use-toast";
 
-export function TotalMemes() {
+interface TotalMemesProps {
+  render: Date;
+}
+
+export function TotalMemes({ render }: TotalMemesProps) {
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
   const [total, setTotal] = useState(0);
@@ -25,7 +29,7 @@ export function TotalMemes() {
         variant: "destructive",
       });
     }
-  }, []);
+  }, [render]);
   return (
     <Card className="w-full max-w-sm mx-auto mt-8">
       <CardContent className="flex items-center justify-between p-6">

@@ -40,8 +40,11 @@ const predefinedTags = [
   "Dark",
 ];
 
-export default function MemeUploadForm() {
-  const router = useRouter();
+interface MemeUploadFormProps {
+  setRender: (date: Date) => void;
+}
+
+export default function MemeUploadForm({ setRender }: MemeUploadFormProps) {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [customTag, setCustomTag] = useState<string>("");
   const { success, fileUrl, fileKey, setFileUrl, setSuccess, setFileKey } =
@@ -117,7 +120,7 @@ export default function MemeUploadForm() {
           title: "Meme uploaded successfully",
           description: resp.data.name + " has been uploaded",
         });
-        router.refresh();
+        setRender(new Date());
       } else {
         toast({
           title: "Meme upload failed",
