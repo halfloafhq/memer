@@ -1,7 +1,6 @@
 "use server";
 import prisma from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
-import { revalidatePath } from "next/cache";
 
 export async function removeMemeFromCollectionAction({
   collectionId,

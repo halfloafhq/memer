@@ -1,14 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useLoadingCtx } from "@/context/LoadingContext";
 import Loader from "@/components/loader";
 import Link from "next/link";
-import { useToast } from "@/components/ui/use-toast";
-import { ChevronLeft } from "lucide-react";
-import { CollectionWithMemes } from "@/types/collection";
+import { ChevronLeft, Edit } from "lucide-react";
 import Image from "next/image";
 import MoreInfo from "./_components/more-info";
 import { useDashboardCtx } from "@/context/DashboardContext";
+import { DeleteCollection } from "./_components/delete-collection";
 
 export default function CollectionPage({ params }: { params: { id: string } }) {
   const { loading, setLoading } = useLoadingCtx();
@@ -41,9 +40,13 @@ export default function CollectionPage({ params }: { params: { id: string } }) {
       ) : (
         <>
           <div className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-              {collectionWithMemes.name}
-            </h1>
+            <div className="flex items-center justify-between gap-4">
+              <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
+                {collectionWithMemes.name}
+              </h1>
+              <Edit />
+              <DeleteCollection collectionId={collectionWithMemes.id} />
+            </div>
             <Link
               href="/dashboard/collections"
               className="flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-200 dark:text-white"

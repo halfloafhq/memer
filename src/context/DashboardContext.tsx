@@ -15,7 +15,7 @@ import { CollectionWithMemes } from "@/types/collection";
 
 type DashboardContextType = {
   collections: Collection[];
-  refreshCollections: () => void;
+  refreshCollections: () => Promise<void>;
   collectionWithMemes: CollectionWithMemes | undefined;
   getCollectionById: (id: string) => void;
   refreshCollectionWithMemes: () => void;

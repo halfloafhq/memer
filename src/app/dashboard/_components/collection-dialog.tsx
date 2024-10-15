@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { FolderPlusIcon } from "lucide-react";
+import { FolderPlusIcon, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -52,7 +52,7 @@ export default function CollectionDialog() {
         }),
       });
       if (req.status === 201) {
-        refreshCollections();
+        await refreshCollections();
         return toast({
           title: "Created collection!",
           description: `${values.name} was created successfully.`,
@@ -107,7 +107,13 @@ export default function CollectionDialog() {
             />
             <DialogFooter className="mt-6">
               <Button type="submit" disabled={loading}>
-                {!loading ? "Create" : "Creating..."}
+                {!loading ? (
+                  "Create"
+                ) : (
+                  <span className="flex items-center">
+                    <Loader2 className="mr-2 animate-spin" /> Creating
+                  </span>
+                )}
               </Button>
             </DialogFooter>
           </form>
