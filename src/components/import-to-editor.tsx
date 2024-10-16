@@ -32,6 +32,7 @@ export default function ImportToEditor({ src }: ImportToEditorProps) {
     }
 
     if (!initialData) {
+      console.log("NO INITIAL DATA, THROWING ERROR")
       toast({
         title: "Import Failed",
         description: "There was an error importing the meme. Please try again.",
