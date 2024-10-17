@@ -98,9 +98,6 @@ export async function POST(
         id: params.id,
         madeById: user.id,
       },
-      include: {
-        memes: true,
-      },
     });
 
     if (!collection) {
@@ -111,6 +108,7 @@ export async function POST(
     }
 
     const { collectionId, memeId } = await req.json();
+
     if (!collectionId || !memeId) {
       return NextResponse.json(
         { message: "No collection id or meme id" },
@@ -143,9 +141,68 @@ export async function POST(
 
     return NextResponse.json(
       { message: "Saved meme to collection successfully" },
-      { status: 200 },
+      { status: 201 },
     );
   } catch (err: any) {
+    console.error(err);
+    return NextResponse.json(
+      { message: "Internal Server error" },
+      { status: 500 },
+    );
+  }
+}
+
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  try {
+    const user = await currentUser();
+    if (!user) {
+      return NextResponse.json(
+        { message: "User not authenticated" },
+        { status: 401 },
+      );
+    }
+
+    if (!params.id) {
+      return NextResponse.json(
+        { message: "No collection id" },
+        { status: 400 },
+      );
+    }
+
+    const collection = await prisma.collection.findUnique({
+      where: {
+        id: params.id,
+        madeById: user.id,
+      },
+    });
+
+    if (!collection) {
+      return NextResponse.json(
+        { message: "Collection not found" },
+        { status: 404 },
+      );
+    }
+
+    const { collectionName } = await req.json();
+
+    await prisma.collection.update({
+      where: {
+        id: params.id,
+        madeById: user.id,
+      },
+      data: {
+        name: collectionName,
+      },
+    });
+
+    return NextResponse.json(
+      { message: "Edited collection successfully" },
+      { status: 200 },
+    );
+  } catch (err) {
     console.error(err);
     return NextResponse.json(
       { message: "Internal Server error" },

@@ -3,18 +3,23 @@ import React, { useEffect } from "react";
 import { useLoadingCtx } from "@/context/LoadingContext";
 import Loader from "@/components/loader";
 import Link from "next/link";
-import { ChevronLeft, Edit } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import MoreInfo from "./_components/more-info";
 import { useDashboardCtx } from "@/context/DashboardContext";
 import { DeleteCollection } from "./_components/delete-collection";
+import { EditCollection } from "./_components/edit-collection";
 
 export default function CollectionPage({ params }: { params: { id: string } }) {
-  const { loading, setLoading } = useLoadingCtx();
+  const { loading } = useLoadingCtx();
   const { collectionWithMemes, getCollectionById } = useDashboardCtx();
 
   useEffect(() => {
-    getCollectionById(params.id);
+    async function getCollection() {
+      await getCollectionById(params.id);
+    }
+
+    getCollection();
   }, []);
 
   return (
@@ -44,7 +49,10 @@ export default function CollectionPage({ params }: { params: { id: string } }) {
               <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
                 {collectionWithMemes.name}
               </h1>
-              <Edit />
+              <EditCollection
+                collectionId={collectionWithMemes.id}
+                name={collectionWithMemes.name}
+              />
               <DeleteCollection collectionId={collectionWithMemes.id} />
             </div>
             <Link

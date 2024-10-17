@@ -17,8 +17,8 @@ type DashboardContextType = {
   collections: Collection[];
   refreshCollections: () => Promise<void>;
   collectionWithMemes: CollectionWithMemes | undefined;
-  getCollectionById: (id: string) => void;
-  refreshCollectionWithMemes: () => void;
+  getCollectionById: (id: string) => Promise<void>;
+  refreshCollectionWithMemes: () => Promise<void>;
 };
 
 const DashboardContext = createContext<DashboardContextType | undefined>(
