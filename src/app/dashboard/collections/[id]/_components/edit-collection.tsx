@@ -56,7 +56,6 @@ export function EditCollection({ name, collectionId }: EditCollectionProps) {
           collectionName: values.name,
         }),
       });
-      console.log(req.status)
       if (req.status === 200) {
         await refreshCollectionWithMemes();
         return toast({
