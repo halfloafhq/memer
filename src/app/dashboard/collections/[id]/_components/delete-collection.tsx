@@ -37,8 +37,8 @@ export function DeleteCollection({ collectionId }: DeleteCollectionProps) {
       });
       if (res.ok) {
         toast({
-          title: "Meme deleted",
-          description: "The meme has been deleted",
+          title: "Collection deleted!",
+          description: "Collection was successfully deleted",
         });
         await refreshCollections();
         router.push("/dashboard/collections");

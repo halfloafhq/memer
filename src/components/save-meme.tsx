@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { FolderOpen } from "lucide-react";
+import { FolderOpen, Loader2 } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
 import { Collection } from "@prisma/client";
 import { getCollections } from "@/app/_actions";
@@ -172,7 +172,7 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
               className={`p-2 cursor-pointer dark:hover:bg-primary hover:bg-gray-100 rounded ${
                 selectedCollection?.id === collection.id
                   ? "bg-primary text-white hover:bg-primary/80 hover:text-white"
-                 : ""
+                  : ""
               }`}
               onClick={() => {
                 if (selectedCollection?.id !== collection.id) {
@@ -188,7 +188,14 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
         </ScrollArea>
         <DialogFooter>
           <Button onClick={handleSaveMeme} disabled={loading}>
-            {loading ? "Saving..." : "Save meme"}
+            {loading ? (
+              <span className="flex items-center justify-center">
+                <Loader2 className="mr-2 animate-spin" />
+                Saving
+              </span>
+            ) : (
+              "Save meme"
+            )}
           </Button>
         </DialogFooter>
       </>
@@ -198,7 +205,10 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="bg-gray-600 hover:bg-gray-800 text-white focus:bg-gray-900">
+        <Button
+          variant="secondary"
+          className="bg-gray-600 hover:bg-gray-800 text-white focus:bg-gray-900"
+        >
           <FolderOpen className="mr-2" /> Save to Collection
         </Button>
       </DialogTrigger>
