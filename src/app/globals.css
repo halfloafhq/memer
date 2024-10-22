@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -65,7 +64,8 @@
 
 .loader path {
   stroke-width: 0.6px;
-  animation: dashArray 4s ease-in-out infinite,
+  animation:
+    dashArray 4s ease-in-out infinite,
     dashOffset 4s linear infinite;
 }
 
@@ -77,10 +77,10 @@
 .loader-dark path {
   stroke: #fff;
   stroke-width: 0.6px;
-  animation: dashArray 4s ease-in-out infinite,
+  animation:
+    dashArray 4s ease-in-out infinite,
     dashOffset 4s linear infinite;
 }
-
 
 @keyframes dashArray {
   0% {

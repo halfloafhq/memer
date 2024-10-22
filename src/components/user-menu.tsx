@@ -79,7 +79,7 @@ export default function UserMenu() {
   }
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <User className="h-9 w-9 cursor-pointer" />
       </DropdownMenuTrigger>
