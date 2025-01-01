@@ -6,6 +6,7 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "build": "prisma generate && next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint"
   },
@@ -30,6 +31,7 @@
     "lucide-react": "^0.378.0",
     "nanoid": "^5.0.7",
     "next": "14.2.3",
+    "next-sitemap": "^4.2.3",
     "next-themes": "^0.3.0",
     "nextjs-toploader": "^3.6.15",
     "react": "^18.3.1",
