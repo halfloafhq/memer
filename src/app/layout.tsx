@@ -23,13 +23,7 @@ export const metadata: Metadata = {
     url: "https://memer.shobhitnagpal.com",
     locale: "en_US",
     type: "website",
-    images: [
-      {
-        url: "/memer-seo.png",
-        width: 1915,
-        height: 935,
-      },
-    ],
+    images: "/memer-seo.png",
   },
   robots: {
     index: true,
