@@ -16,6 +16,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Memer",
   description: "Your one-stop meme workshop: Search, collect, create.",
+  metadataBase: new URL("https://memer.shobhitnagpal.com"),
   openGraph: {
     title: "Memer by Shobhit",
     description: "Your one-stop meme workshop: Search, collect, create.",
