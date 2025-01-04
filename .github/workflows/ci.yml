@@ -24,5 +24,8 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Setup API keys
+        run: echo "UPLOADTHING_SECRET=${{ secrets.UPLOADTHING_SECRET }}" >> $GITHUB_ENV
+
       - name: Build
         run: npm run build
