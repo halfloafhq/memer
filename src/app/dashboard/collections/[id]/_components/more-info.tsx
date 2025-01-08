@@ -13,11 +13,9 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
 import { downloadMeme } from "@/utils/download";
 import { removeMemeFromCollectionAction } from "../_actions";
-import { useDashboardCtx } from "@/context/DashboardContext";
 
 interface MoreInfoProps {
   src: string;
@@ -26,6 +24,7 @@ interface MoreInfoProps {
   collectionId: string;
   memeCollectionId: string;
   className?: string;
+  onDeleteSuccess: (id: string) => Promise<void>;
 }
 
 export default function MoreInfo({
@@ -34,9 +33,9 @@ export default function MoreInfo({
   description,
   collectionId,
   memeCollectionId,
-  className,
+  className = "",
+  onDeleteSuccess,
 }: MoreInfoProps) {
-  const { refreshCollectionWithMemes } = useDashboardCtx();
   const { toast } = useToast();
   const handleDownload = async () => {
     try {
@@ -79,7 +78,7 @@ export default function MoreInfo({
           variant: "destructive",
         });
       } else {
-        refreshCollectionWithMemes();
+        onDeleteSuccess(collectionId);
         return toast({
           title: "Removed!",
           description: `${name} has been removed successfully!`,
@@ -96,7 +95,7 @@ export default function MoreInfo({
   };
 
   return (
-    <div className={cn("", className)}>
+    <div className={className}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <MoreHorizontal className="h-5 w-5 cursor-pointer" />
@@ -129,7 +128,7 @@ export default function MoreInfo({
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuPortal>
-            </DropdownMenuSub>{" "}
+            </DropdownMenuSub>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer" onClick={handleRemove}>
               <Trash2 className="mr-2 h-4 w-4 text-red-500" />

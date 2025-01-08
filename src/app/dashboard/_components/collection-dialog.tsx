@@ -21,8 +21,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
-import { useEffect, useState } from "react";
-import { useDashboardCtx } from "@/context/DashboardContext";
+import { useState } from "react";
+import { usePostCollection } from "@/hooks/collections/usePostCollection";
 
 const collectionFormSchema = z.object({
   name: z.string().min(3, {
@@ -30,11 +30,16 @@ const collectionFormSchema = z.object({
   }),
 });
 
-export default function CollectionDialog() {
+interface CollectionDialogProps {
+  onSuccess: () => Promise<void>;
+}
+
+export default function CollectionDialog({ onSuccess }: CollectionDialogProps) {
   const { toast } = useToast();
-  const { refreshCollections } = useDashboardCtx();
-  const [loading, setLoading] = useState<boolean>(false);
+  const { postCollection, loading } = usePostCollection();
+
   const [open, setOpen] = useState<boolean>(false);
+
   const collectionForm = useForm<z.infer<typeof collectionFormSchema>>({
     resolver: zodResolver(collectionFormSchema),
     defaultValues: {
@@ -43,21 +48,9 @@ export default function CollectionDialog() {
   });
 
   async function onSubmit(values: z.infer<typeof collectionFormSchema>) {
-    setLoading(true);
     try {
-      const req = await fetch("/api/collection", {
-        method: "POST",
-        body: JSON.stringify({
-          collectionName: values.name,
-        }),
-      });
-      if (req.status === 201) {
-        await refreshCollections();
-        return toast({
-          title: "Created collection!",
-          description: `${values.name} was created successfully.`,
-        });
-      }
+      await postCollection(values.name);
+      await onSuccess();
     } catch (err: any) {
       console.error(err);
       return toast({
@@ -67,7 +60,6 @@ export default function CollectionDialog() {
       });
     } finally {
       setOpen(false);
-      setLoading(false);
       collectionForm.reset();
     }
   }

@@ -4,7 +4,6 @@ import { Inter } from "next/font/google";
 import { ClerkProvider, GoogleOneTap } from "@clerk/nextjs";
 import "./globals.css";
 import Navbar from "@/components/navbar";
-import { LoadingProvider } from "@/context/LoadingContext";
 import { ThemeProvider } from "@/components/theme-provider";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
@@ -57,15 +56,11 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <LoadingProvider>
-              <NextSSRPlugin
-                routerConfig={extractRouterConfig(ourFileRouter)}
-              />
-              <Navbar />
-              <NextTopLoader />
-              <main className="flex-1 pt-16">{children}</main>
-              <Toaster />
-            </LoadingProvider>
+            <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+            <Navbar />
+            <NextTopLoader />
+            <main className="flex-1 pt-16">{children}</main>
+            <Toaster />
           </ThemeProvider>
         </ClerkProvider>
       </body>

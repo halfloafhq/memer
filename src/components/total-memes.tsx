@@ -29,7 +29,8 @@ export function TotalMemes({ render }: TotalMemesProps) {
         variant: "destructive",
       });
     }
-  }, [render]);
+  }, [toast, render]);
+
   return (
     <Card className="w-full max-w-sm mx-auto mt-8">
       <CardContent className="flex items-center justify-between p-6">

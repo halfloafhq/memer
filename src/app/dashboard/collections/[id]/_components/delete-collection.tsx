@@ -10,9 +10,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { useDashboardCtx } from "@/context/DashboardContext";
+import { useDeleteCollection } from "@/hooks/collections/useDeleteCollection";
+import { useFetchCollections } from "@/hooks/collections/useFetchCollections";
 import { Loader2, Trash } from "lucide-react";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 interface DeleteCollectionProps {
@@ -21,28 +21,14 @@ interface DeleteCollectionProps {
 
 export function DeleteCollection({ collectionId }: DeleteCollectionProps) {
   const [open, setOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const { loading, deleteCollection } = useDeleteCollection();
+  const { refetch } = useFetchCollections();
   const { toast } = useToast();
-  const { refreshCollections } = useDashboardCtx();
-  const router = useRouter();
 
   async function handleDeleteCollection() {
     try {
-      setLoading(true);
-      const res = await fetch("/api/collection", {
-        method: "DELETE",
-        body: JSON.stringify({
-          collectionId,
-        }),
-      });
-      if (res.ok) {
-        toast({
-          title: "Collection deleted!",
-          description: "Collection was successfully deleted",
-        });
-        await refreshCollections();
-        router.push("/dashboard/collections");
-      }
+      await deleteCollection(collectionId);
+      await refetch();
     } catch (error: any) {
       toast({
         title: "Error",
@@ -51,7 +37,6 @@ export function DeleteCollection({ collectionId }: DeleteCollectionProps) {
       });
     } finally {
       setOpen(false);
-      setLoading(false);
     }
   }
 

@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Edit, FolderPlusIcon, Loader2 } from "lucide-react";
+import { Edit, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,13 +20,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
-import { useEffect, useState } from "react";
-import { useDashboardCtx } from "@/context/DashboardContext";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useUpdateCollection } from "@/hooks/collections/useUpdateCollection";
 
 interface EditCollectionProps {
   collectionId: string;
   name: string;
+  onSuccess: (id: string) => Promise<void>;
 }
 
 const collectionFormSchema = z.object({
@@ -35,10 +36,9 @@ const collectionFormSchema = z.object({
   }),
 });
 
-export function EditCollection({ name, collectionId }: EditCollectionProps) {
+export function EditCollection({ name, collectionId, onSuccess }: EditCollectionProps) {
   const { toast } = useToast();
-  const { refreshCollectionWithMemes } = useDashboardCtx();
-  const [loading, setLoading] = useState<boolean>(false);
+  const { updateCollection, loading } = useUpdateCollection();
   const [open, setOpen] = useState<boolean>(false);
   const collectionForm = useForm<z.infer<typeof collectionFormSchema>>({
     resolver: zodResolver(collectionFormSchema),
@@ -48,21 +48,10 @@ export function EditCollection({ name, collectionId }: EditCollectionProps) {
   });
 
   async function onSubmit(values: z.infer<typeof collectionFormSchema>) {
-    setLoading(true);
     try {
-      const req = await fetch(`/api/collection/${collectionId}`, {
-        method: "PATCH",
-        body: JSON.stringify({
-          collectionName: values.name,
-        }),
-      });
-      if (req.status === 200) {
-        await refreshCollectionWithMemes();
-        return toast({
-          title: "Edit collection!",
-          description: `${name} was renamed to ${values.name} successfully.`,
-        });
-      }
+      await updateCollection(collectionId, { collectionName: values.name });
+      setOpen(false);
+      await onSuccess(collectionId);
     } catch (err: any) {
       console.error(err);
       return toast({
@@ -71,8 +60,6 @@ export function EditCollection({ name, collectionId }: EditCollectionProps) {
         variant: "destructive",
       });
     } finally {
-      setOpen(false);
-      setLoading(false);
       collectionForm.reset();
     }
   }
