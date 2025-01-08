@@ -32,7 +32,7 @@ export function useUpdateCollection() {
         setLoading(false);
       }
     },
-    [],
+    [toast],
   );
 
   return {

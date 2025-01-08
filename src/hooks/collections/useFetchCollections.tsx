@@ -26,7 +26,7 @@ export function useFetchCollections() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [toast]);
 
   useEffect(() => {
     fetchCollections();

@@ -30,7 +30,7 @@ export function useFetchCollectionWithMemes() {
         setLoading(false);
       }
     },
-    [collectionWithMemes, toast],
+    [toast],
   );
 
   return {

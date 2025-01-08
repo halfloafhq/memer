@@ -35,7 +35,7 @@ export function useFetchCollection(id: string) {
 
   useEffect(() => {
     getCollectionById(id);
-  }, [getCollectionById]);
+  }, [id, getCollectionById]);
 
   return { collectionWithMemes, loading, refetch: getCollectionById };
 }

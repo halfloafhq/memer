@@ -35,7 +35,7 @@ export function useDeleteCollection() {
         });
       }
     },
-    [toast],
+    [router, toast],
   );
 
   return {

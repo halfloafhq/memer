@@ -31,7 +31,7 @@ export function usePostCollection() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [toast]);
 
   return {
     postCollection,
