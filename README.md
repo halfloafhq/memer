@@ -43,6 +43,20 @@ This project is a comprehensive meme management platform that allows users to se
    ```
 5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
+### Setting up with Docker
+
+You can develop with Docker as well with the following commands:
+
+1. Build image
+    ```
+    docker build -t memer .
+    ```
+2. Run the image
+    ```
+    docker run -p 3000:3000 memer
+    ```
+3. Open [http://localhost:3000](http://localhost:3000) in your browser
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
