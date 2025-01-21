@@ -8,7 +8,9 @@
     "build": "prisma generate && next build",
     "postbuild": "next-sitemap",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:generate": "npx prisma generate",
+    "db:studio": "npx prisma studio"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.1.3",
