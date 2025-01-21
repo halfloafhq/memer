@@ -1,10 +1,10 @@
 "use client";
-import CollectionDialog from "../_components/collection-dialog";
 import Loader from "@/components/loader";
 import { useRouter } from "next/navigation";
 import { useFetchCollections } from "@/hooks/collections/useFetchCollections";
 import { EmptyCollections } from "../_components/empty-collections";
 import { CollectionCard } from "../_components/collection-card";
+import CollectionDialog from "@/components/collection-dialog";
 
 export default function CollectionsPage() {
   const { collections, loading, refetch } = useFetchCollections();

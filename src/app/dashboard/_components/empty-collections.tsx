@@ -1,5 +1,5 @@
+import CollectionDialog from "@/components/collection-dialog";
 import React from "react";
-import CollectionDialog from "./collection-dialog";
 
 interface EmptyCollectionProps {
   onCreateSuccess: () => Promise<void>;
