@@ -1,3 +1,5 @@
+![Test status](https://github.com/halfloafhq/memer/actions/workflows/ci.yml/badge.svg)
+
 # Memer
 ### One stop meme workshop
 
