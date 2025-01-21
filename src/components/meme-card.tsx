@@ -19,6 +19,7 @@ import { useUser } from "@clerk/nextjs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
 import ImportToEditor from "./import-to-editor";
+import CollectionDialog from "./collection-dialog";
 
 type MemeCardProps = {
   memeId: string;

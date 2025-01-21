@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { FolderOpen, Loader2 } from "lucide-react";
+import { Folder, FolderOpen, Loader2 } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
 import { Collection } from "@prisma/client";
 import { useRouter } from "next/navigation";
@@ -29,7 +29,11 @@ interface MemeProps {
 
 export default function SaveMeme({ src, name, memeId }: MemeProps) {
   const { isLoaded, isSignedIn } = useUser();
-  const { collections, refetch } = useFetchCollections();
+  const {
+    collections,
+    refetch,
+    loading: fetchCollectionsLoading,
+  } = useFetchCollections();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedCollection, setSelectedCollection] =
     useState<Collection | null>(null);
@@ -100,7 +104,7 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
   }
 
   const renderDialogContent = () => {
-    if (!isLoaded) {
+    if (!isLoaded || fetchCollectionsLoading) {
       return <div>Loading...</div>;
     }
 
@@ -167,6 +171,7 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
           ))}
         </ScrollArea>
         <DialogFooter>
+          <CollectionDialog onSuccess={refetch} text="Add" />
           <Button onClick={handleSaveMeme} disabled={loading}>
             {loading ? (
               <span className="flex items-center justify-center">
@@ -174,7 +179,10 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
                 Saving
               </span>
             ) : (
-              "Save meme"
+              <span className="flex items-center justify-center">
+                <Folder className="mr-2 h-5 w-5" />
+                Save meme
+              </span>
             )}
           </Button>
         </DialogFooter>

@@ -31,10 +31,14 @@ const collectionFormSchema = z.object({
 });
 
 interface CollectionDialogProps {
+  text?: string;
   onSuccess: () => Promise<void>;
 }
 
-export default function CollectionDialog({ onSuccess }: CollectionDialogProps) {
+export default function CollectionDialog({
+  text = "Add collection",
+  onSuccess,
+}: CollectionDialogProps) {
   const { toast } = useToast();
   const { postCollection, loading } = usePostCollection();
 
@@ -69,7 +73,7 @@ export default function CollectionDialog({ onSuccess }: CollectionDialogProps) {
       <DialogTrigger asChild>
         <Button variant="default">
           <FolderPlusIcon className="h-5 w-5 mr-2" />
-          Add collection
+          {text}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
