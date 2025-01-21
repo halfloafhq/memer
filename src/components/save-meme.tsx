@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "./ui/use-toast";
 import CollectionDialog from "./collection-dialog";
 import { useFetchCollections } from "@/hooks/collections/useFetchCollections";
+import { usePostMemeToCollection } from "@/hooks/memes/usePostMemeToCollection";
 
 interface MemeProps {
   memeId: string;
@@ -34,11 +35,12 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
     refetch,
     loading: fetchCollectionsLoading,
   } = useFetchCollections();
+  const { postMemeToCollection, loading: postMemeLoading } =
+    usePostMemeToCollection();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedCollection, setSelectedCollection] =
     useState<Collection | null>(null);
   const [open, setOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
   const { toast } = useToast();
 
@@ -56,44 +58,13 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
 
   async function handleSaveMeme() {
     if (selectedCollection) {
-      try {
-        setLoading(true);
-        const req = await fetch(`/api/collection/${selectedCollection.id}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            collectionId: selectedCollection.id,
-            memeId: memeId,
-          }),
-        });
-        if (!req.ok) {
-          const res = await req.json();
-          return toast({
-            title: "Save Failed",
-            description:
-              res.message ||
-              "There was an error saving the meme to the collection. Please try again.",
-            variant: "destructive",
-          });
-        }
-        toast({
-          title: "Saved!",
-          description: `${name} has been saved to ${selectedCollection.name}.`,
-        });
-        setOpen(false);
-      } catch (error) {
-        console.error("Save failed:", error);
-        return toast({
-          title: "Save Failed",
-          description:
-            "There was an error saving the meme to the collection. Please try again.",
-          variant: "destructive",
-        });
-      } finally {
-        setLoading(false);
-      }
+      await postMemeToCollection(
+        memeId,
+        selectedCollection.id,
+        name,
+        selectedCollection.name,
+      );
+      setOpen(false);
     } else {
       return toast({
         title: "Please select a collection",
@@ -172,8 +143,8 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
         </ScrollArea>
         <DialogFooter>
           <CollectionDialog onSuccess={refetch} text="Add" />
-          <Button onClick={handleSaveMeme} disabled={loading}>
-            {loading ? (
+          <Button onClick={handleSaveMeme} disabled={postMemeLoading}>
+            {postMemeLoading ? (
               <span className="flex items-center justify-center">
                 <Loader2 className="mr-2 animate-spin" />
                 Saving
