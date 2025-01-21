@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,9 +16,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { FolderOpen, Loader2 } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
 import { Collection } from "@prisma/client";
-import { getCollections } from "@/app/_actions";
 import { useRouter } from "next/navigation";
 import { useToast } from "./ui/use-toast";
+import CollectionDialog from "./collection-dialog";
+import { useFetchCollections } from "@/hooks/collections/useFetchCollections";
 
 interface MemeProps {
   memeId: string;
@@ -27,8 +28,8 @@ interface MemeProps {
 }
 
 export default function SaveMeme({ src, name, memeId }: MemeProps) {
-  const { user, isLoaded, isSignedIn } = useUser();
-  const [collections, setCollections] = useState<Collection[]>([]);
+  const { isLoaded, isSignedIn } = useUser();
+  const { collections, refetch } = useFetchCollections();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedCollection, setSelectedCollection] =
     useState<Collection | null>(null);
@@ -48,10 +49,6 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
     }
     setOpen(open);
   };
-
-  async function handleCreateCollection() {
-    console.log("handleCreateCollection");
-  }
 
   async function handleSaveMeme() {
     if (selectedCollection) {
@@ -102,18 +99,6 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
     }
   }
 
-  useEffect(() => {
-    const loadCollections = async () => {
-      if (user) {
-        const fetchedCollections = await getCollections(user.id);
-        setCollections(fetchedCollections);
-      }
-    };
-    if (isLoaded && isSignedIn) {
-      loadCollections();
-    }
-  }, [user, isLoaded, isSignedIn]);
-
   const renderDialogContent = () => {
     if (!isLoaded) {
       return <div>Loading...</div>;
@@ -138,15 +123,10 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
     if (collections.length === 0) {
       return (
         <div className="text-center">
-          <p>You have no collections. Create a collection to save memes.</p>
-          <Button
-            onClick={() => {
-              /* Add your create collection logic here */
-            }}
-            className="mt-4"
-          >
-            Create Collection
-          </Button>
+          <p className="mb-4">
+            You have no collections. Create a collection to save memes.
+          </p>
+          <CollectionDialog onSuccess={refetch} />
         </div>
       );
     }
