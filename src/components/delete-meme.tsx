@@ -14,40 +14,31 @@ import { Loader, Trash } from "lucide-react";
 import { useToast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useDeleteMeme } from "@/hooks/memes/useDeleteMeme";
 
 interface DeleteMemeProps {
   memeId: string;
 }
 
 export function DeleteMeme({ memeId }: DeleteMemeProps) {
-  const [open, setOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
   const { toast } = useToast();
+  const { deleteMeme, loading } = useDeleteMeme();
   const router = useRouter();
+
+  const [open, setOpen] = useState<boolean>(false);
 
   async function handleDeleteMeme() {
     try {
       setOpen(true);
-      setLoading(true);
-      const res = await fetch(`/api/memes/${memeId}`, {
-        method: "DELETE",
-      });
-      if (res.ok) {
-        toast({
-          title: "Meme deleted",
-          description: "The meme has been deleted",
-        });
-        setOpen(false);
-        router.push("/");
-      }
+      await deleteMeme(memeId);
+      setOpen(false);
+      router.push("/");
     } catch (error: any) {
       toast({
         title: "Error",
         description: error.message,
         variant: "destructive",
       });
-    } finally {
-      setLoading(false);
     }
   }
 
