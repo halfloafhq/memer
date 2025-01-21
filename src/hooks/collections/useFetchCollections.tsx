@@ -12,7 +12,7 @@ export function useFetchCollections() {
   const fetchCollections = useCallback(async () => {
     setLoading(true);
     try {
-      const req = await fetch("/api/collection/all");
+      const req = await fetch("/api/collections");
       const res = await req.json();
       if (req.status === 200) {
         setCollections(res.data);

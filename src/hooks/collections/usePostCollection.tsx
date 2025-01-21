@@ -10,7 +10,7 @@ export function usePostCollection() {
   const postCollection = useCallback(async (name: string) => {
     setLoading(true);
     try {
-      const req = await fetch("/api/collection/", {
+      const req = await fetch("/api/collections", {
         method: "POST",
         body: JSON.stringify({
           collectionName: name,
