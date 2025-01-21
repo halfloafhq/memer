@@ -15,7 +15,7 @@ export function useFetchCollectionWithMemes() {
     async (collectionId: string) => {
       try {
         setLoading(true);
-        const req = await fetch(`/api/collection/${collectionId}`);
+        const req = await fetch(`/api/collections/${collectionId}`);
         const res = await req.json();
         if (req.status === 200) {
           setCollectionWithMemes(res.data);

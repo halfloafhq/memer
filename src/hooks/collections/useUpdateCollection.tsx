@@ -11,7 +11,7 @@ export function useUpdateCollection() {
     async (collectionId: string, payload: { collectionName: string }) => {
       setLoading(true);
       try {
-        const req = await fetch(`/api/collection/${collectionId}`, {
+        const req = await fetch(`/api/collections/${collectionId}`, {
           method: "PATCH",
           body: JSON.stringify(payload),
         });

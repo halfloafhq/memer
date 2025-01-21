@@ -12,7 +12,7 @@ export function useDeleteCollection() {
     async (id: string) => {
       try {
         setLoading(true);
-        const res = await fetch("/api/collection", {
+        const res = await fetch("/api/collections", {
           method: "DELETE",
           body: JSON.stringify({
             collectionId: id,
