@@ -14,7 +14,7 @@ export function usePostMemeToCollection() {
     ) => {
       try {
         setLoading(true);
-        const req = await fetch(`/api/collection/${collectionId}`, {
+        const req = await fetch(`/api/collections/${collectionId}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
