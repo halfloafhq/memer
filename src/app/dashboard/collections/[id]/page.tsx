@@ -1,10 +1,11 @@
 'use client';
 import React from 'react';
-import Loader from '@/components/loader';
+import Loader from '@/components/loaders/loader';
 import { useFetchCollection } from '@/hooks/collections/useFetchCollection';
-import { CollectionNotFound } from './_components/collection-not-found';
-import { CollectionMemeCard } from './_components/collection-meme-card';
-import { CollectionHeader } from './_components/collection-header';
+import { CollectionHeader } from '@/components/collections/collection-header';
+import { CollectionNotFound } from '@/components/collections/collection-not-found';
+import { CollectionMemeCard } from '@/components/collections/collection-meme-card';
+import { removeMemeFromCollectionAction } from './_actions';
 
 export default function CollectionPage({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -48,6 +49,7 @@ export default function CollectionPage({ params }: { params: { id: string } }) {
                   collectionId={memeCollection.collectionId}
                   memeCollectionId={memeCollection.id}
                   onDeleteSuccess={refetch}
+                  onRemoveMemeFromCollection={removeMemeFromCollectionAction}
                 />
               ))}
             </div>

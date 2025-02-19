@@ -1,6 +1,6 @@
 import { useClerk, useSession, useUser } from '@clerk/nextjs';
 import React, { useEffect, useState } from 'react';
-import { useToast } from './ui/use-toast';
+import { useToast } from '../ui/use-toast';
 import { useRouter } from 'next/navigation';
 import {
   DropdownMenu,
@@ -8,12 +8,13 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
+  DropdownMenuLabel,
+  DropdownMenuGroup,
 } from '@/components/ui/dropdown-menu';
 import { LayoutDashboardIcon, LogOutIcon, ShieldCheck, User } from 'lucide-react';
 import Link from 'next/link';
-import { DropdownMenuGroup, DropdownMenuLabel } from '@radix-ui/react-dropdown-menu';
-import { Spinner } from './spinner';
-import { Button } from './ui/button';
+import { Spinner } from '../loaders/spinner';
+import { Button } from '../ui/button';
 
 export default function UserMenu() {
   const { signOut } = useClerk();

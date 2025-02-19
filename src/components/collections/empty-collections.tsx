@@ -1,4 +1,4 @@
-import CollectionDialog from '@/components/collection-dialog';
+import CollectionDialog from './collection-dialog';
 import React from 'react';
 
 interface EmptyCollectionProps {

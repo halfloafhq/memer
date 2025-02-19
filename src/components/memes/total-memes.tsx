@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { ImageIcon } from 'lucide-react';
 import { getTotalMemes } from '@/app/_actions';
-import { Spinner } from './spinner';
-import { useToast } from './ui/use-toast';
+import { Spinner } from '../loaders/spinner';
+import { useToast } from '../ui/use-toast';
 
 interface TotalMemesProps {
   render: Date;

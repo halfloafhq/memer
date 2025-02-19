@@ -19,7 +19,7 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 import OtpForm, { otpFormSchema } from './otp-form';
 import { Eye, EyeOff } from 'lucide-react';
-import OauthSignIn from '@/components/google-oauth';
+import OauthSignIn from '../google-oauth';
 
 const signUpFormSchema = z.object({
   email: z.string().email(),

@@ -11,15 +11,14 @@ import {
 import Meme from './meme';
 import Image from 'next/image';
 import SaveMeme from './save-meme';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { Edit, FileDown } from 'lucide-react';
-import { useToast } from './ui/use-toast';
+import { useToast } from '../ui/use-toast';
 import { downloadMeme } from '@/utils/download';
 import { useUser } from '@clerk/nextjs';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useRouter } from 'next/navigation';
-import ImportToEditor from './import-to-editor';
-import CollectionDialog from './collection-dialog';
+import ImportToEditor from '../import-to-editor';
 
 type MemeCardProps = {
   memeId: string;

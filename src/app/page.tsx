@@ -1,7 +1,7 @@
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { getMemes, searchMemes } from './_actions';
-import Memes from '@/components/memes';
+import Memes from '@/components/memes/memes';
 import LoadMore from '@/components/load-more';
 import { NoResult } from '@/components/no-result';
 

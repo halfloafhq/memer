@@ -2,9 +2,9 @@
 import { Meme } from '@prisma/client';
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { Spinner } from './spinner';
+import { Spinner } from './loaders/spinner';
 import { getMemes } from '@/app/_actions';
-import Memes from './memes';
+import Memes from './memes/memes';
 
 export default function LoadMore() {
   const [memes, setMemes] = useState<Meme[]>([]);

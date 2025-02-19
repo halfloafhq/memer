@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Loader, Trash } from 'lucide-react';
-import { useToast } from './ui/use-toast';
+import { useToast } from '../ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useDeleteMeme } from '@/hooks/memes/useDeleteMeme';

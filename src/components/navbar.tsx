@@ -2,8 +2,8 @@
 import Link from 'next/link';
 import MemerIcon from './memer-icon';
 import ModeToggle from './theme-button';
-import { DashboardSheet } from './dashboard-sheet';
-import UserMenu from './user-menu';
+import { DashboardSheet } from './dashboard/dashboard-sheet';
+import UserMenu from './users/user-menu';
 
 export default function Navbar() {
   const homeHref = '/?search=';

@@ -1,6 +1,6 @@
 'use client';
-import { TotalMemes } from '@/components/total-memes';
-import MemeUploadForm from './_components/meme-upload-form';
+import MemeUploadForm from '@/components/memes/meme-upload-form';
+import { TotalMemes } from '@/components/memes/total-memes';
 import { useState } from 'react';
 
 export default function AdminDashboardUploadPage() {

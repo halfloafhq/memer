@@ -1,6 +1,6 @@
 import React from 'react';
-import SignUpForm from './_components/signup-form';
 import Link from 'next/link';
+import SignUpForm from '@/components/auth/sign-up/signup-form';
 
 export default function SignUpPage() {
   return (

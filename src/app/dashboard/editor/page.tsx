@@ -1,7 +1,7 @@
 'use client';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
-import Loader from '@/components/loader';
+import Loader from '@/components/loaders/loader';
 import { EditorData } from '@/types/collection';
 import { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types';
 import { AppState, BinaryFiles } from '@excalidraw/excalidraw/types/types';
