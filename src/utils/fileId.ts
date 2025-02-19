@@ -1,12 +1,9 @@
-import { FileId } from "@excalidraw/excalidraw/types/element/types";
-import { nanoid } from "nanoid";
+import { FileId } from '@excalidraw/excalidraw/types/element/types';
+import { nanoid } from 'nanoid';
 
 export const generateIdFromFile = async (file: File): Promise<FileId> => {
   try {
-    const hashBuffer = await window.crypto.subtle.digest(
-      "SHA-1",
-      await blobToArrayBuffer(file),
-    );
+    const hashBuffer = await window.crypto.subtle.digest('SHA-1', await blobToArrayBuffer(file));
     return bytesToHexString(new Uint8Array(hashBuffer)) as FileId;
   } catch (error: any) {
     console.error(error);
@@ -16,7 +13,7 @@ export const generateIdFromFile = async (file: File): Promise<FileId> => {
 };
 
 export const blobToArrayBuffer = (blob: Blob): Promise<ArrayBuffer> => {
-  if ("arrayBuffer" in blob) {
+  if ('arrayBuffer' in blob) {
     return blob.arrayBuffer();
   }
   // Safari
@@ -35,5 +32,5 @@ export const blobToArrayBuffer = (blob: Blob): Promise<ArrayBuffer> => {
 export const bytesToHexString = (bytes: Uint8Array) => {
   return Array.from(bytes)
     .map((byte) => `0${byte.toString(16)}`.slice(-2))
-    .join("");
+    .join('');
 };

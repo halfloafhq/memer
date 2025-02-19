@@ -1,8 +1,5 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "plugin:prettier/recommended"
-  ],
+  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
   "plugins": ["import", "prettier"],
   "rules": {
     "quotes": ["warn", "single"],
@@ -10,10 +7,13 @@
     "no-console": ["warn", { "allow": ["warn", "error"] }],
     "indent": ["warn", 2],
     "semi": ["warn", "always"],
-    "prettier/prettier": ["warn", {
-      "singleQuote": true,
-      "semi": true,
-      "tabWidth": 2
-    }]
+    "prettier/prettier": [
+      "warn",
+      {
+        "singleQuote": true,
+        "semi": true,
+        "tabWidth": 2
+      }
+    ]
   }
 }

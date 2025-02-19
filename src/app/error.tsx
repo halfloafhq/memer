@@ -1,5 +1,5 @@
-"use client";
-import Link from "next/link";
+'use client';
+import Link from 'next/link';
 
 export default function ErrorPage() {
   return (
@@ -10,8 +10,8 @@ export default function ErrorPage() {
           Oops, something went wrong!
         </h1>
         <p className="mt-4 text-muted-foreground">
-          We&apos;re sorry, but an unexpected error has occurred. Please try again
-          later or contact support if the issue persists.
+          We&apos;re sorry, but an unexpected error has occurred. Please try again later or contact
+          support if the issue persists.
         </p>
         <div className="mt-6">
           <Link

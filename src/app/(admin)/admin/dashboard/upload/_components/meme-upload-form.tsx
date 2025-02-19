@@ -1,43 +1,43 @@
-import React from "react";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import Image from "next/image";
-import { CloudUpload, X, Plus, XIcon } from "lucide-react";
+import React from 'react';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import Image from 'next/image';
+import { CloudUpload, X, Plus, XIcon } from 'lucide-react';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useState } from "react";
-import UploadBtn from "@/components/image-upload-button";
-import { useUpload } from "@/hooks/useUpload";
-import { useToast } from "@/components/ui/use-toast";
-import { useRouter } from "next/navigation";
+} from '@/components/ui/select';
+import { useState } from 'react';
+import UploadBtn from '@/components/image-upload-button';
+import { useUpload } from '@/hooks/useUpload';
+import { useToast } from '@/components/ui/use-toast';
+import { useRouter } from 'next/navigation';
 
 const predefinedTags = [
-  "Funny",
-  "Relatable",
-  "Wholesome",
-  "Sarcastic",
-  "Ironic",
-  "Nostalgic",
-  "Animals",
-  "Politics",
-  "Movies",
-  "Gaming",
-  "Sports",
-  "Music",
-  "Technology",
-  "Science",
-  "Food",
-  "Fashion",
-  "Art",
-  "Literature",
-  "Dark",
+  'Funny',
+  'Relatable',
+  'Wholesome',
+  'Sarcastic',
+  'Ironic',
+  'Nostalgic',
+  'Animals',
+  'Politics',
+  'Movies',
+  'Gaming',
+  'Sports',
+  'Music',
+  'Technology',
+  'Science',
+  'Food',
+  'Fashion',
+  'Art',
+  'Literature',
+  'Dark',
 ];
 
 interface MemeUploadFormProps {
@@ -46,11 +46,10 @@ interface MemeUploadFormProps {
 
 export default function MemeUploadForm({ setRender }: MemeUploadFormProps) {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [customTag, setCustomTag] = useState<string>("");
-  const { success, fileUrl, fileKey, setFileUrl, setSuccess, setFileKey } =
-    useUpload();
-  const [memeName, setMemeName] = useState<string>("");
-  const [memeDescription, setMemeDescription] = useState<string>("");
+  const [customTag, setCustomTag] = useState<string>('');
+  const { success, fileUrl, fileKey, setFileUrl, setSuccess, setFileKey } = useUpload();
+  const [memeName, setMemeName] = useState<string>('');
+  const [memeDescription, setMemeDescription] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [removingImage, setRemovingImage] = useState<boolean>(false);
   const { toast } = useToast();
@@ -64,7 +63,7 @@ export default function MemeUploadForm({ setRender }: MemeUploadFormProps) {
   function handleCustomTagAdd() {
     if (customTag && !selectedTags.includes(customTag)) {
       setSelectedTags([...selectedTags, customTag]);
-      setCustomTag("");
+      setCustomTag('');
     }
   }
 
@@ -76,29 +75,29 @@ export default function MemeUploadForm({ setRender }: MemeUploadFormProps) {
     e.preventDefault();
     if (!fileUrl)
       return toast({
-        title: "Meme upload failed",
-        description: "No file uploaded",
-        variant: "destructive",
+        title: 'Meme upload failed',
+        description: 'No file uploaded',
+        variant: 'destructive',
       });
-    if (memeName === "" || memeDescription === "")
+    if (memeName === '' || memeDescription === '')
       return toast({
-        title: "Meme upload failed",
-        description: "Meme name or description is empty",
-        variant: "destructive",
+        title: 'Meme upload failed',
+        description: 'Meme name or description is empty',
+        variant: 'destructive',
       });
     if (selectedTags.length === 0)
       return toast({
-        title: "Meme upload failed",
-        description: "No tags selected",
-        variant: "destructive",
+        title: 'Meme upload failed',
+        description: 'No tags selected',
+        variant: 'destructive',
       });
 
     if (success) {
       setLoading(true);
-      const req = await fetch("/api/memes", {
-        method: "POST",
+      const req = await fetch('/api/memes', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           memeName,
@@ -113,19 +112,19 @@ export default function MemeUploadForm({ setRender }: MemeUploadFormProps) {
 
       if (req.status === 201) {
         setFileUrl(null);
-        setMemeName("");
-        setMemeDescription("");
+        setMemeName('');
+        setMemeDescription('');
         setSelectedTags([]);
         toast({
-          title: "Meme uploaded successfully",
-          description: resp.data.name + " has been uploaded",
+          title: 'Meme uploaded successfully',
+          description: resp.data.name + ' has been uploaded',
         });
         setRender(new Date());
       } else {
         toast({
-          title: "Meme upload failed",
+          title: 'Meme upload failed',
           description: resp.error,
-          variant: "destructive",
+          variant: 'destructive',
         });
       }
       setLoading(false);
@@ -135,10 +134,10 @@ export default function MemeUploadForm({ setRender }: MemeUploadFormProps) {
   async function handleRemoveImage() {
     try {
       setRemovingImage(true);
-      const res = await fetch("/api/memes/", {
-        method: "DELETE",
+      const res = await fetch('/api/memes/', {
+        method: 'DELETE',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           memeFileKey: fileKey,
@@ -150,22 +149,22 @@ export default function MemeUploadForm({ setRender }: MemeUploadFormProps) {
         setFileKey(null);
         setSuccess(false);
         toast({
-          title: "Image removed",
-          description: "Image removed successfully",
+          title: 'Image removed',
+          description: 'Image removed successfully',
         });
       } else {
         toast({
-          title: "Error",
-          description: "Failed to remove image",
-          variant: "destructive",
+          title: 'Error',
+          description: 'Failed to remove image',
+          variant: 'destructive',
         });
       }
     } catch (error) {
       console.error(error);
       toast({
-        title: "Error",
-        description: "Failed to remove image",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to remove image',
+        variant: 'destructive',
       });
     } finally {
       setRemovingImage(false);
@@ -258,7 +257,7 @@ export default function MemeUploadForm({ setRender }: MemeUploadFormProps) {
               className="mt-2"
             >
               {removingImage ? (
-                "Removing..."
+                'Removing...'
               ) : (
                 <>
                   <X className="h-4 w-4 mr-2" />
@@ -268,16 +267,12 @@ export default function MemeUploadForm({ setRender }: MemeUploadFormProps) {
             </Button>
           </div>
         ) : (
-          <UploadBtn
-            setFileUrl={setFileUrl}
-            setSuccess={setSuccess}
-            setFileKey={setFileKey}
-          />
+          <UploadBtn setFileUrl={setFileUrl} setSuccess={setSuccess} setFileKey={setFileKey} />
         )}
       </div>
       <Button type="submit" className="mt-4" disabled={loading}>
         <CloudUpload className="mr-2" />
-        {loading ? "Uploading..." : "Upload Meme"}
+        {loading ? 'Uploading...' : 'Upload Meme'}
       </Button>
     </form>
   );

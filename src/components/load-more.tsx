@@ -1,10 +1,10 @@
-"use client";
-import { Meme } from "@prisma/client";
-import React, { useEffect, useState } from "react";
-import { useInView } from "react-intersection-observer";
-import { Spinner } from "./spinner";
-import { getMemes } from "@/app/_actions";
-import Memes from "./memes";
+'use client';
+import { Meme } from '@prisma/client';
+import React, { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { Spinner } from './spinner';
+import { getMemes } from '@/app/_actions';
+import Memes from './memes';
 
 export default function LoadMore() {
   const [memes, setMemes] = useState<Meme[]>([]);
@@ -35,10 +35,7 @@ export default function LoadMore() {
   return (
     <>
       <Memes memes={memes} />
-      <div
-        className="flex flex-col items-center justify-center w-full"
-        ref={ref}
-      >
+      <div className="flex flex-col items-center justify-center w-full" ref={ref}>
         {showSpinner && <Spinner />}
       </div>
     </>

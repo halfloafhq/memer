@@ -1,4 +1,4 @@
-import { FileDown, Info, MoreHorizontal, Trash2 } from "lucide-react";
+import { FileDown, Info, MoreHorizontal, Trash2 } from 'lucide-react';
 
 import {
   DropdownMenu,
@@ -12,10 +12,10 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useToast } from "@/components/ui/use-toast";
-import { downloadMeme } from "@/utils/download";
-import { removeMemeFromCollectionAction } from "../_actions";
+} from '@/components/ui/dropdown-menu';
+import { useToast } from '@/components/ui/use-toast';
+import { downloadMeme } from '@/utils/download';
+import { removeMemeFromCollectionAction } from '../_actions';
 
 interface MoreInfoProps {
   src: string;
@@ -33,7 +33,7 @@ export default function MoreInfo({
   description,
   collectionId,
   memeCollectionId,
-  className = "",
+  className = '',
   onDeleteSuccess,
 }: MoreInfoProps) {
   const { toast } = useToast();
@@ -42,24 +42,22 @@ export default function MoreInfo({
       const success = await downloadMeme(src, name);
       if (!success) {
         return toast({
-          title: "Download Failed",
-          description:
-            "There was an error downloading the image. Please try again.",
-          variant: "destructive",
+          title: 'Download Failed',
+          description: 'There was an error downloading the image. Please try again.',
+          variant: 'destructive',
         });
       } else {
         toast({
-          title: "Downloaded!",
+          title: 'Downloaded!',
           description: `${name} has been downloaded successfully!`,
         });
       }
     } catch (error) {
-      console.error("Download failed:", error);
+      console.error('Download failed:', error);
       return toast({
-        title: "Download Failed",
-        description:
-          "There was an error downloading the image. Please try again.",
-        variant: "destructive",
+        title: 'Download Failed',
+        description: 'There was an error downloading the image. Please try again.',
+        variant: 'destructive',
       });
     }
   };
@@ -73,23 +71,23 @@ export default function MoreInfo({
       });
       if (!status.success) {
         return toast({
-          title: "Remove Failed",
+          title: 'Remove Failed',
           description: status.message,
-          variant: "destructive",
+          variant: 'destructive',
         });
       } else {
         onDeleteSuccess(collectionId);
         return toast({
-          title: "Removed!",
+          title: 'Removed!',
           description: `${name} has been removed successfully!`,
         });
       }
     } catch (error) {
-      console.error("Remove failed:", error);
+      console.error('Remove failed:', error);
       return toast({
-        title: "Remove Failed",
-        description: "There was an error removing the image. Please try again.",
-        variant: "destructive",
+        title: 'Remove Failed',
+        description: 'There was an error removing the image. Please try again.',
+        variant: 'destructive',
       });
     }
   };
@@ -102,10 +100,7 @@ export default function MoreInfo({
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-40">
           <DropdownMenuGroup>
-            <DropdownMenuItem
-              className="cursor-pointer"
-              onClick={handleDownload}
-            >
+            <DropdownMenuItem className="cursor-pointer" onClick={handleDownload}>
               <FileDown className="mr-2 h-4 w-4" />
               <span>Download</span>
             </DropdownMenuItem>
@@ -122,9 +117,7 @@ export default function MoreInfo({
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <p className="text-gray-600 dark:text-white">
-                      {description}
-                    </p>
+                    <p className="text-gray-600 dark:text-white">{description}</p>
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuPortal>

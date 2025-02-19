@@ -1,7 +1,7 @@
-"use client";
-import { useToast } from "@/components/ui/use-toast";
-import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+'use client';
+import { useToast } from '@/components/ui/use-toast';
+import { useRouter } from 'next/navigation';
+import { useCallback, useState } from 'react';
 
 export function useDeleteCollection() {
   const { toast } = useToast();
@@ -12,8 +12,8 @@ export function useDeleteCollection() {
     async (id: string) => {
       try {
         setLoading(true);
-        const res = await fetch("/api/collections", {
-          method: "DELETE",
+        const res = await fetch('/api/collections', {
+          method: 'DELETE',
           body: JSON.stringify({
             collectionId: id,
           }),
@@ -21,21 +21,21 @@ export function useDeleteCollection() {
 
         if (res.ok) {
           toast({
-            title: "Collection deleted!",
-            description: "Collection was successfully deleted",
+            title: 'Collection deleted!',
+            description: 'Collection was successfully deleted',
           });
-          router.push("/dashboard/collections");
+          router.push('/dashboard/collections');
         }
       } catch (err) {
         const error = err as Error;
         toast({
-          title: "Error",
+          title: 'Error',
           description: error.message,
-          variant: "destructive",
+          variant: 'destructive',
         });
       }
     },
-    [router, toast],
+    [router, toast]
   );
 
   return {

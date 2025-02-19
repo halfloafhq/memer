@@ -7,7 +7,7 @@ export async function downloadMeme(src: string, name: string) {
   const blob = await response.blob();
   const url = window.URL.createObjectURL(blob);
 
-  const link = document.createElement("a");
+  const link = document.createElement('a');
   link.href = url;
   link.download = `${name}.jpg`;
   document.body.appendChild(link);

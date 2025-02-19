@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { usePathname, useRouter } from "next/navigation";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import { usePathname, useRouter } from 'next/navigation';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -12,13 +12,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { UserSearch } from "lucide-react";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { UserSearch } from 'lucide-react';
 
 const formSchema = z.object({
   email: z.string().min(3, {
-    message: "Input must be at least 3 characters long",
+    message: 'Input must be at least 3 characters long',
   }),
 });
 
@@ -29,12 +29,12 @@ export default function SearchUsers() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      email: '',
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    router.push(pathname + "?search=" + values.email);
+    router.push(pathname + '?search=' + values.email);
   }
 
   return (

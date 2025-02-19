@@ -1,8 +1,8 @@
-import React from "react";
-import { EditCollection } from "./edit-collection";
-import { DeleteCollection } from "./delete-collection";
-import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
+import React from 'react';
+import { EditCollection } from './edit-collection';
+import { DeleteCollection } from './delete-collection';
+import Link from 'next/link';
+import { ChevronLeft } from 'lucide-react';
 
 interface CollectionHeaderProps {
   collectionId: string;
@@ -18,9 +18,7 @@ export function CollectionHeader({
   return (
     <div className="flex justify-between items-center mb-4">
       <div className="flex items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-          {collectionName}
-        </h1>
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-white">{collectionName}</h1>
         <EditCollection
           collectionId={collectionId}
           name={collectionName}

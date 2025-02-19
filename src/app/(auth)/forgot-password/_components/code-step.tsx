@@ -1,8 +1,8 @@
-import React from "react";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
+import React from 'react';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -10,11 +10,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 
 const codeSchema = z.object({
-  code: z.string().min(6, "Verification code must be at least 6 characters"),
+  code: z.string().min(6, 'Verification code must be at least 6 characters'),
 });
 
 type CodeFormValues = z.infer<typeof codeSchema>;
@@ -28,7 +28,7 @@ export const CodeStep: React.FC<CodeStepProps> = ({ onSubmit, loading }) => {
   const form = useForm<CodeFormValues>({
     resolver: zodResolver(codeSchema),
     defaultValues: {
-      code: "",
+      code: '',
     },
   });
 
@@ -46,10 +46,7 @@ export const CodeStep: React.FC<CodeStepProps> = ({ onSubmit, loading }) => {
             <FormItem>
               <FormLabel className="text-white">Verification Code</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Enter verification code"
-                  {...field}
-                />
+                <Input placeholder="Enter verification code" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -60,7 +57,7 @@ export const CodeStep: React.FC<CodeStepProps> = ({ onSubmit, loading }) => {
           className="w-full text-white font-semibold btn btn-reverse btn-arrow"
           disabled={loading}
         >
-          {loading ? "Updating..." : "Update"}
+          {loading ? 'Updating...' : 'Update'}
         </Button>
       </form>
     </Form>

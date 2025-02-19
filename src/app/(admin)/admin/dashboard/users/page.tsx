@@ -1,14 +1,14 @@
-import { redirect } from "next/navigation";
-import { checkRole } from "@/utils/roles";
-import SearchUsers from "./_components/search-users";
-import { clerkClient } from "@clerk/nextjs/server";
-import UserCard from "./_components/user-card";
+import { redirect } from 'next/navigation';
+import { checkRole } from '@/utils/roles';
+import SearchUsers from './_components/search-users';
+import { clerkClient } from '@clerk/nextjs/server';
+import UserCard from './_components/user-card';
 
 export default async function AdminDashboardUsersPage(params: {
   searchParams: { search?: string };
 }) {
-  if (!checkRole("admin")) {
-    redirect("/");
+  if (!checkRole('admin')) {
+    redirect('/');
   }
   const query = params.searchParams.search;
   const userCount = (await clerkClient.users.getCount()) - 1;
@@ -24,9 +24,9 @@ export default async function AdminDashboardUsersPage(params: {
         {users.length === 0 ? (
           <p className="text-gray-500">No user found.</p>
         ) : (
-            <div className="grid gap-6 grid-cols-1">
+          <div className="grid gap-6 grid-cols-1">
             {users
-              .filter((user) => user.publicMetadata.role !== "admin")
+              .filter((user) => user.publicMetadata.role !== 'admin')
               .map((user) => (
                 <UserCard
                   key={user.id}
@@ -36,9 +36,8 @@ export default async function AdminDashboardUsersPage(params: {
                   lastName={user.lastName}
                   banned={user.banned}
                   email={
-                    user.emailAddresses.find(
-                      (email) => email.id === user.primaryEmailAddressId,
-                    )?.emailAddress
+                    user.emailAddresses.find((email) => email.id === user.primaryEmailAddressId)
+                      ?.emailAddress
                   }
                   role={user.publicMetadata.role as string}
                 />

@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useToast } from "@/components/ui/use-toast";
-import { CollectionWithMemes } from "@/types/collection";
-import { useCallback, useState } from "react";
+import { useToast } from '@/components/ui/use-toast';
+import { CollectionWithMemes } from '@/types/collection';
+import { useCallback, useState } from 'react';
 
 export function useFetchCollectionWithMemes() {
   const { toast } = useToast();
   const [loading, setLoading] = useState<boolean>(true);
-  const [collectionWithMemes, setCollectionWithMemes] = useState<
-    CollectionWithMemes | undefined
-  >(undefined);
+  const [collectionWithMemes, setCollectionWithMemes] = useState<CollectionWithMemes | undefined>(
+    undefined
+  );
 
   const fetchCollectionWithMemes = useCallback(
     async (collectionId: string) => {
@@ -24,13 +24,13 @@ export function useFetchCollectionWithMemes() {
         toast({
           title: "Uh oh! Couldn't get collection",
           description: err.message,
-          variant: "destructive",
+          variant: 'destructive',
         });
       } finally {
         setLoading(false);
       }
     },
-    [toast],
+    [toast]
   );
 
   return {

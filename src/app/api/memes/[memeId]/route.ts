@@ -1,7 +1,7 @@
-import prisma from "@/lib/prisma";
-import { currentUser } from "@clerk/nextjs/server";
-import { NextRequest, NextResponse } from "next/server";
-import { utapi } from "@/lib/utapi";
+import prisma from '@/lib/prisma';
+import { currentUser } from '@clerk/nextjs/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { utapi } from '@/lib/utapi';
 
 export async function GET(req: NextRequest) {
   try {
@@ -9,32 +9,29 @@ export async function GET(req: NextRequest) {
     if (!user) {
       return NextResponse.json(
         {
-          error: "Unauthorized",
+          error: 'Unauthorized',
         },
         {
           status: 401,
-        },
+        }
       );
     }
 
-    if (user.publicMetadata.role !== "admin") {
+    if (user.publicMetadata.role !== 'admin') {
       return NextResponse.json(
         {
-          error: "Unauthorized",
+          error: 'Unauthorized',
         },
         {
           status: 401,
-        },
+        }
       );
     }
 
-    const memeId = req.url.split("/").at(-1);
+    const memeId = req.url.split('/').at(-1);
 
     if (!memeId) {
-      return NextResponse.json(
-        { message: "Meme id is required" },
-        { status: 400 },
-      );
+      return NextResponse.json({ message: 'Meme id is required' }, { status: 400 });
     }
 
     const meme = await prisma.meme.findUnique({
@@ -45,18 +42,15 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "Fetched meme successfully",
+        message: 'Fetched meme successfully',
         data: meme,
       },
       {
         status: 200,
-      },
+      }
     );
   } catch (err: any) {
-    return NextResponse.json(
-      { message: "Interval server errror" },
-      { status: 500 },
-    );
+    return NextResponse.json({ message: 'Interval server errror' }, { status: 500 });
   }
 }
 
@@ -66,37 +60,30 @@ export async function PUT(req: NextRequest) {
     if (!user) {
       return NextResponse.json(
         {
-          error: "Unauthorized",
+          error: 'Unauthorized',
         },
         {
           status: 401,
-        },
+        }
       );
     }
-    if (user.publicMetadata.role !== "admin") {
+    if (user.publicMetadata.role !== 'admin') {
       return NextResponse.json(
         {
-          error: "Unauthorized",
+          error: 'Unauthorized',
         },
         {
           status: 401,
-        },
+        }
       );
     }
-    const memeId = req.url.split("/").at(-1);
+    const memeId = req.url.split('/').at(-1);
     if (!memeId) {
-      return NextResponse.json(
-        { message: "Meme id is required" },
-        { status: 400 },
-      );
+      return NextResponse.json({ message: 'Meme id is required' }, { status: 400 });
     }
-    const { memeName, memeDescription, memeTags, memeImageURL } =
-      await req.json();
+    const { memeName, memeDescription, memeTags, memeImageURL } = await req.json();
     if (!memeName || !memeDescription || !memeTags || !memeImageURL) {
-      return NextResponse.json(
-        { message: "All fields are required" },
-        { status: 400 },
-      );
+      return NextResponse.json({ message: 'All fields are required' }, { status: 400 });
     }
     const meme = await prisma.meme.findUnique({
       where: {
@@ -105,7 +92,7 @@ export async function PUT(req: NextRequest) {
     });
 
     if (!meme) {
-      return NextResponse.json({ message: "Meme not found" }, { status: 404 });
+      return NextResponse.json({ message: 'Meme not found' }, { status: 404 });
     }
 
     const updatedMeme = await prisma.meme.update({
@@ -121,18 +108,15 @@ export async function PUT(req: NextRequest) {
     });
     return NextResponse.json(
       {
-        message: "Meme updated successfully",
+        message: 'Meme updated successfully',
         data: updatedMeme,
       },
       {
         status: 200,
-      },
+      }
     );
   } catch (err: any) {
-    return NextResponse.json(
-      { message: "Interval server errror" },
-      { status: 500 },
-    );
+    return NextResponse.json({ message: 'Interval server errror' }, { status: 500 });
   }
 }
 
@@ -142,29 +126,26 @@ export async function DELETE(req: NextRequest) {
     if (!user) {
       return NextResponse.json(
         {
-          error: "Unauthorized",
+          error: 'Unauthorized',
         },
         {
           status: 401,
-        },
+        }
       );
     }
-    if (user.publicMetadata.role !== "admin") {
+    if (user.publicMetadata.role !== 'admin') {
       return NextResponse.json(
         {
-          error: "Unauthorized",
+          error: 'Unauthorized',
         },
         {
           status: 401,
-        },
+        }
       );
     }
-    const memeId = req.url.split("/").at(-1);
+    const memeId = req.url.split('/').at(-1);
     if (!memeId) {
-      return NextResponse.json(
-        { message: "Meme id is required" },
-        { status: 400 },
-      );
+      return NextResponse.json({ message: 'Meme id is required' }, { status: 400 });
     }
     const meme = await prisma.meme.findUnique({
       where: {
@@ -173,7 +154,7 @@ export async function DELETE(req: NextRequest) {
     });
 
     if (!meme) {
-      return NextResponse.json({ message: "Meme not found" }, { status: 404 });
+      return NextResponse.json({ message: 'Meme not found' }, { status: 404 });
     }
 
     //Delete file from upload thing
@@ -188,22 +169,22 @@ export async function DELETE(req: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "Meme deleted successfully",
+        message: 'Meme deleted successfully',
         data: deletedMeme,
       },
       {
         status: 200,
-      },
+      }
     );
   } catch (error) {
     return NextResponse.json(
       {
-        message: "Error deleting meme",
+        message: 'Error deleting meme',
         error: error,
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }

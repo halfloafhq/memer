@@ -1,13 +1,13 @@
-"use server";
+'use server';
 
-import { clerkClient } from "@clerk/nextjs/server";
-import { revalidatePath } from "next/cache";
+import { clerkClient } from '@clerk/nextjs/server';
+import { revalidatePath } from 'next/cache';
 
 export async function banUserAction(formData: FormData) {
   try {
-    const userId = formData.get("userId") as string;
+    const userId = formData.get('userId') as string;
     await clerkClient.users.banUser(userId);
-    revalidatePath("/admin/dashboard/users");
+    revalidatePath('/admin/dashboard/users');
   } catch (error) {
     console.error(error);
   }
@@ -15,9 +15,9 @@ export async function banUserAction(formData: FormData) {
 
 export async function unbanUserAction(formData: FormData) {
   try {
-    const userId = formData.get("userId") as string;
+    const userId = formData.get('userId') as string;
     await clerkClient.users.unbanUser(userId);
-    revalidatePath("/admin/dashboard/users");
+    revalidatePath('/admin/dashboard/users');
   } catch (error) {
     console.error(error);
   }

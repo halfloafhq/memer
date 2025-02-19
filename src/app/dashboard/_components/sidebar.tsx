@@ -1,23 +1,23 @@
-"use client";
-import { usePathname, useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { Library, Pencil } from "lucide-react";
+'use client';
+import { usePathname, useRouter } from 'next/navigation';
+import { cn } from '@/lib/utils';
+import { Library, Pencil } from 'lucide-react';
 
 export default function Sidebar() {
-  const pathname = usePathname().split("/")[2];
+  const pathname = usePathname().split('/')[2];
   const router = useRouter();
   const tools = [
     {
       icon: <Library />,
-      name: "Collections",
-      active: pathname === "collections",
-      path: "/dashboard/collections",
+      name: 'Collections',
+      active: pathname === 'collections',
+      path: '/dashboard/collections',
     },
     {
       icon: <Pencil />,
-      name: "Editor",
-      active: pathname === "editor",
-      path: "/dashboard/editor",
+      name: 'Editor',
+      active: pathname === 'editor',
+      path: '/dashboard/editor',
     },
   ];
 
@@ -34,10 +34,10 @@ export default function Sidebar() {
             <div
               key={idx}
               className={cn(
-                "p-4 w-full flex items-center justify-start gap-x-4 rounded-lg transition duration-200 ease-in-out cursor-pointer",
+                'p-4 w-full flex items-center justify-start gap-x-4 rounded-lg transition duration-200 ease-in-out cursor-pointer',
                 tool.active
-                  ? "bg-[#F5F5F5] text-[#363430]"
-                  : "text-[#91908F] hover:text-[#363430] dark:hover:text-white",
+                  ? 'bg-[#F5F5F5] text-[#363430]'
+                  : 'text-[#91908F] hover:text-[#363430] dark:hover:text-white'
               )}
               onClick={() => reRoute(tool.path)}
             >

@@ -1,8 +1,8 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Ban, ShieldMinus, ShieldPlus } from "lucide-react";
-import { banUserAction, unbanUserAction } from "../_actions";
-import Image from "next/image";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Ban, ShieldMinus, ShieldPlus } from 'lucide-react';
+import { banUserAction, unbanUserAction } from '../_actions';
+import Image from 'next/image';
 
 interface UserCardProps {
   userId: string;
@@ -37,14 +37,11 @@ export default function UserCard({
           <h2 className="text-xl font-semibold dark:text-black">
             {firstName} {lastName}
           </h2>
-          <p className="text-sm text-gray-600 dark:text-black">
-            {email}
-          </p>
+          <p className="text-sm text-gray-600 dark:text-black">{email}</p>
         </div>
       </div>
       <p className="mb-4 dark:text-black">
-        <span className="font-semibold">Role:</span>{" "}
-        {role}
+        <span className="font-semibold">Role:</span> {role}
       </p>
       <div className="flex space-x-2">
         <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">

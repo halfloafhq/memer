@@ -1,6 +1,6 @@
-"use server";
+'use server';
 
-import prisma from "@/lib/prisma";
+import prisma from '@/lib/prisma';
 
 export async function getMemes(pageNumber: number) {
   try {
@@ -8,7 +8,7 @@ export async function getMemes(pageNumber: number) {
       skip: pageNumber * 15,
       take: 15,
       orderBy: {
-        name: "asc",
+        name: 'asc',
       },
     });
     return memes;
@@ -26,13 +26,13 @@ export async function searchMemes(searchTerm: string) {
           {
             name: {
               contains: searchTerm,
-              mode: "insensitive",
+              mode: 'insensitive',
             },
           },
           {
             description: {
               contains: searchTerm,
-              mode: "insensitive",
+              mode: 'insensitive',
             },
           },
         ],
@@ -54,7 +54,7 @@ export async function getCollections(userId: string) {
     });
     return collections;
   } catch (error) {
-    console.error("Error fetching collections:", error);
+    console.error('Error fetching collections:', error);
     return [];
   }
 }
@@ -69,8 +69,8 @@ export async function createUser(email: string | null, userId: string) {
     });
     return { success: true, createdUser };
   } catch (error) {
-    console.error("Error creating user:", error);
-    return { success: false, error: "Failed to create user" };
+    console.error('Error creating user:', error);
+    return { success: false, error: 'Failed to create user' };
   }
 }
 
@@ -79,7 +79,7 @@ export async function getTotalMemes() {
     const total = await prisma.meme.count();
     return total;
   } catch (error) {
-    console.error("Error getting total memes:", error);
+    console.error('Error getting total memes:', error);
     return 0;
   }
 }

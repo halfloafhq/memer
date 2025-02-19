@@ -8,13 +8,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { Loader, Trash } from "lucide-react";
-import { useToast } from "./ui/use-toast";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useDeleteMeme } from "@/hooks/memes/useDeleteMeme";
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { Loader, Trash } from 'lucide-react';
+import { useToast } from './ui/use-toast';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useDeleteMeme } from '@/hooks/memes/useDeleteMeme';
 
 interface DeleteMemeProps {
   memeId: string;
@@ -32,12 +32,12 @@ export function DeleteMeme({ memeId }: DeleteMemeProps) {
       setOpen(true);
       await deleteMeme(memeId);
       setOpen(false);
-      router.push("/");
+      router.push('/');
     } catch (error: any) {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     }
   }
@@ -53,23 +53,19 @@ export function DeleteMeme({ memeId }: DeleteMemeProps) {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete the meme
-            from the database.
+            This action cannot be undone. This will permanently delete the meme from the database.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={handleDeleteMeme}
-            className="bg-red-600 dark:bg-red-600"
-          >
+          <AlertDialogAction onClick={handleDeleteMeme} className="bg-red-600 dark:bg-red-600">
             {loading ? (
               <span>
                 <Loader className="animate-spin mr-2" />
                 Deleting
               </span>
             ) : (
-              "Delete"
+              'Delete'
             )}
           </AlertDialogAction>
         </AlertDialogFooter>

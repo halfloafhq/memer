@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import React, { useState } from 'react';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -12,24 +12,24 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useSignUp } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import { useToast } from "@/components/ui/use-toast";
-import OtpForm, { otpFormSchema } from "./otp-form";
-import { Eye, EyeOff } from "lucide-react";
-import OauthSignIn from "@/components/google-oauth";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { useSignUp } from '@clerk/nextjs';
+import { useRouter } from 'next/navigation';
+import { useToast } from '@/components/ui/use-toast';
+import OtpForm, { otpFormSchema } from './otp-form';
+import { Eye, EyeOff } from 'lucide-react';
+import OauthSignIn from '@/components/google-oauth';
 
 const signUpFormSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8, {
-    message: "Password must be at least 8 characters",
+    message: 'Password must be at least 8 characters',
   }),
 });
 
 export default function SignUpForm() {
-  const [email, setEmail] = useState<string>("");
+  const [email, setEmail] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [verify, setVerify] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -40,8 +40,8 @@ export default function SignUpForm() {
   const signUpForm = useForm<z.infer<typeof signUpFormSchema>>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
@@ -59,7 +59,7 @@ export default function SignUpForm() {
       });
 
       await signUp?.prepareEmailAddressVerification({
-        strategy: "email_code",
+        strategy: 'email_code',
       });
 
       setEmail(values.email);
@@ -67,9 +67,9 @@ export default function SignUpForm() {
     } catch (err: any) {
       console.error(JSON.stringify(err, null, 2));
       toast({
-        title: "Uh oh! Something went wrong.",
-        description: err.errors[0].longMessage || "Could not fulfill request",
-        variant: "destructive",
+        title: 'Uh oh! Something went wrong.',
+        description: err.errors[0].longMessage || 'Could not fulfill request',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -86,38 +86,38 @@ export default function SignUpForm() {
         code: values.pin,
       });
       if (!completeSignUp) {
-        console.error("Complete signup error");
+        console.error('Complete signup error');
         return;
       }
 
       // If verification was completed, set the session to active
       // and redirect the user
-      if (completeSignUp.status === "complete") {
+      if (completeSignUp.status === 'complete') {
         await setActive({ session: completeSignUp.createdSessionId });
         toast({
-          title: "Signed up!",
-          description: "Your account has been created",
-          variant: "default",
+          title: 'Signed up!',
+          description: 'Your account has been created',
+          variant: 'default',
         });
-        router.push("/");
+        router.push('/');
       } else {
         // If the status is not complete, check why. User may need to
         // complete further steps.
         console.error(JSON.stringify(completeSignUp, null, 2));
         toast({
-          title: "Uh oh! Something went wrong.",
-          description: "There was a problem with your sign up completion.",
-          variant: "destructive",
+          title: 'Uh oh! Something went wrong.',
+          description: 'There was a problem with your sign up completion.',
+          variant: 'destructive',
         });
       }
     } catch (err: any) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
-      console.error("Error:", JSON.stringify(err, null, 2));
+      console.error('Error:', JSON.stringify(err, null, 2));
       toast({
-        title: "Uh oh! Something went wrong.",
-        description: err.errors[0].longMessage || "Could not fulfill request",
-        variant: "destructive",
+        title: 'Uh oh! Something went wrong.',
+        description: err.errors[0].longMessage || 'Could not fulfill request',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -130,10 +130,7 @@ export default function SignUpForm() {
         <OtpForm onVerify={onVerify} loading={loading} />
       ) : (
         <Form {...signUpForm}>
-          <form
-            onSubmit={signUpForm.handleSubmit(onSubmit)}
-            className="space-y-8"
-          >
+          <form onSubmit={signUpForm.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
               control={signUpForm.control}
               name="email"
@@ -157,7 +154,7 @@ export default function SignUpForm() {
                   <FormControl>
                     <div className="relative">
                       <Input
-                        type={showPassword ? "text" : "password"}
+                        type={showPassword ? 'text' : 'password'}
                         placeholder="********"
                         {...field}
                       />
@@ -183,7 +180,7 @@ export default function SignUpForm() {
               className="w-full text-lg bg-purple-600 hover:bg-purple-700 active:bg-purple-900 transition-colors"
               disabled={loading}
             >
-              {!loading ? "Sign Up" : "Signing up..."}
+              {!loading ? 'Sign Up' : 'Signing up...'}
             </Button>
           </form>
         </Form>

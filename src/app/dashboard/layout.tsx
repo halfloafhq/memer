@@ -1,5 +1,5 @@
-import React from "react";
-import Sidebar from "./_components/sidebar";
+import React from 'react';
+import Sidebar from './_components/sidebar';
 
 function DashboardLayout({
   children,

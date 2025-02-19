@@ -1,10 +1,10 @@
-"use client";
-import { TotalMemes } from "@/components/total-memes";
-import MemeUploadForm from "./_components/meme-upload-form";
-import { useState } from "react";
+'use client';
+import { TotalMemes } from '@/components/total-memes';
+import MemeUploadForm from './_components/meme-upload-form';
+import { useState } from 'react';
 
 export default function AdminDashboardUploadPage() {
-  const [render, setRender] = useState<Date>(new Date())
+  const [render, setRender] = useState<Date>(new Date());
   return (
     <main className="container flex flex-1 flex-col gap-4 px-4 py-8 md:gap-8">
       <div className="flex flex-col items-center">

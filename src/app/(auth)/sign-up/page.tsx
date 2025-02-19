@@ -1,6 +1,6 @@
-import React from "react";
-import SignUpForm from "./_components/signup-form";
-import Link from "next/link";
+import React from 'react';
+import SignUpForm from './_components/signup-form';
+import Link from 'next/link';
 
 export default function SignUpPage() {
   return (
@@ -11,8 +11,7 @@ export default function SignUpPage() {
             Sign up on <span className="text-purple-600">Memer</span>
           </h1>
           <p className="mt-4 text-lg text-gray-600">
-            <span className="underline text-purple-600">Rick Roll</span> the
-            world in a few clicks!
+            <span className="underline text-purple-600">Rick Roll</span> the world in a few clicks!
           </p>
         </div>
       </section>
@@ -20,7 +19,7 @@ export default function SignUpPage() {
         <SignUpForm />
         <div className="mt-8 text-center">
           <p className="text-gray-600">
-            Already have an account?{" "}
+            Already have an account?{' '}
             <Link href="/sign-in">
               <span className="text-purple-600 underline">Sign in</span>
             </Link>

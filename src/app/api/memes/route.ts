@@ -1,7 +1,7 @@
-import prisma from "@/lib/prisma";
-import { currentUser } from "@clerk/nextjs/server";
-import { NextRequest, NextResponse } from "next/server";
-import { utapi } from "@/lib/utapi";
+import prisma from '@/lib/prisma';
+import { currentUser } from '@clerk/nextjs/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { utapi } from '@/lib/utapi';
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,27 +9,26 @@ export async function POST(req: NextRequest) {
     if (!user) {
       return NextResponse.json(
         {
-          error: "Unauthorized",
+          error: 'Unauthorized',
         },
         {
           status: 401,
-        },
+        }
       );
     }
 
-    if (user.publicMetadata.role !== "admin") {
+    if (user.publicMetadata.role !== 'admin') {
       return NextResponse.json(
         {
-          error: "Unauthorized",
+          error: 'Unauthorized',
         },
         {
           status: 401,
-        },
+        }
       );
     }
 
-    const { memeName, memeDescription, memeTags, memeImageURL, memeFileKey } =
-      await req.json();
+    const { memeName, memeDescription, memeTags, memeImageURL, memeFileKey } = await req.json();
 
     const meme = await prisma.meme.create({
       data: {
@@ -44,31 +43,31 @@ export async function POST(req: NextRequest) {
     if (!meme) {
       return NextResponse.json(
         {
-          error: "Meme creation failed",
+          error: 'Meme creation failed',
         },
         {
           status: 500,
-        },
+        }
       );
     }
 
     return NextResponse.json(
       {
-        message: "Meme created successfully",
+        message: 'Meme created successfully',
         data: meme,
       },
       {
         status: 201,
-      },
+      }
     );
   } catch (error) {
     return NextResponse.json(
       {
-        error: "Internal Server Error",
+        error: 'Internal Server Error',
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }
@@ -79,22 +78,22 @@ export async function DELETE(req: NextRequest) {
     if (!user) {
       return NextResponse.json(
         {
-          error: "Unauthorized",
+          error: 'Unauthorized',
         },
         {
           status: 401,
-        },
+        }
       );
     }
 
-    if (user.publicMetadata.role !== "admin") {
+    if (user.publicMetadata.role !== 'admin') {
       return NextResponse.json(
         {
-          error: "Unauthorized",
+          error: 'Unauthorized',
         },
         {
           status: 401,
-        },
+        }
       );
     }
 
@@ -103,11 +102,11 @@ export async function DELETE(req: NextRequest) {
     if (!memeFileKey) {
       return NextResponse.json(
         {
-          error: "No file key provided",
+          error: 'No file key provided',
         },
         {
           status: 404,
-        },
+        }
       );
     }
 
@@ -115,20 +114,20 @@ export async function DELETE(req: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "Meme deleted successfully",
+        message: 'Meme deleted successfully',
       },
       {
         status: 200,
-      },
+      }
     );
   } catch (error) {
     return NextResponse.json(
       {
-        error: "Internal Server Error",
+        error: 'Internal Server Error',
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }

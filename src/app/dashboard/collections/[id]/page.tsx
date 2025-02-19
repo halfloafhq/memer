@@ -1,10 +1,10 @@
-"use client";
-import React from "react";
-import Loader from "@/components/loader";
-import { useFetchCollection } from "@/hooks/collections/useFetchCollection";
-import { CollectionNotFound } from "./_components/collection-not-found";
-import { CollectionMemeCard } from "./_components/collection-meme-card";
-import { CollectionHeader } from "./_components/collection-header";
+'use client';
+import React from 'react';
+import Loader from '@/components/loader';
+import { useFetchCollection } from '@/hooks/collections/useFetchCollection';
+import { CollectionNotFound } from './_components/collection-not-found';
+import { CollectionMemeCard } from './_components/collection-meme-card';
+import { CollectionHeader } from './_components/collection-header';
 
 export default function CollectionPage({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -36,11 +36,8 @@ export default function CollectionPage({ params }: { params: { id: string } }) {
           onEditCollectionSuccess={refetch}
         />
         <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-4 dark:text-white">
-            Memes in this Collection
-          </h2>
-          {collectionWithMemes.memes &&
-          collectionWithMemes.memes.length >= 1 ? (
+          <h2 className="text-xl font-semibold mb-4 dark:text-white">Memes in this Collection</h2>
+          {collectionWithMemes.memes && collectionWithMemes.memes.length >= 1 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {collectionWithMemes.memes.map((memeCollection) => (
                 <CollectionMemeCard
@@ -55,9 +52,7 @@ export default function CollectionPage({ params }: { params: { id: string } }) {
               ))}
             </div>
           ) : (
-            <p className="text-gray-500 dark:text-gray-400">
-              No memes in this collection yet.
-            </p>
+            <p className="text-gray-500 dark:text-gray-400">No memes in this collection yet.</p>
           )}
         </div>
       </>

@@ -1,6 +1,6 @@
-import Image from "next/image";
-import React from "react";
-import MoreInfo from "./more-info";
+import Image from 'next/image';
+import React from 'react';
+import MoreInfo from './more-info';
 
 interface CollectionMemeCardProps {
   url: string;
@@ -22,15 +22,9 @@ export function CollectionMemeCard({
   return (
     <div className="border rounded-lg p-4 shadow-sm dark:bg-secondary dark:border-gray-700 relative">
       <div className="relative aspect-square mb-2">
-        <Image
-          src={url}
-          alt={name}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-md"
-        />
+        <Image src={url} alt={name} layout="fill" objectFit="cover" className="rounded-md" />
       </div>
-      <p className="text-center dark:text-white">{name ?? "Meme"}</p>
+      <p className="text-center dark:text-white">{name ?? 'Meme'}</p>
       <MoreInfo
         src={url}
         name={name}
