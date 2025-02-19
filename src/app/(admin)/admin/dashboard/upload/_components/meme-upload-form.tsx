@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import Image from 'next/image';
-import { CloudUpload, X, Plus, XIcon } from 'lucide-react';
+import { CloudUpload, X, Plus } from 'lucide-react';
 import {
   Select,
   SelectContent,
@@ -16,29 +16,7 @@ import { useState } from 'react';
 import UploadBtn from '@/components/image-upload-button';
 import { useUpload } from '@/hooks/useUpload';
 import { useToast } from '@/components/ui/use-toast';
-import { useRouter } from 'next/navigation';
-
-const predefinedTags = [
-  'Funny',
-  'Relatable',
-  'Wholesome',
-  'Sarcastic',
-  'Ironic',
-  'Nostalgic',
-  'Animals',
-  'Politics',
-  'Movies',
-  'Gaming',
-  'Sports',
-  'Music',
-  'Technology',
-  'Science',
-  'Food',
-  'Fashion',
-  'Art',
-  'Literature',
-  'Dark',
-];
+import { predefinedTags } from '@/data/tags';
 
 interface MemeUploadFormProps {
   setRender: (date: Date) => void;

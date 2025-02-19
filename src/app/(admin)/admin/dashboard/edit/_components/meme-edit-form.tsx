@@ -18,28 +18,7 @@ import UploadBtn from '@/components/image-upload-button';
 import { useUpload } from '@/hooks/useUpload';
 import { useToast } from '@/components/ui/use-toast';
 import { DeleteMeme } from '@/components/delete-meme';
-
-const predefinedTags = [
-  'Funny',
-  'Relatable',
-  'Wholesome',
-  'Sarcastic',
-  'Ironic',
-  'Nostalgic',
-  'Animals',
-  'Politics',
-  'Movies',
-  'Gaming',
-  'Sports',
-  'Music',
-  'Technology',
-  'Science',
-  'Food',
-  'Fashion',
-  'Art',
-  'Literature',
-  'Dark',
-];
+import { predefinedTags } from '@/data/tags';
 
 export default function MemeEditForm() {
   const searchParams = useSearchParams();
@@ -49,7 +28,7 @@ export default function MemeEditForm() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [customTag, setCustomTag] = useState<string>('');
   const [removingImage, setRemovingImage] = useState<boolean>(false);
-  const { success, fileUrl, fileKey, setFileUrl, setSuccess, setFileKey } = useUpload();
+  const { fileUrl, fileKey, setFileUrl, setSuccess, setFileKey } = useUpload();
   const [loading, setLoading] = useState<boolean>(false);
   const { toast } = useToast();
 
