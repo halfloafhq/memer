@@ -17,6 +17,7 @@ import UploadBtn from '@/components/image-upload-button';
 import { useUpload } from '@/hooks/useUpload';
 import { useToast } from '@/components/ui/use-toast';
 import { predefinedTags } from '@/data/tags';
+import { useUploadMeme } from '@/hooks/memes/useUploadMeme';
 
 interface MemeUploadFormProps {
   setRender: (date: Date) => void;
@@ -26,9 +27,9 @@ export default function MemeUploadForm({ setRender }: MemeUploadFormProps) {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [customTag, setCustomTag] = useState<string>('');
   const { success, fileUrl, fileKey, setFileUrl, setSuccess, setFileKey } = useUpload();
+  const { uploadMeme, loading } = useUploadMeme();
   const [memeName, setMemeName] = useState<string>('');
   const [memeDescription, setMemeDescription] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
   const [removingImage, setRemovingImage] = useState<boolean>(false);
   const { toast } = useToast();
 
@@ -47,6 +48,14 @@ export default function MemeUploadForm({ setRender }: MemeUploadFormProps) {
 
   function removeTag(tag: string) {
     setSelectedTags(selectedTags.filter((t) => t !== tag));
+  }
+
+  function resetValues() {
+    setFileUrl(null);
+    setMemeName('');
+    setMemeDescription('');
+    setSelectedTags([]);
+    setRender(new Date());
   }
 
   async function handleUploadMeme(e: React.FormEvent<HTMLFormElement>) {
@@ -71,41 +80,7 @@ export default function MemeUploadForm({ setRender }: MemeUploadFormProps) {
       });
 
     if (success) {
-      setLoading(true);
-      const req = await fetch('/api/memes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          memeName,
-          memeDescription,
-          memeTags: selectedTags,
-          memeImageURL: fileUrl,
-          memeFileKey: fileKey,
-        }),
-      });
-
-      const resp = await req.json();
-
-      if (req.status === 201) {
-        setFileUrl(null);
-        setMemeName('');
-        setMemeDescription('');
-        setSelectedTags([]);
-        toast({
-          title: 'Meme uploaded successfully',
-          description: resp.data.name + ' has been uploaded',
-        });
-        setRender(new Date());
-      } else {
-        toast({
-          title: 'Meme upload failed',
-          description: resp.error,
-          variant: 'destructive',
-        });
-      }
-      setLoading(false);
+      await uploadMeme(memeName, memeDescription, selectedTags, fileUrl, fileKey, resetValues);
     }
   }
 
