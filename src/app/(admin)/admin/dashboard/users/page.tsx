@@ -1,8 +1,9 @@
 import { redirect } from 'next/navigation';
 import { checkRole } from '@/utils/roles';
 import { clerkClient } from '@clerk/nextjs/server';
-import UserCard from './_components/user-card';
 import SearchUsers from '@/components/users/search-users';
+import { banUserAction, unbanUserAction } from './_actions';
+import UserCard from '@/components/users/user-card';
 
 export default async function AdminDashboardUsersPage(params: {
   searchParams: { search?: string };
@@ -40,6 +41,8 @@ export default async function AdminDashboardUsersPage(params: {
                       ?.emailAddress
                   }
                   role={user.publicMetadata.role as string}
+                  onBanUser={banUserAction}
+                  onUnbanUser={unbanUserAction}
                 />
               ))}
           </div>

@@ -1,7 +1,5 @@
-import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Ban, ShieldMinus, ShieldPlus } from 'lucide-react';
-import { banUserAction, unbanUserAction } from '../_actions';
 import Image from 'next/image';
 
 interface UserCardProps {
@@ -12,6 +10,8 @@ interface UserCardProps {
   email: string | undefined;
   banned: boolean;
   role: string | undefined;
+  onBanUser: (formData: FormData) => Promise<void>;
+  onUnbanUser: (formData: FormData) => Promise<void>;
 }
 
 export default function UserCard({
@@ -22,6 +22,8 @@ export default function UserCard({
   banned,
   email,
   role,
+  onBanUser,
+  onUnbanUser,
 }: UserCardProps) {
   return (
     <div key={userId} className="bg-white rounded-lg shadow-md p-6">
@@ -49,7 +51,7 @@ export default function UserCard({
           Make Moderator
         </Button>
         {banned ? (
-          <form action={unbanUserAction} className="w-full">
+          <form action={onUnbanUser} className="w-full">
             <input type="hidden" name="userId" value={userId} />
             <Button
               type="submit"
@@ -60,7 +62,7 @@ export default function UserCard({
             </Button>
           </form>
         ) : (
-          <form action={banUserAction} className="w-full">
+          <form action={onBanUser} className="w-full">
             <input type="hidden" name="userId" value={userId} />
             <Button className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded">
               <Ban className="mr-2" />
