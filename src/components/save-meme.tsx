@@ -1,6 +1,6 @@
-"use client";
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
+'use client';
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -9,18 +9,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Folder, FolderOpen, Loader2 } from "lucide-react";
-import { useUser } from "@clerk/nextjs";
-import { Collection } from "@prisma/client";
-import { useRouter } from "next/navigation";
-import { useToast } from "./ui/use-toast";
-import CollectionDialog from "./collection-dialog";
-import { useFetchCollections } from "@/hooks/collections/useFetchCollections";
-import { usePostMemeToCollection } from "@/hooks/memes/usePostMemeToCollection";
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Folder, FolderOpen, Loader2 } from 'lucide-react';
+import { useUser } from '@clerk/nextjs';
+import { Collection } from '@prisma/client';
+import { useRouter } from 'next/navigation';
+import { useToast } from './ui/use-toast';
+import CollectionDialog from './collection-dialog';
+import { useFetchCollections } from '@/hooks/collections/useFetchCollections';
+import { usePostMemeToCollection } from '@/hooks/memes/usePostMemeToCollection';
 
 interface MemeProps {
   memeId: string;
@@ -30,46 +30,35 @@ interface MemeProps {
 
 export default function SaveMeme({ src, name, memeId }: MemeProps) {
   const { isLoaded, isSignedIn } = useUser();
-  const {
-    collections,
-    refetch,
-    loading: fetchCollectionsLoading,
-  } = useFetchCollections();
-  const { postMemeToCollection, loading: postMemeLoading } =
-    usePostMemeToCollection();
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [selectedCollection, setSelectedCollection] =
-    useState<Collection | null>(null);
+  const { collections, refetch, loading: fetchCollectionsLoading } = useFetchCollections();
+  const { postMemeToCollection, loading: postMemeLoading } = usePostMemeToCollection();
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectedCollection, setSelectedCollection] = useState<Collection | null>(null);
   const [open, setOpen] = useState<boolean>(false);
   const router = useRouter();
   const { toast } = useToast();
 
   const filteredCollections = collections.filter((collection) =>
-    collection.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    collection.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleOpenChange = (open: boolean) => {
     if (open) {
       setSelectedCollection(null);
-      setSearchTerm("");
+      setSearchTerm('');
     }
     setOpen(open);
   };
 
   async function handleSaveMeme() {
     if (selectedCollection) {
-      await postMemeToCollection(
-        memeId,
-        selectedCollection.id,
-        name,
-        selectedCollection.name,
-      );
+      await postMemeToCollection(memeId, selectedCollection.id, name, selectedCollection.name);
       setOpen(false);
     } else {
       return toast({
-        title: "Please select a collection",
-        description: "Please select a collection to save your meme.",
-        variant: "destructive",
+        title: 'Please select a collection',
+        description: 'Please select a collection to save your meme.',
+        variant: 'destructive',
       });
     }
   }
@@ -85,7 +74,7 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
           <p>Please log in to save memes to your collection.</p>
           <Button
             onClick={() => {
-              router.push("/sign-in");
+              router.push('/sign-in');
             }}
             className="mt-4"
           >
@@ -98,9 +87,7 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
     if (collections.length === 0) {
       return (
         <div className="text-center">
-          <p className="mb-4">
-            You have no collections. Create a collection to save memes.
-          </p>
+          <p className="mb-4">You have no collections. Create a collection to save memes.</p>
           <CollectionDialog onSuccess={refetch} />
         </div>
       );
@@ -126,8 +113,8 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
               key={collection.id}
               className={`p-2 cursor-pointer dark:hover:bg-primary hover:bg-gray-100 rounded ${
                 selectedCollection?.id === collection.id
-                  ? "bg-primary text-white hover:bg-primary/80 hover:text-white"
-                  : ""
+                  ? 'bg-primary text-white hover:bg-primary/80 hover:text-white'
+                  : ''
               }`}
               onClick={() => {
                 if (selectedCollection?.id !== collection.id) {
@@ -174,9 +161,7 @@ export default function SaveMeme({ src, name, memeId }: MemeProps) {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Choose a collection</DialogTitle>
-          <DialogDescription>
-            Search and select a collection to save your meme.
-          </DialogDescription>
+          <DialogDescription>Search and select a collection to save your meme.</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">{renderDialogContent()}</div>
       </DialogContent>

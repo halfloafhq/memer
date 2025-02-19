@@ -1,6 +1,6 @@
-"use server";
-import prisma from "@/lib/prisma";
-import { currentUser } from "@clerk/nextjs/server";
+'use server';
+import prisma from '@/lib/prisma';
+import { currentUser } from '@clerk/nextjs/server';
 
 export async function removeMemeFromCollectionAction({
   collectionId,
@@ -15,7 +15,7 @@ export async function removeMemeFromCollectionAction({
     if (!user) {
       return {
         success: false,
-        message: "Unauthorized: User not authenticated",
+        message: 'Unauthorized: User not authenticated',
       };
     }
 
@@ -30,7 +30,7 @@ export async function removeMemeFromCollectionAction({
     if (!collection) {
       return {
         success: false,
-        message: "Collection not found or unauthorized",
+        message: 'Collection not found or unauthorized',
       };
     }
 
@@ -43,19 +43,19 @@ export async function removeMemeFromCollectionAction({
     if (!memeCollection) {
       return {
         success: false,
-        message: "Meme not found in the collection",
+        message: 'Meme not found in the collection',
       };
     }
 
     return {
       success: true,
-      message: "Meme removed from collection successfully",
+      message: 'Meme removed from collection successfully',
     };
   } catch (error) {
-    console.error("Error removing meme from collection:", error);
+    console.error('Error removing meme from collection:', error);
     return {
       success: false,
-      message: "Error removing meme from collection",
+      message: 'Error removing meme from collection',
     };
   }
 }

@@ -6,23 +6,17 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Edit, Loader2 } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
-import { useToast } from "@/components/ui/use-toast";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { useUpdateCollection } from "@/hooks/collections/useUpdateCollection";
+} from '@/components/ui/dialog';
+import { Edit, Loader2 } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { useToast } from '@/components/ui/use-toast';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { useUpdateCollection } from '@/hooks/collections/useUpdateCollection';
 
 interface EditCollectionProps {
   collectionId: string;
@@ -32,7 +26,7 @@ interface EditCollectionProps {
 
 const collectionFormSchema = z.object({
   name: z.string().min(3, {
-    message: "Name must be at least 3 characters",
+    message: 'Name must be at least 3 characters',
   }),
 });
 
@@ -57,7 +51,7 @@ export function EditCollection({ name, collectionId, onSuccess }: EditCollection
       return toast({
         title: "Uh oh! Couldn't create collection",
         description: err.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     } finally {
       collectionForm.reset();
@@ -74,9 +68,7 @@ export function EditCollection({ name, collectionId, onSuccess }: EditCollection
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Edit collection</DialogTitle>
-          <DialogDescription>
-            Edit this collection&apos;s name
-          </DialogDescription>
+          <DialogDescription>Edit this collection&apos;s name</DialogDescription>
         </DialogHeader>
         <Form {...collectionForm}>
           <form onSubmit={collectionForm.handleSubmit(onSubmit)}>
@@ -86,11 +78,7 @@ export function EditCollection({ name, collectionId, onSuccess }: EditCollection
               render={({ field }) => (
                 <FormItem className="w-full flex flex-col items-center justify-center">
                   <FormControl>
-                    <Input
-                      className="col-span-3"
-                      placeholder="Twitter"
-                      {...field}
-                    />
+                    <Input className="col-span-3" placeholder="Twitter" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -99,7 +87,7 @@ export function EditCollection({ name, collectionId, onSuccess }: EditCollection
             <DialogFooter className="mt-6">
               <Button type="submit" disabled={loading}>
                 {!loading ? (
-                  "Edit"
+                  'Edit'
                 ) : (
                   <span className="flex items-center">
                     <Loader2 className="mr-2 animate-spin" /> Editing

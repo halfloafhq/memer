@@ -1,8 +1,8 @@
-import prisma from "@/lib/prisma";
-import { currentUser } from "@clerk/nextjs/server";
-import { NextRequest, NextResponse } from "next/server";
+import prisma from '@/lib/prisma';
+import { currentUser } from '@clerk/nextjs/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
@@ -11,9 +11,9 @@ export async function GET() {
     if (!user) {
       return NextResponse.json(
         {
-          message: "User not authenticated",
+          message: 'User not authenticated',
         },
-        { status: 401 },
+        { status: 401 }
       );
     }
 
@@ -25,22 +25,22 @@ export async function GET() {
 
     return NextResponse.json(
       {
-        message: "Fetched collections successfully",
+        message: 'Fetched collections successfully',
         data: collections,
       },
       {
         status: 200,
-      },
+      }
     );
   } catch (err: any) {
     console.error(err);
     return NextResponse.json(
       {
-        message: "Internal Server error",
+        message: 'Internal Server error',
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }
@@ -52,9 +52,9 @@ export async function POST(req: NextRequest) {
     if (!user) {
       return NextResponse.json(
         {
-          message: "User not authenticated",
+          message: 'User not authenticated',
         },
-        { status: 401 },
+        { status: 401 }
       );
     }
 
@@ -69,21 +69,21 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "Created collection successfully",
+        message: 'Created collection successfully',
       },
       {
         status: 201,
-      },
+      }
     );
   } catch (err: any) {
     console.error(err);
     return NextResponse.json(
       {
-        message: "Internal Server error",
+        message: 'Internal Server error',
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }
@@ -94,9 +94,9 @@ export async function DELETE(req: NextRequest) {
     if (!user) {
       return NextResponse.json(
         {
-          message: "User not authenticated",
+          message: 'User not authenticated',
         },
-        { status: 401 },
+        { status: 401 }
       );
     }
 
@@ -112,11 +112,11 @@ export async function DELETE(req: NextRequest) {
     if (!collection) {
       return NextResponse.json(
         {
-          message: "Collection not found or unauthorized",
+          message: 'Collection not found or unauthorized',
         },
         {
           status: 404,
-        },
+        }
       );
     }
 
@@ -129,21 +129,21 @@ export async function DELETE(req: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "Deleted collection successfully",
+        message: 'Deleted collection successfully',
       },
       {
         status: 201,
-      },
+      }
     );
   } catch (err) {
     console.error(err);
     return NextResponse.json(
       {
-        message: "Internal Server error",
+        message: 'Internal Server error',
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }

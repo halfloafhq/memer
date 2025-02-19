@@ -1,5 +1,5 @@
-import { useToast } from "@/components/ui/use-toast";
-import { useCallback, useState } from "react";
+import { useToast } from '@/components/ui/use-toast';
+import { useCallback, useState } from 'react';
 
 export function useDeleteMeme() {
   const { toast } = useToast();
@@ -10,25 +10,25 @@ export function useDeleteMeme() {
       try {
         setLoading(true);
         const res = await fetch(`/api/memes/${memeId}`, {
-          method: "DELETE",
+          method: 'DELETE',
         });
         if (res.ok) {
           toast({
-            title: "Meme deleted",
-            description: "The meme has been deleted",
+            title: 'Meme deleted',
+            description: 'The meme has been deleted',
           });
         }
       } catch (error: any) {
         toast({
-          title: "Error",
+          title: 'Error',
           description: error.message,
-          variant: "destructive",
+          variant: 'destructive',
         });
       } finally {
         setLoading(false);
       }
     },
-    [toast],
+    [toast]
   );
 
   return {

@@ -1,5 +1,5 @@
-import { UploadButton } from "@/utils/uploadthing";
-import { useToast } from "./ui/use-toast";
+import { UploadButton } from '@/utils/uploadthing';
+import { useToast } from './ui/use-toast';
 
 interface UploadBtnProps {
   setFileUrl: (url: string | null) => void;
@@ -7,11 +7,7 @@ interface UploadBtnProps {
   setSuccess: (success: boolean) => void;
 }
 
-export default function UploadBtn({
-  setFileUrl,
-  setFileKey,
-  setSuccess,
-}: UploadBtnProps) {
+export default function UploadBtn({ setFileUrl, setFileKey, setSuccess }: UploadBtnProps) {
   const { toast } = useToast();
 
   return (
@@ -24,24 +20,22 @@ export default function UploadBtn({
           setFileKey(res[0].key);
           setSuccess(true);
           toast({
-            title: "Upload Completed",
-            description: "Image uploaded successfully!",
+            title: 'Upload Completed',
+            description: 'Image uploaded successfully!',
           });
         }
       }}
       onUploadError={(error: Error) => {
         // Do something with the error.
         toast({
-          title: "Uh oh! Something went wrong",
+          title: 'Uh oh! Something went wrong',
           description: error.message,
-          variant: "destructive",
+          variant: 'destructive',
         });
       }}
       onBeforeUploadBegin={(files) => {
         // Preprocess files before uploading (e.g. rename them)
-        return files.map(
-          (f) => new File([f], "renamed-" + f.name, { type: f.type }),
-        );
+        return files.map((f) => new File([f], 'renamed-' + f.name, { type: f.type }));
       }}
     />
   );

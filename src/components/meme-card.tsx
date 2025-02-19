@@ -1,5 +1,5 @@
-"use client";
-import React, { useEffect, useState } from "react";
+'use client';
+import React, { useEffect, useState } from 'react';
 import {
   Sheet,
   SheetContent,
@@ -7,19 +7,19 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import Meme from "./meme";
-import Image from "next/image";
-import SaveMeme from "./save-meme";
-import { Button } from "./ui/button";
-import { Edit, FileDown } from "lucide-react";
-import { useToast } from "./ui/use-toast";
-import { downloadMeme } from "@/utils/download";
-import { useUser } from "@clerk/nextjs";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useRouter } from "next/navigation";
-import ImportToEditor from "./import-to-editor";
-import CollectionDialog from "./collection-dialog";
+} from '@/components/ui/sheet';
+import Meme from './meme';
+import Image from 'next/image';
+import SaveMeme from './save-meme';
+import { Button } from './ui/button';
+import { Edit, FileDown } from 'lucide-react';
+import { useToast } from './ui/use-toast';
+import { downloadMeme } from '@/utils/download';
+import { useUser } from '@clerk/nextjs';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useRouter } from 'next/navigation';
+import ImportToEditor from './import-to-editor';
+import CollectionDialog from './collection-dialog';
 
 type MemeCardProps = {
   memeId: string;
@@ -28,12 +28,7 @@ type MemeCardProps = {
   description: string;
 };
 
-export default function MemeCard({
-  src,
-  name,
-  description,
-  memeId,
-}: MemeCardProps) {
+export default function MemeCard({ src, name, description, memeId }: MemeCardProps) {
   const { user } = useUser();
   const router = useRouter();
   const { toast } = useToast();
@@ -50,24 +45,22 @@ export default function MemeCard({
       const success = await downloadMeme(src, name);
       if (!success) {
         toast({
-          title: "Download Failed",
-          description:
-            "There was an error downloading the image. Please try again.",
-          variant: "destructive",
+          title: 'Download Failed',
+          description: 'There was an error downloading the image. Please try again.',
+          variant: 'destructive',
         });
       } else {
         toast({
-          title: "Downloaded!",
+          title: 'Downloaded!',
           description: `${name} has been downloaded.`,
         });
       }
     } catch (error) {
-      console.error("Download failed:", error);
+      console.error('Download failed:', error);
       toast({
-        title: "Download Failed",
-        description:
-          "There was an error downloading the image. Please try again.",
-        variant: "destructive",
+        title: 'Download Failed',
+        description: 'There was an error downloading the image. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -75,7 +68,7 @@ export default function MemeCard({
   };
 
   useEffect(() => {
-    setIsAdmin(user?.publicMetadata.role === "admin");
+    setIsAdmin(user?.publicMetadata.role === 'admin');
   }, [user]);
 
   return (
@@ -104,7 +97,7 @@ export default function MemeCard({
           />
           <Button onClick={handleDownload} className="w-full sm:w-auto">
             <FileDown className="mr-2" />
-            {loading ? "Downloading..." : "Download"}
+            {loading ? 'Downloading...' : 'Download'}
           </Button>
           <SaveMeme src={src} name={name} memeId={memeId} />
           <ImportToEditor src={src} />

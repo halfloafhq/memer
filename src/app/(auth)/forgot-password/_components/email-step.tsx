@@ -1,8 +1,8 @@
-import React from "react";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
+import React from 'react';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -10,11 +10,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 
 const emailSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z.string().email('Invalid email address'),
 });
 
 type EmailFormValues = z.infer<typeof emailSchema>;
@@ -28,7 +28,7 @@ export const EmailStep: React.FC<EmailStepProps> = ({ onSubmit, loading }) => {
   const form = useForm<EmailFormValues>({
     resolver: zodResolver(emailSchema),
     defaultValues: {
-      email: "",
+      email: '',
     },
   });
 
@@ -57,7 +57,7 @@ export const EmailStep: React.FC<EmailStepProps> = ({ onSubmit, loading }) => {
           className="w-full text-white font-semibold btn btn-reverse btn-arrow"
           disabled={loading}
         >
-          {loading ? "Loading..." : "Continue"}
+          {loading ? 'Loading...' : 'Continue'}
         </Button>
       </form>
     </Form>

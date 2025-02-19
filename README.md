@@ -1,6 +1,7 @@
 ![Test status](https://github.com/halfloafhq/memer/actions/workflows/ci.yml/badge.svg)
 
 # Memer
+
 ### One stop meme workshop
 
 ## Overview
@@ -50,13 +51,13 @@ This project is a comprehensive meme management platform that allows users to se
 You can develop with Docker as well with the following commands:
 
 1. Build image
-    ```
-    docker build -t memer .
-    ```
+   ```
+   docker build -t memer .
+   ```
 2. Run the image
-    ```
-    docker run -p 3000:3000 memer
-    ```
+   ```
+   docker run -p 3000:3000 memer
+   ```
 3. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ## Contributing

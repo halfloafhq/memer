@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -7,26 +7,20 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { FolderPlusIcon, Loader2 } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
-import { useToast } from "@/components/ui/use-toast";
-import { useState } from "react";
-import { usePostCollection } from "@/hooks/collections/usePostCollection";
+} from '@/components/ui/dialog';
+import { FolderPlusIcon, Loader2 } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { useToast } from '@/components/ui/use-toast';
+import { useState } from 'react';
+import { usePostCollection } from '@/hooks/collections/usePostCollection';
 
 const collectionFormSchema = z.object({
   name: z.string().min(3, {
-    message: "Name must be at least 3 characters",
+    message: 'Name must be at least 3 characters',
   }),
 });
 
@@ -36,7 +30,7 @@ interface CollectionDialogProps {
 }
 
 export default function CollectionDialog({
-  text = "Add collection",
+  text = 'Add collection',
   onSuccess,
 }: CollectionDialogProps) {
   const { toast } = useToast();
@@ -47,7 +41,7 @@ export default function CollectionDialog({
   const collectionForm = useForm<z.infer<typeof collectionFormSchema>>({
     resolver: zodResolver(collectionFormSchema),
     defaultValues: {
-      name: "",
+      name: '',
     },
   });
 
@@ -60,7 +54,7 @@ export default function CollectionDialog({
       return toast({
         title: "Uh oh! Couldn't create collection",
         description: err.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     } finally {
       setOpen(false);
@@ -91,11 +85,7 @@ export default function CollectionDialog({
               render={({ field }) => (
                 <FormItem className="w-full flex flex-col items-center justify-center">
                   <FormControl>
-                    <Input
-                      className="col-span-3"
-                      placeholder="Twitter"
-                      {...field}
-                    />
+                    <Input className="col-span-3" placeholder="Twitter" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -104,7 +94,7 @@ export default function CollectionDialog({
             <DialogFooter className="mt-6">
               <Button type="submit" disabled={loading}>
                 {!loading ? (
-                  "Create"
+                  'Create'
                 ) : (
                   <span className="flex items-center">
                     <Loader2 className="mr-2 animate-spin" /> Creating

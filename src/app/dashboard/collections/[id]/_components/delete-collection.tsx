@@ -7,13 +7,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
-import { useDeleteCollection } from "@/hooks/collections/useDeleteCollection";
-import { useFetchCollections } from "@/hooks/collections/useFetchCollections";
-import { Loader2, Trash } from "lucide-react";
-import React, { useState } from "react";
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
+import { useDeleteCollection } from '@/hooks/collections/useDeleteCollection';
+import { useFetchCollections } from '@/hooks/collections/useFetchCollections';
+import { Loader2, Trash } from 'lucide-react';
+import React, { useState } from 'react';
 
 interface DeleteCollectionProps {
   collectionId: string;
@@ -31,9 +31,9 @@ export function DeleteCollection({ collectionId }: DeleteCollectionProps) {
       await refetch();
     } catch (error: any) {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     } finally {
       setOpen(false);
@@ -49,8 +49,8 @@ export function DeleteCollection({ collectionId }: DeleteCollectionProps) {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            This action cannot be undone. This will permanently delete your account and remove your
+            data from our servers.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -67,7 +67,7 @@ export function DeleteCollection({ collectionId }: DeleteCollectionProps) {
                 Deleting
               </span>
             ) : (
-              "Delete"
+              'Delete'
             )}
           </Button>
         </AlertDialogFooter>

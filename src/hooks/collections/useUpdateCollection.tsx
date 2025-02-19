@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useToast } from "@/components/ui/use-toast";
-import { useCallback, useState } from "react";
+import { useToast } from '@/components/ui/use-toast';
+import { useCallback, useState } from 'react';
 
 export function useUpdateCollection() {
   const { toast } = useToast();
@@ -12,12 +12,12 @@ export function useUpdateCollection() {
       setLoading(true);
       try {
         const req = await fetch(`/api/collections/${collectionId}`, {
-          method: "PATCH",
+          method: 'PATCH',
           body: JSON.stringify(payload),
         });
         if (req.status === 200) {
           toast({
-            title: "Edit collection!",
+            title: 'Edit collection!',
             description: `Renamed to ${payload.collectionName} successfully.`,
           });
         }
@@ -26,13 +26,13 @@ export function useUpdateCollection() {
         return toast({
           title: "Uh oh! Couldn't create collection",
           description: err.message,
-          variant: "destructive",
+          variant: 'destructive',
         });
       } finally {
         setLoading(false);
       }
     },
-    [toast],
+    [toast]
   );
 
   return {

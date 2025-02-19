@@ -1,29 +1,24 @@
-"use client";
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
-import Loader from "@/components/loader";
-import { EditorData } from "@/types/collection";
-import { ExcalidrawElement } from "@excalidraw/excalidraw/types/element/types";
-import { AppState, BinaryFiles } from "@excalidraw/excalidraw/types/types";
+'use client';
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+import Loader from '@/components/loader';
+import { EditorData } from '@/types/collection';
+import { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types';
+import { AppState, BinaryFiles } from '@excalidraw/excalidraw/types/types';
 
-const Excalidraw = dynamic(
-  async () => (await import("@excalidraw/excalidraw")).Excalidraw,
-  {
-    ssr: false,
-  },
-);
+const Excalidraw = dynamic(async () => (await import('@excalidraw/excalidraw')).Excalidraw, {
+  ssr: false,
+});
 
 export default function EditorPage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [initialData, setInitialData] = useState<EditorData | null>(null);
 
   useEffect(() => {
-    if (!localStorage.getItem("MEMER_EXCALIDRAW_EDITOR_DATA")) {
-      localStorage.setItem("MEMER_EXCALIDRAW_EDITOR_DATA", JSON.stringify({}));
+    if (!localStorage.getItem('MEMER_EXCALIDRAW_EDITOR_DATA')) {
+      localStorage.setItem('MEMER_EXCALIDRAW_EDITOR_DATA', JSON.stringify({}));
     }
-    const data = JSON.parse(
-      localStorage.getItem("MEMER_EXCALIDRAW_EDITOR_DATA") || "{}",
-    );
+    const data = JSON.parse(localStorage.getItem('MEMER_EXCALIDRAW_EDITOR_DATA') || '{}');
     if (data) {
       setInitialData({
         ...data,
@@ -39,7 +34,7 @@ export default function EditorPage() {
   const onChange = (
     excalidrawElements: readonly ExcalidrawElement[],
     appState: AppState,
-    files: BinaryFiles,
+    files: BinaryFiles
   ) => {
     const data: EditorData = {
       elements: excalidrawElements,
@@ -47,7 +42,7 @@ export default function EditorPage() {
       files,
       scrollToContent: true,
     };
-    localStorage.setItem("MEMER_EXCALIDRAW_EDITOR_DATA", JSON.stringify(data));
+    localStorage.setItem('MEMER_EXCALIDRAW_EDITOR_DATA', JSON.stringify(data));
   };
 
   return (

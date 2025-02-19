@@ -1,14 +1,14 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { Button } from "./ui/button";
-import { Pencil } from "lucide-react";
-import { BinaryFileData, DataURL } from "@excalidraw/excalidraw/types/types";
-import { useToast } from "./ui/use-toast";
-import { EditorData } from "@/types/collection";
-import { useRouter } from "next/navigation";
-import { generateIdFromFile } from "@/utils/fileId";
-import { ExcalidrawImageElement } from "@excalidraw/excalidraw/types/element/types";
-import { useUser } from "@clerk/nextjs";
+'use client';
+import React, { useState, useEffect } from 'react';
+import { Button } from './ui/button';
+import { Pencil } from 'lucide-react';
+import { BinaryFileData, DataURL } from '@excalidraw/excalidraw/types/types';
+import { useToast } from './ui/use-toast';
+import { EditorData } from '@/types/collection';
+import { useRouter } from 'next/navigation';
+import { generateIdFromFile } from '@/utils/fileId';
+import { ExcalidrawImageElement } from '@excalidraw/excalidraw/types/element/types';
+import { useUser } from '@clerk/nextjs';
 
 interface ImportToEditorProps {
   src: string;
@@ -24,18 +24,18 @@ export default function ImportToEditor({ src }: ImportToEditorProps) {
   async function handleImport() {
     if (!isSignedIn) {
       toast({
-        title: "Not logged in!",
-        description: "To use the import to editor functionality, you need to be logged in.",
-        variant: "info",
+        title: 'Not logged in!',
+        description: 'To use the import to editor functionality, you need to be logged in.',
+        variant: 'info',
       });
       return;
     }
 
     if (!initialData) {
       toast({
-        title: "Import Failed",
-        description: "There was an error importing the meme. Please try again.",
-        variant: "destructive",
+        title: 'Import Failed',
+        description: 'There was an error importing the meme. Please try again.',
+        variant: 'destructive',
       });
       return;
     }
@@ -48,10 +48,10 @@ export default function ImportToEditor({ src }: ImportToEditorProps) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const blob = await response.blob();
-      const contentType = response.headers.get("Content-Type") || "image/png";
+      const contentType = response.headers.get('Content-Type') || 'image/png';
 
       // Create a File object
-      const fileName = src.split("/").pop() || "image";
+      const fileName = src.split('/').pop() || 'image';
       const file = new File([blob], fileName, { type: contentType });
 
       const fileId = await generateIdFromFile(file);
@@ -73,11 +73,11 @@ export default function ImportToEditor({ src }: ImportToEditorProps) {
 
       const binaryFileData: BinaryFileData = {
         mimeType: contentType as
-          | "image/png"
-          | "image/jpeg"
-          | "image/webp"
-          | "image/svg+xml"
-          | "image/gif",
+          | 'image/png'
+          | 'image/jpeg'
+          | 'image/webp'
+          | 'image/svg+xml'
+          | 'image/gif',
         id: fileId,
         dataURL: memeDataURL as DataURL,
         created: Date.now(),
@@ -85,21 +85,21 @@ export default function ImportToEditor({ src }: ImportToEditorProps) {
       };
 
       const imageElement: ExcalidrawImageElement = {
-        type: "image",
+        type: 'image',
         version: 2,
         versionNonce: 0,
         isDeleted: false,
         id: fileId,
-        fillStyle: "hachure",
+        fillStyle: 'hachure',
         strokeWidth: 1,
-        strokeStyle: "solid",
+        strokeStyle: 'solid',
         roughness: 1,
         opacity: 100,
         angle: 0,
         x: 0,
         y: 0,
-        strokeColor: "transparent",
-        backgroundColor: "transparent",
+        strokeColor: 'transparent',
+        backgroundColor: 'transparent',
         width: img.naturalWidth,
         height: img.naturalHeight,
         seed: Math.floor(Math.random() * 2 ** 31),
@@ -112,7 +112,7 @@ export default function ImportToEditor({ src }: ImportToEditorProps) {
         locked: false,
         fileId: fileId,
         scale: [1, 1],
-        status: "saved",
+        status: 'saved',
       };
 
       const { elements, appState } = initialData;
@@ -123,22 +123,19 @@ export default function ImportToEditor({ src }: ImportToEditorProps) {
         scrollToContent: true,
       };
 
-      localStorage.setItem(
-        "MEMER_EXCALIDRAW_EDITOR_DATA",
-        JSON.stringify(updatedData),
-      );
+      localStorage.setItem('MEMER_EXCALIDRAW_EDITOR_DATA', JSON.stringify(updatedData));
       router.push(`/dashboard/editor`);
 
       toast({
-        title: "Imported!",
-        description: "Meme was imported to editor.",
+        title: 'Imported!',
+        description: 'Meme was imported to editor.',
       });
     } catch (error) {
-      console.error("Import failed:", error);
+      console.error('Import failed:', error);
       toast({
-        title: "Import Failed",
-        description: "There was an error importing the meme. Please try again.",
-        variant: "destructive",
+        title: 'Import Failed',
+        description: 'There was an error importing the meme. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -146,12 +143,10 @@ export default function ImportToEditor({ src }: ImportToEditorProps) {
   }
 
   useEffect(() => {
-    if (!localStorage.getItem("MEMER_EXCALIDRAW_EDITOR_DATA")) {
-      localStorage.setItem("MEMER_EXCALIDRAW_EDITOR_DATA", JSON.stringify({}));
+    if (!localStorage.getItem('MEMER_EXCALIDRAW_EDITOR_DATA')) {
+      localStorage.setItem('MEMER_EXCALIDRAW_EDITOR_DATA', JSON.stringify({}));
     }
-    const data = JSON.parse(
-      localStorage.getItem("MEMER_EXCALIDRAW_EDITOR_DATA") || "{}",
-    );
+    const data = JSON.parse(localStorage.getItem('MEMER_EXCALIDRAW_EDITOR_DATA') || '{}');
     if (data) {
       setInitialData({
         ...data,
@@ -165,15 +160,10 @@ export default function ImportToEditor({ src }: ImportToEditorProps) {
 
   return (
     <div className="w-full flex items-center gap-2">
-      <Button
-        variant="outline"
-        className="w-full"
-        onClick={handleImport}
-        disabled={isLoading}
-      >
+      <Button variant="outline" className="w-full" onClick={handleImport} disabled={isLoading}>
         <Pencil className="h-5 w-5 mr-2" />
-        {isLoading && "Importing..."}
-        {!isLoading && "Import to Editor"}
+        {isLoading && 'Importing...'}
+        {!isLoading && 'Import to Editor'}
       </Button>
     </div>
   );

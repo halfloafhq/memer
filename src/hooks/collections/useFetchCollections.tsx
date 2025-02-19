@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useToast } from "@/components/ui/use-toast";
-import { Collection } from "@prisma/client";
-import { useCallback, useEffect, useState } from "react";
+import { useToast } from '@/components/ui/use-toast';
+import { Collection } from '@prisma/client';
+import { useCallback, useEffect, useState } from 'react';
 
 export function useFetchCollections() {
   const [collections, setCollections] = useState<Collection[]>([]);
@@ -12,7 +12,7 @@ export function useFetchCollections() {
   const fetchCollections = useCallback(async () => {
     setLoading(true);
     try {
-      const req = await fetch("/api/collections");
+      const req = await fetch('/api/collections');
       const res = await req.json();
       if (req.status === 200) {
         setCollections(res.data);
@@ -21,7 +21,7 @@ export function useFetchCollections() {
       toast({
         title: "Uh oh! Couldn't fetch collections",
         description: err.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -35,6 +35,6 @@ export function useFetchCollections() {
   return {
     collections,
     loading,
-    refetch: fetchCollections
+    refetch: fetchCollections,
   };
 }
