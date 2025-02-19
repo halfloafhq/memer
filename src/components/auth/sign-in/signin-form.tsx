@@ -18,7 +18,7 @@ import { useSignIn } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 import { Eye, EyeOff } from 'lucide-react';
-import OauthSignIn from '@/components/google-oauth';
+import OauthSignIn from '../google-oauth';
 
 const signInFormSchema = z.object({
   email: z.string().email(),

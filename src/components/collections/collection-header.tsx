@@ -1,4 +1,3 @@
-import React from 'react';
 import { EditCollection } from './edit-collection';
 import { DeleteCollection } from './delete-collection';
 import Link from 'next/link';

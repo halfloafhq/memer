@@ -15,7 +15,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useToast } from '@/components/ui/use-toast';
 import { downloadMeme } from '@/utils/download';
-import { removeMemeFromCollectionAction } from '../_actions';
 
 interface MoreInfoProps {
   src: string;
@@ -25,6 +24,15 @@ interface MoreInfoProps {
   memeCollectionId: string;
   className?: string;
   onDeleteSuccess: (id: string) => Promise<void>;
+  onRemoveMemeFromCollection: ({
+    memeId,
+    collectionId,
+    memeCollectionId,
+  }: {
+    memeId: string;
+    collectionId: string;
+    memeCollectionId: string;
+  }) => Promise<{ success: boolean; message: string }>;
 }
 
 export default function MoreInfo({
@@ -35,6 +43,7 @@ export default function MoreInfo({
   memeCollectionId,
   className = '',
   onDeleteSuccess,
+  onRemoveMemeFromCollection,
 }: MoreInfoProps) {
   const { toast } = useToast();
   const handleDownload = async () => {
@@ -64,7 +73,7 @@ export default function MoreInfo({
 
   const handleRemove = async () => {
     try {
-      const status = await removeMemeFromCollectionAction({
+      const status = await onRemoveMemeFromCollection({
         memeId: memeCollectionId,
         collectionId,
         memeCollectionId,

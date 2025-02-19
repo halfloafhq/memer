@@ -9,6 +9,15 @@ interface CollectionMemeCardProps {
   collectionId: string;
   memeCollectionId: string;
   onDeleteSuccess: (id: string) => Promise<void>;
+  onRemoveMemeFromCollection: ({
+    memeId,
+    collectionId,
+    memeCollectionId,
+  }: {
+    memeId: string;
+    collectionId: string;
+    memeCollectionId: string;
+  }) => Promise<{ success: boolean; message: string }>;
 }
 
 export function CollectionMemeCard({
@@ -18,6 +27,7 @@ export function CollectionMemeCard({
   collectionId,
   memeCollectionId,
   onDeleteSuccess,
+  onRemoveMemeFromCollection,
 }: CollectionMemeCardProps) {
   return (
     <div className="border rounded-lg p-4 shadow-sm dark:bg-secondary dark:border-gray-700 relative">
@@ -33,6 +43,7 @@ export function CollectionMemeCard({
         memeCollectionId={memeCollectionId}
         className="absolute top-2 right-2 p-1 rounded-full bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200 border border-black/15"
         onDeleteSuccess={onDeleteSuccess}
+        onRemoveMemeFromCollection={onRemoveMemeFromCollection}
       />
     </div>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
-import ForgotPasswordForm from './_components/forgot-password-form';
 import Link from 'next/link';
+import ForgotPasswordForm from '@/components/auth/forgot-password/forgot-password-form';
 
 export default function page() {
   return (

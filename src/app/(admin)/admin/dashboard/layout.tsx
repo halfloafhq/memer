@@ -1,7 +1,7 @@
 import React from 'react';
-import AdminSidebar from './_components/admin-sidebar';
 import { checkRole } from '@/utils/roles';
 import { redirect } from 'next/navigation';
+import AdminSidebar from '@/components/dashboard/admin-sidebar';
 
 function AdminDashboardLayout({
   children,

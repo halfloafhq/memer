@@ -3,10 +3,10 @@
 import * as React from 'react';
 import { OAuthStrategy } from '@clerk/types';
 import { useSignIn, useSignUp } from '@clerk/nextjs';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import Image from 'next/image';
 import { createUser } from '@/app/_actions';
-import { Spinner } from './spinner';
+import { Spinner } from '../loaders/spinner';
 
 export default function OauthSignIn() {
   const { signIn } = useSignIn();

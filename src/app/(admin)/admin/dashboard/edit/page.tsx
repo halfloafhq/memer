@@ -1,5 +1,6 @@
 'use client';
-import MemeEditForm from './_components/meme-edit-form';
+
+import MemeEditForm from "@/components/memes/meme-edit-form";
 
 export default function EditMemePage() {
   //get data here

@@ -1,6 +1,8 @@
-import React from 'react';
-import { Label } from '@/components/ui/label';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import Image from 'next/image';
@@ -12,26 +14,51 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useState } from 'react';
 import UploadBtn from '@/components/image-upload-button';
 import { useUpload } from '@/hooks/useUpload';
 import { useToast } from '@/components/ui/use-toast';
+import { DeleteMeme } from '@/components/memes/delete-meme';
 import { predefinedTags } from '@/data/tags';
-import { useUploadMeme } from '@/hooks/memes/useUploadMeme';
 
-interface MemeUploadFormProps {
-  setRender: (date: Date) => void;
-}
-
-export default function MemeUploadForm({ setRender }: MemeUploadFormProps) {
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [customTag, setCustomTag] = useState<string>('');
-  const { success, fileUrl, fileKey, setFileUrl, setSuccess, setFileKey } = useUpload();
-  const { uploadMeme, loading } = useUploadMeme();
+export default function MemeEditForm() {
+  const searchParams = useSearchParams();
+  const memeId = searchParams.get('memeId');
   const [memeName, setMemeName] = useState<string>('');
   const [memeDescription, setMemeDescription] = useState<string>('');
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [customTag, setCustomTag] = useState<string>('');
   const [removingImage, setRemovingImage] = useState<boolean>(false);
+  const { fileUrl, fileKey, setFileUrl, setSuccess, setFileKey } = useUpload();
+  const [loading, setLoading] = useState<boolean>(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (memeId) {
+      fetchMemeData();
+    }
+  }, [memeId, fetchMemeData]);
+
+  async function fetchMemeData() {
+    try {
+      const response = await fetch(`/api/memes/${memeId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch meme data');
+      }
+      const { data } = await response.json();
+      setMemeName(data.name);
+      setMemeDescription(data.description);
+      setSelectedTags(data.tags);
+      setFileUrl(data.url);
+      setFileKey(data.fileKey);
+    } catch (error: any) {
+      console.error('Error fetching meme data:', error);
+      toast({
+        title: 'Error',
+        description: error.message,
+        variant: 'destructive',
+      });
+    }
+  }
 
   function handleTagSelection(tag: string) {
     if (!selectedTags.includes(tag)) {
@@ -50,37 +77,70 @@ export default function MemeUploadForm({ setRender }: MemeUploadFormProps) {
     setSelectedTags(selectedTags.filter((t) => t !== tag));
   }
 
-  function resetValues() {
-    setFileUrl(null);
-    setMemeName('');
-    setMemeDescription('');
-    setSelectedTags([]);
-    setRender(new Date());
-  }
-
-  async function handleUploadMeme(e: React.FormEvent<HTMLFormElement>) {
+  async function handleUpdateMeme(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!fileUrl)
-      return toast({
-        title: 'Meme upload failed',
+    if (!fileUrl) {
+      toast({
+        title: 'Meme update failed',
         description: 'No file uploaded',
         variant: 'destructive',
       });
-    if (memeName === '' || memeDescription === '')
-      return toast({
-        title: 'Meme upload failed',
+      return;
+    }
+    if (memeName === '' || memeDescription === '') {
+      toast({
+        title: 'Meme update failed',
         description: 'Meme name or description is empty',
         variant: 'destructive',
       });
-    if (selectedTags.length === 0)
-      return toast({
-        title: 'Meme upload failed',
+      return;
+    }
+    if (selectedTags.length === 0) {
+      toast({
+        title: 'Meme update failed',
         description: 'No tags selected',
         variant: 'destructive',
       });
+      return;
+    }
 
-    if (success) {
-      await uploadMeme(memeName, memeDescription, selectedTags, fileUrl, fileKey, resetValues);
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/memes/${memeId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          memeName,
+          memeDescription,
+          memeTags: selectedTags,
+          memeImageURL: fileUrl,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update meme');
+      }
+
+      const { data: updatedMeme } = await response.json();
+      toast({
+        title: 'Meme updated successfully',
+        description: `${updatedMeme.name} has been updated`,
+      });
+      setMemeName(updatedMeme.name);
+      setMemeDescription(updatedMeme.description);
+      setSelectedTags(updatedMeme.tags);
+      setFileUrl(updatedMeme.url);
+    } catch (error: any) {
+      console.error('Error updating meme:', error);
+      toast({
+        title: 'Meme update failed',
+        description: error.message,
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -124,20 +184,36 @@ export default function MemeUploadForm({ setRender }: MemeUploadFormProps) {
     }
   }
 
+  if (!memeId) {
+    return (
+      <div className="flex flex-col items-center justify-center space-y-4">
+        <h3 className="text-2xl font-bold">Kindly select a meme to edit</h3>
+        <Link href="/">
+          <Button className="text-md">Go to home</Button>
+        </Link>
+      </div>
+    );
+  }
+
   return (
-    <form className="grid gap-4" onSubmit={handleUploadMeme}>
+    <form className="grid gap-4" onSubmit={handleUpdateMeme}>
       <div className="grid gap-2">
-        <Label htmlFor="meme-name">Meme Name</Label>
+        <Label htmlFor="meme-name" className="font-semibold">
+          Meme Name
+        </Label>
         <Input
           id="meme-name"
           type="text"
+          className="text-md"
           placeholder="Rick Astley"
           onChange={(e) => setMemeName(e.target.value)}
           value={memeName}
         />
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="meme-tags">Meme Tags</Label>
+        <Label htmlFor="meme-tags" className="font-semibold">
+          Meme Tags
+        </Label>
         <div className="flex flex-wrap gap-2 mb-2">
           {selectedTags.map((tag) => (
             <div
@@ -182,17 +258,21 @@ export default function MemeUploadForm({ setRender }: MemeUploadFormProps) {
         </div>
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="meme-description">Meme Description</Label>
+        <Label htmlFor="meme-description" className="font-semibold">
+          Meme Description
+        </Label>
         <Textarea
           id="meme-description"
-          className="min-h-[100px]"
-          placeholder="Rick Astley is a British rock band."
+          className="min-h-[100px] text-md"
+          placeholder="Describe your meme here"
           onChange={(e) => setMemeDescription(e.target.value)}
           value={memeDescription}
         />
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="meme-image">Meme Image</Label>
+        <Label htmlFor="meme-image" className="font-semibold">
+          Meme Image
+        </Label>
         {fileUrl ? (
           <div className="flex flex-col items-center justify-center relative">
             <Image
@@ -225,8 +305,9 @@ export default function MemeUploadForm({ setRender }: MemeUploadFormProps) {
       </div>
       <Button type="submit" className="mt-4" disabled={loading}>
         <CloudUpload className="mr-2" />
-        {loading ? 'Uploading...' : 'Upload Meme'}
+        {loading ? 'Updating...' : 'Update Meme'}
       </Button>
+      <DeleteMeme memeId={memeId} />
     </form>
   );
 }

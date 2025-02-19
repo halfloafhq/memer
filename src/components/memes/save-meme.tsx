@@ -17,8 +17,8 @@ import { Folder, FolderOpen, Loader2 } from 'lucide-react';
 import { useUser } from '@clerk/nextjs';
 import { Collection } from '@prisma/client';
 import { useRouter } from 'next/navigation';
-import { useToast } from './ui/use-toast';
-import CollectionDialog from './collection-dialog';
+import { useToast } from '../ui/use-toast';
+import CollectionDialog from '../collections/collection-dialog';
 import { useFetchCollections } from '@/hooks/collections/useFetchCollections';
 import { usePostMemeToCollection } from '@/hooks/memes/usePostMemeToCollection';
 
