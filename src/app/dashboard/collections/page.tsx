@@ -1,10 +1,12 @@
 'use client';
+
 import Loader from '@/components/loaders/loader';
 import { useRouter } from 'next/navigation';
 import { useFetchCollections } from '@/hooks/collections/useFetchCollections';
 import CollectionDialog from '@/components/collections/collection-dialog';
 import { CollectionCard } from '@/components/collections/collection-card';
 import { EmptyCollections } from '@/components/collections/empty-collections';
+import { motion } from 'motion/react';
 
 export default function CollectionsPage() {
   const { collections, loading, refetch } = useFetchCollections();
@@ -34,11 +36,24 @@ export default function CollectionsPage() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
         {collections.map((collection) => (
-          <CollectionCard
+          <motion.div
             key={collection.id}
-            name={collection.name}
-            onClick={() => router.push(`/dashboard/collections/${collection.id}`)}
-          />
+            initial={{
+              y: 25,
+              opacity: 0,
+            }}
+            animate={{
+              y: 0,
+              opacity: 100,
+              transition: { duration: 0.4 },
+            }}
+            whileHover={{ scale: 1.05 }}
+          >
+            <CollectionCard
+              name={collection.name}
+              onClick={() => router.push(`/dashboard/collections/${collection.id}`)}
+            />
+          </motion.div>
         ))}
       </div>
     </main>
