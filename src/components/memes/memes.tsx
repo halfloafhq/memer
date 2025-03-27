@@ -9,15 +9,17 @@ interface MemesProps {
 }
 
 export default function Memes({ memes }: MemesProps) {
-  return memes.map((meme: Meme, idx: number) => (
+  return memes.map((meme: Meme) => (
     <motion.div
       key={meme.id}
       initial={{
         y: 25,
+        opacity: 0,
       }}
       animate={{
         y: 0,
-        transition: { duration: 0.4 + idx },
+        opacity: 100,
+        transition: { duration: 0.4 },
       }}
       whileHover={{ scale: 1.1 }}
     >
