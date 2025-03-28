@@ -1,4 +1,5 @@
 'use client';
+
 import React from 'react';
 import Loader from '@/components/loaders/loader';
 import { useFetchCollection } from '@/hooks/collections/useFetchCollection';
@@ -6,6 +7,7 @@ import { CollectionHeader } from '@/components/collections/collection-header';
 import { CollectionNotFound } from '@/components/collections/collection-not-found';
 import { CollectionMemeCard } from '@/components/collections/collection-meme-card';
 import { removeMemeFromCollectionAction } from './_actions';
+import { motion } from 'motion/react';
 
 export default function CollectionPage({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -41,16 +43,29 @@ export default function CollectionPage({ params }: { params: { id: string } }) {
           {collectionWithMemes.memes && collectionWithMemes.memes.length >= 1 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {collectionWithMemes.memes.map((memeCollection) => (
-                <CollectionMemeCard
+                <motion.div
                   key={memeCollection.meme.id}
-                  url={memeCollection.meme.url}
-                  name={memeCollection.meme.name}
-                  description={memeCollection.meme.description}
-                  collectionId={memeCollection.collectionId}
-                  memeCollectionId={memeCollection.id}
-                  onDeleteSuccess={refetch}
-                  onRemoveMemeFromCollection={removeMemeFromCollectionAction}
-                />
+                  initial={{
+                    y: 25,
+                    opacity: 0,
+                  }}
+                  animate={{
+                    y: 0,
+                    opacity: 100,
+                    transition: { duration: 0.4 },
+                  }}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <CollectionMemeCard
+                    url={memeCollection.meme.url}
+                    name={memeCollection.meme.name}
+                    description={memeCollection.meme.description}
+                    collectionId={memeCollection.collectionId}
+                    memeCollectionId={memeCollection.id}
+                    onDeleteSuccess={refetch}
+                    onRemoveMemeFromCollection={removeMemeFromCollectionAction}
+                  />
+                </motion.div>
               ))}
             </div>
           ) : (

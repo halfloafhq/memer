@@ -98,7 +98,7 @@ export default function MemeCard({ src, name, description, memeId }: MemeCardPro
             <FileDown className="mr-2" />
             {loading ? 'Downloading...' : 'Download'}
           </Button>
-          <SaveMeme src={src} name={name} memeId={memeId} />
+          {user && <SaveMeme src={src} name={name} memeId={memeId} />}
           <ImportToEditor src={src} />
           {isAdmin && (
             <Button variant="outline" onClick={() => handleEdit(memeId)}>
