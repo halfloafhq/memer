@@ -37,12 +37,12 @@ This project is a comprehensive meme management platform that allows users to se
 1. Clone the repository
 2. Install dependencies:
    ```
-   npm install
+   pnpm install
    ```
 3. Set up environment variables (for Clerk, UploadThing, and database connection)
 4. Run the development server:
    ```
-   npm run dev
+   pnpm dev
    ```
 5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
