@@ -19,6 +19,7 @@ import { useUser } from '@clerk/nextjs';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useRouter } from 'next/navigation';
 import ImportToEditor from '../import-to-editor';
+import CopyMemeButton from '../copy-meme-button';
 
 type MemeCardProps = {
   memeId: string;
@@ -99,6 +100,7 @@ export default function MemeCard({ src, name, description, memeId }: MemeCardPro
             {loading ? 'Downloading...' : 'Download'}
           </Button>
           {user && <SaveMeme src={src} name={name} memeId={memeId} />}
+          <CopyMemeButton src={src} />
           <ImportToEditor src={src} />
           {isAdmin && (
             <Button variant="outline" onClick={() => handleEdit(memeId)}>
